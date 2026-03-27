@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Imagine Math Facts - UNBL0CKEDZ0NE</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="images/IL_favicon.ico" type="image/x-icon">
+    <script src="js/bbslider.js"></script>
+    <script src="js/bbfader.js"></script>
+    <script src="js/UnityProgress.js"></script>
+    <script>
+        var buildUrl = "Build";
+        var loaderUrl = buildUrl + "/WebGL.loader.js";
+        var config = {
+          dataUrl: buildUrl + "/WebGL.data.unityweb",
+          frameworkUrl: buildUrl + "/WebGL.framework.js.unityweb",
+          codeUrl: buildUrl + "/WebGL.wasm.unityweb",
+          webglContextAttributes: {
+            premultipliedAlpha: true,
+          },
+          streamingAssetsUrl: "StreamingAssets",
+          companyName: "Imagine Learning",
+          productName: "Imagine Math Facts",
+          productVersion: "9.220",
+        };
+        var gameInstance;
+    </script>
+</head>
+<body class="template">
+<p class="header"><span>Unity WebGL Player | </span>Imagine Math Facts</p>
+<div class="slider">
+    <div id="bb-slider"></div>
+</div>
+<div class="template-wrap clear">
+    <div id="gameContainer" width="640" height="480">
+        <canvas id="unity-canvas" width="640" height="480" style="width: 640px; height: 480px;"></canvas>
+    </div>
+    <br>
+    <br>
+    <div>
+        <div class="fullscreen"><img src="images/fullscreen.png" width="38" height="38" alt="Fullscreen" title="Fullscreen" onclick="gameInstance.SetFullscreen(1);"></div>
+    </div>
+</div>
+<div id="cache-message">
+    <p>
+        It looks like you need to recache. Please push the button below.
+    </p>
+    <button onclick="clearCache()">ReCache</button>
+</div>
+<script type="text/javascript">
+    var canvas = document.querySelector("#unity-canvas");
+    var gameContainer = document.querySelector("#gameContainer");
+
+    var QueryString = function () {
+        var query_string = {};
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if (typeof query_string[pair[0]] === "undefined") {
+                query_string[pair[0]] = decodeURIComponent(pair[1]);
+            } else if (typeof query_string[pair[0]] === "string") {
+                var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
+                query_string[pair[0]] = arr;
+            } else {
+                query_string[pair[0]].push(decodeURIComponent(pair[1]));
+            }
+        }
+        return query_string;
+    }();
+
+    // Force token to always be "demo"
+    QueryString.token = "demo";
+
+    var ios = (window.navigator.userAgent.toLowerCase().match(/(ipad)/g) ? true : false) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+    if (ios) {
+        window.location = ('imaginemathfacts://' + QueryString.token);
+    }
+
+    canvas.style.width = "640px";
+    canvas.style.height = "480px";
+
+    var unityLoadScript = document.createElement("script");
+    unityLoadScript.src = loaderUrl;
+    unityLoadScript.onload = () => {
+        createUnityInstance(canvas, config, (progress) => JUnityProgress(gameContainer, progress)).then((unityInstance) => { gameInstance = unityInstance; }).catch((message) => { alert(message); });
+    };
+    document.body.appendChild(unityLoadScript);
+</script>
+<script src="js/WebGL.loader.js"></script>
+</body>
+</html>
