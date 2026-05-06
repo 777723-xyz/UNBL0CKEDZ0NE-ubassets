@@ -3557,7 +3557,7 @@ var UnityLoader = UnityLoader || {
                     if (e.endsWith("BATIM.data.unityweb")) {
                         return window.dataUrll;
                     }
-                    return e.match(/(http|https|ftp|file):\/\//) ? e : "https://cdn.jsdelivr.net/gh/genizy/web-port@main/bendy/Build/"+e
+                    return e.match(/(http|https|ftp|file):\/\//) ? e : "https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/bendy/Build/"+e
                 },
                 streamingAssetsUrl: function() {
                     return o(this.resolveBuildUrl("../StreamingAssets"))
