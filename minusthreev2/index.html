@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-    <title>MINUS THREE</title>
+    <title>MINUS THREE | UNBL0CKEDZ0NE</title>
     <style>
         body {
             margin: 0;
@@ -66,31 +66,6 @@
             box-shadow: 0 0 15px #00ffa3;
             transition: width 0.3s ease-out
         }
-
-        #fullscreen-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            padding: 10px 15px;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff;
-            cursor: pointer;
-            border-radius: 6px;
-            display: none;
-            z-index: 100;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            backdrop-filter: blur(10px);
-            transition: all 0.2s
-        }
-
-        #fullscreen-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: scale(1.05)
-        }
     </style>
 </head>
 
@@ -103,7 +78,6 @@
                 <div id="progress-fill"></div>
             </div>
         </div>
-        <button id="fullscreen-btn">FULLSCREEN</button>
     </div>
     <script>
         const ROOT = "https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@latest/minusthreev2/";
@@ -119,7 +93,6 @@
         const loading = document.querySelector("#loading");
         const progressText = document.querySelector("#progress-text");
         const progressFill = document.querySelector("#progress-fill");
-        const fsBtn = document.querySelector("#fullscreen-btn");
         async function start() {
             try {
                 const paths = [BUILD + ASSETS.loader, BUILD + ASSETS.framework, BUILD + ASSETS.wasm];
@@ -156,8 +129,6 @@
                     }).then(i => {
                         loading.style.display = "none";
                         canvas.style.display = "block";
-                        fsBtn.style.display = "block";
-                        fsBtn.onclick = () => i.SetFullscreen(1);
                         canvas.focus();
                     });
                 };

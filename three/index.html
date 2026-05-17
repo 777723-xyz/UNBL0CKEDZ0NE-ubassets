@@ -3,33 +3,57 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>THREE</title>
+    <title>THREE | UNBL0CKEDZ0NE</title>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, viewport-fit=cover">
     <style>
       :root { color-scheme: dark; }
-      html, body { height: 100%; margin: 0; background: #0b0f14; color: #e7edf5; font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
-      #app { height: 100%; display: grid; place-items: center; }
-      #stage { width: min(1280px, 100vw); height: min(720px, 100vh); position: relative; border-radius: 14px; overflow: hidden; background: radial-gradient(900px 600px at 20% 10%, rgba(120,160,255,.12), transparent 60%), linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); box-shadow: 0 18px 60px rgba(0,0,0,.55); }
-      #unity-canvas { width: 100%; height: 100%; display: block; background: transparent; }
-      #overlay { position: absolute; inset: 0; display: grid; align-content: center; justify-items: center; gap: 14px; padding: 24px; background: linear-gradient(180deg, rgba(11,15,20,.92), rgba(11,15,20,.78)); }
+      html, body { 
+        height: 100%; 
+        margin: 0; 
+        background: #0b0f14; 
+        color: #e7edf5; 
+        font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; 
+        overflow: hidden;
+      }
+      #app { 
+        height: 100%; 
+        width: 100%;
+      }
+      #stage { 
+        width: 100%; 
+        height: 100%; 
+        position: relative; 
+      }
+      #unity-canvas { 
+        width: 100%; 
+        height: 100%; 
+        display: block; 
+        background: transparent; 
+      }
+      #overlay { 
+        position: absolute; 
+        inset: 0; 
+        display: grid; 
+        align-content: center; 
+        justify-items: center; 
+        gap: 14px; 
+        padding: 24px; 
+        background: #0b0f14; 
+      }
       #title { font-size: 18px; letter-spacing: .2px; opacity: .95; }
       #bar { width: min(520px, 84vw); height: 10px; background: rgba(255,255,255,.08); border-radius: 999px; overflow: hidden; }
       #bar > div { height: 100%; width: 0%; background: linear-gradient(90deg, #6ea8ff, #a78bfa, #34d399); border-radius: 999px; transition: width 120ms linear; }
       #status { width: min(520px, 84vw); display: flex; justify-content: space-between; gap: 12px; opacity: .9; }
       #status .muted { opacity: .75; }
-      #fullscreen { position: absolute; top: 12px; right: 12px; z-index: 3; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.06); color: inherit; padding: 8px 10px; border-radius: 10px; cursor: pointer; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-      #fullscreen:hover { background: rgba(255,255,255,.1); }
       #banner { position: absolute; left: 12px; right: 12px; bottom: 12px; z-index: 3; display: none; gap: 8px; }
       .msg { border: 1px solid rgba(255,255,255,.12); background: rgba(11,15,20,.72); padding: 10px 12px; border-radius: 12px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
       .msg.error { border-color: rgba(255,86,86,.35); background: rgba(60,0,0,.35); }
       .msg.warn { border-color: rgba(255,204,102,.35); background: rgba(60,40,0,.35); }
-      @media (max-width: 520px) { #stage { border-radius: 0; width: 100vw; height: 100vh; } }
     </style>
   </head>
   <body>
     <div id="app">
       <div id="stage">
-        <button id="fullscreen" type="button">Fullscreen</button>
         <canvas id="unity-canvas" tabindex="-1"></canvas>
         <div id="overlay">
           <div id="title">THREE</div>
@@ -49,7 +73,6 @@
       const barFill = document.getElementById("barFill");
       const statusText = document.getElementById("statusText");
       const statusPct = document.getElementById("statusPct");
-      const fullscreenBtn = document.getElementById("fullscreen");
       const banner = document.getElementById("banner");
 
       function pad2(n) { return String(n).padStart(2, "0"); }
@@ -138,18 +161,12 @@
           createUnityInstance(canvas, config, (p) => setProgress(0.8 + p * 0.2, p < 0.98 ? "Initializing…": "Almost ready…"))
             .then((unityInstance) => {
               overlay.style.display = "none";
-              fullscreenBtn.onclick = () => unityInstance.SetFullscreen(1);
-              fullscreenBtn.style.display = "block";
             })
             .catch((e) => { showBanner(String(e && e.message ? e.message : e), "error"); });
         };
         script.onerror = () => showBanner("Failed to load Unity loader script.", "error");
         document.body.appendChild(script);
       }
-
-      fullscreenBtn.onclick = async () => {
-        try { await (document.fullscreenElement ? document.exitFullscreen() : canvas.requestFullscreen()); } catch (e) {}
-      };
 
       start().catch((e) => { showBanner(String(e && e.message ? e.message : e), "error"); });
     </script>
