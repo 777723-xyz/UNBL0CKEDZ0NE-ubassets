@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cross-Origin-Embedder-Policy" content="unsafe-none">
+  <title>Home - Classroom</title>
+  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEACABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAAAAAAAYqMdAAC8/wBanhIAAbT0AGSkIQBfoRkAWZ4RAP///wAJt/QAZKQgAF+hGAATuvUAFLr1AFyfFQAVuvUAY6QfAGGiHABbnxQAZqUjAAa29AAHtvQACLb0AGGiGwAQufUAErn1AFufEwBlpSIAYKIaAF2gFwBeoBcA9/f3AAK19AADtfQABLX0AAW19AAMuPUAYqMeAA249QAOuPUAXaAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAICCSMjFhUVIyMjIyMgAgICIyMjIyMjIyMjIyMjIwQCAiQGBwgICAgICAgIBwMgAiYCFwcICAgICAgICAcaIQInAhEHBwgfHx8fCAcHEiECAgIBBwcHBwcHBwcHBxIiAgIYJSUBBwcICAcHBygOIwICGRAQBwcICAgIBwcHDiMCAgwKChAlCB8fCAYeHSgUAgINGwUKEAcICAcGCx4oFAICDxMbBwcHBwcHHAseHRQCAiMjIyMjIyMjIyMjIyMUAgIjIyMjIyMjIyMjIyMjIwIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAP//AAA=">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <script src="https://cdn.jsdelivr.net/gh/luminsdk/script@latest/lumin.min.js"></script>
+  <style>
+    :root{
+      --accent:#ff6600;
+      --accent-glow:rgba(255,102,0,0.5);
+      --accent-glow-strong:rgba(255,102,0,0.8);
+      --accent-glow-soft:rgba(255,102,0,0.15);
+      --bg-alpha:rgba(15,8,0,0.75);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:'Pixelify Sans',monospace,sans-serif;background:#050001;color:var(--accent);overflow:hidden;cursor:url('https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/arrow.png'),auto;}
+    a,button,.sidebar-btn,.card,.game-card,.play-btn,.partner-card a,.media-cat,.game-cat,.gv-btn,.link-item a{cursor:url('https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/hand.png'),pointer;}
+    .loading-cursor{cursor:wait;}
+    html.loading-custom-cursor, html.loading-custom-cursor * { cursor: none !important; }
+
+    body::after{
+      content:"";position:fixed;inset:0;
+      background:radial-gradient(circle at 30% 70%,var(--accent-glow-soft),transparent 70%),
+                radial-gradient(circle at 70% 30%,var(--accent-glow-soft),transparent 70%);
+      mix-blend-mode:screen;
+      animation:glowShift 10s ease-in-out infinite alternate;
+      pointer-events:none;z-index:0
+    }
+    @keyframes glowShift{0%{opacity:.4}100%{opacity:.7}}
+    canvas#bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none}
+
+    #loading-screen {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #000000; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+    #loading-screen.hidden { opacity: 0; pointer-events: none; }
+    #loading-screen svg { margin-bottom: 16px; }
+    .loading-school-name { color: white; font-size: 18px; margin-bottom: 32px; }
+    .loading-stripe {
+      background: #ff6600; color: #ffffff; width: 100%;
+      padding: 24px 16px; text-align: center; margin-bottom: 16px;
+    }
+    .loading-stripe .top-text { font-size: 14px; color: #ffffff; }
+    .loading-stripe .website { font-size: 30px; color: #ffffff; }
+    .loading-stripe .bottom-text { font-size: 14px; color: #ffffff; }
+    .loading-system-msg { color: #ff6600; margin-bottom: 8px; font-size: 14px; }
+
+    #loading-timer {
+      position: fixed; top: 16px; right: 16px;
+      color: rgba(255,102,0,0.35);
+      font-family: "Pixelify Sans", monospace; font-size: 14px; font-weight: 400;
+      z-index: 10000;
+    }
+
+    #main-content {
+      display: none; min-height: 100vh; position: relative; z-index: 2;
+    }
+    #main-content.visible { display: flex; }
+
+    #sidebar {
+      width: 260px; min-height: 100vh;
+      background: rgba(8, 4, 0, 0.95);
+      border-right: 3px solid var(--accent);
+      display: flex; flex-direction: column; align-items: center;
+      padding: 24px 16px; position: fixed; left: 0; top: 0; bottom: 0;
+      z-index: 100;
+      box-shadow: 0 0 30px rgba(255,102,0,0.3);
+    }
+    #sidebar-logo {
+      width: 100%; max-width: 220px; margin-bottom: 16px;
+      filter: drop-shadow(0 0 10px rgba(255,102,0,0.6));
+    }
+    #sidebar-logo img { width: 100%; height: auto; display: block; }
+    .sidebar-divider {
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, #ff6600, transparent);
+      margin: 4px 0 16px;
+    }
+    .sidebar-nav {
+      display: flex; flex-direction: column; gap: 8px; width: 100%;
+    }
+    .sidebar-btn {
+      background: transparent; border: 2px solid var(--accent); color: var(--accent);
+      font-family: "Pixelify Sans", sans-serif; font-size: 15px; font-weight: 600;
+      padding: 12px 16px; cursor: pointer; border-radius: 8px;
+      transition: all 0.2s; text-align: left;
+      display: flex; align-items: center; gap: 10px; width: 100%;
+    }
+    .sidebar-btn:hover, .sidebar-btn.active {
+      background: var(--accent); color: #000000;
+      box-shadow: 0 0 15px rgba(255,102,0,0.5);
+      transform: translateX(4px);
+    }
+    .sidebar-btn .icon { font-size: 18px; width: 24px; text-align: center; }
+    #content-area {
+      margin-left: 260px; flex: 1; min-height: 100vh;
+      padding: 32px 40px; position: relative; overflow-y: auto; height: 100vh;
+    }
+
+    .date-section { text-align: center; padding: 20px 20px 10px; }
+    .day-name {
+      font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; letter-spacing: 0.2em;
+      color: #e8e8e8; text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(255,255,255,0.3), 0 0 40px rgba(255,255,255,0.1);
+      line-height: 1.1;
+    }
+    .full-date {
+      font-size: clamp(0.8rem, 2vw, 1.2rem); font-weight: 500; letter-spacing: 0.5em;
+      color: #b0b0b0; margin-top: 10px; text-transform: uppercase;
+    }
+
+    .tab-content { display: none; max-width: 1100px; margin: 0 auto; }
+    .tab-content.active { display: block; }
+    .tab-content h2 {
+      font-size: 36px; margin-bottom: 20px; text-align: center;
+      text-shadow: 0 0 15px rgba(255,102,0,0.4); color: var(--accent);
+    }
+    .tab-content p {
+      font-size: 18px; line-height: 1.6; text-align: center;
+      max-width: 800px; margin: 0 auto 20px; color: #ff8c00;
+    }
+
+    .search-bar {
+      max-width: 600px; margin: 0 auto 24px; position: relative;
+    }
+    .search-bar input {
+      width: 100%; background: rgba(8, 4, 0, 0.8);
+      border: 2px solid var(--accent); color: var(--accent);
+      font-family: "Pixelify Sans", sans-serif; font-size: 18px;
+      padding: 14px 20px; border-radius: 8px; outline: none;
+    }
+    .search-bar input::placeholder { color: #ff8c00; opacity: 0.6; }
+    .search-bar input:focus {
+      border-color: #ff8c00; box-shadow: 0 0 20px rgba(255,102,0,0.4);
+    }
+
+    .game-categories {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      justify-content: center; margin-bottom: 20px;
+    }
+    .game-cat {
+      background: transparent; border: 2px solid var(--accent); color: var(--accent);
+      font-family: "Pixelify Sans", sans-serif; font-size: 13px; font-weight: 600;
+      padding: 8px 14px; cursor: pointer; border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .game-cat:hover, .game-cat.active {
+      background: var(--accent); color: #000000;
+      box-shadow: 0 0 12px rgba(255,102,0,0.4);
+    }
+    .media-categories { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+    .media-cat {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      color: #ccc; padding: 8px 18px; border-radius: 8px; cursor: pointer;
+      font-size: 14px; transition: all 0.2s;
+    }
+    .media-cat:hover, .media-cat.active {
+      background: #ff8c00; color: #000; border-color: #ff8c00;
+    }
+
+    #game-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px; margin-top: 16px;
+    }
+    @media (max-width: 900px) { #game-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 700px) { #game-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 500px) { #game-grid { grid-template-columns: 1fr; } }
+    .game-card {
+      background: rgba(8, 4, 0, 0.9); border: 2px solid var(--accent);
+      border-radius: 10px; overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer; text-decoration: none; color: inherit; display: block;
+    }
+    .game-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 25px rgba(255,102,0,0.5);
+      border-color: #ff8c00;
+    }
+    .game-card img {
+      width: 100%; height: 140px; object-fit: cover;
+      border-bottom: 2px solid var(--accent); display: block;
+      background: rgba(255,102,0,0.1);
+    }
+    .game-card h3 {
+      font-size: 15px; padding: 10px 8px; text-align: center;
+      color: var(--accent); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .game-card .play-btn {
+      display: block; text-align: center;
+      background: var(--accent); color: #000; font-weight: 700;
+      font-size: 14px; padding: 8px; text-decoration: none;
+      transition: all 0.2s; cursor: pointer;
+    }
+    .game-card .play-btn:hover {
+      background: #ff8c00;
+    }
+    .game-card.big { grid-column: span 2; }
+    .game-card.big img { height: 180px; }
+    .proxy-section {
+      background: rgba(8,4,0,0.9); border: 2px solid var(--accent);
+      border-radius: 10px; padding: 16px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .proxy-section:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px rgba(255,102,0,0.4);
+      border-color: #ff8c00;
+    }
+
+    .under-construction {
+      text-align: center; padding: 60px 20px; grid-column: 1/-1;
+    }
+    .under-construction h3 {
+      font-size: 28px; color: var(--accent); margin-bottom: 16px;
+      text-shadow: 0 0 15px rgba(255,102,0,0.4);
+    }
+    .under-construction p {
+      font-size: 18px; color: #ff8c00;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px; margin-top: 20px;
+    }
+    .card {
+      background: rgba(8, 4, 0, 0.9); border: 2px solid var(--accent);
+      border-radius: 10px; overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer; text-decoration: none; color: inherit; display: block;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 25px rgba(255,102,0,0.4);
+      border-color: #ff8c00;
+    }
+    .card-img {
+      width: 100%; height: 140px; background: rgba(255,102,0,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 48px; border-bottom: 2px solid var(--accent);
+    }
+    .card-img img { display:block; }
+    .card-info { padding: 16px; text-align: center; }
+    .card h3 { font-size: 18px; margin-bottom: 6px; color: var(--accent); }
+    .card p { font-size: 13px; color: #ff8c00; margin: 0; text-align: center; }
+    .card-tag {
+      display: inline-block; background: var(--accent); color: #000;
+      font-size: 11px; font-weight: 700; padding: 3px 8px;
+      border-radius: 4px; margin-top: 8px;
+    }
+
+    .link-list {
+      display: flex; flex-direction: column; gap: 12px;
+      max-width: 700px; margin: 20px auto;
+    }
+    .link-item {
+      background: rgba(8, 4, 0, 0.9); border: 2px solid var(--accent);
+      border-radius: 8px; padding: 16px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: all 0.2s;
+    }
+    .link-item:hover {
+      background: rgba(255,102,0,0.1); border-color: #ff8c00;
+      box-shadow: 0 0 15px rgba(255,102,0,0.3);
+    }
+    .link-item .link-info { display: flex; flex-direction: column; }
+    .link-item .link-name { color: var(--accent); font-weight: 700; font-size: 18px; }
+    .link-item .link-desc { color: #ff8c00; font-size: 13px; margin-top: 2px; }
+    .link-item a {
+      background: var(--accent); color: #000000; text-decoration: none;
+      font-weight: 700; font-size: 14px; padding: 8px 16px;
+      border-radius: 6px; transition: all 0.2s;
+    }
+    .link-item a:hover { background: #ff8c00; box-shadow: 0 0 10px rgba(255,102,0,0.5); }
+
+    .partner-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px; margin-top: 20px;
+    }
+    .partner-card {
+      background: rgba(8, 4, 0, 0.9); border: 2px solid var(--accent);
+      border-radius: 10px; padding: 24px; text-align: center;
+      transition: all 0.2s;
+    }
+    .partner-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 20px rgba(255,102,0,0.4);
+    }
+    .partner-card .partner-icon { font-size: 40px; margin-bottom: 12px; }
+    .partner-card .partner-img { width: 60px; height: 60px; object-fit: contain; border-radius: 50%; margin-bottom: 12px; }
+    .partner-card h3 { font-size: 20px; margin-bottom: 8px; }
+    .partner-card p { font-size: 14px; color: #ff8c00; margin-bottom: 12px; }
+    .partner-card a {
+      color: var(--accent); text-decoration: none; font-weight: 700;
+      font-size: 14px; border: 2px solid var(--accent);
+      padding: 6px 14px; border-radius: 4px; display: inline-block;
+      transition: all 0.2s;
+    }
+    .partner-card a:hover { background: var(--accent); color: #000; }
+
+    .form-container {
+      max-width: 500px; margin: 20px auto;
+      background: rgba(8, 4, 0, 0.9); border: 2px solid var(--accent);
+      border-radius: 10px; padding: 28px;
+    }
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block; margin-bottom: 6px; font-weight: 700; font-size: 15px;
+    }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%; background: rgba(0, 0, 0, 0.6);
+      border: 2px solid var(--accent); color: var(--accent);
+      font-family: "Pixelify Sans", sans-serif; font-size: 16px;
+      padding: 12px; border-radius: 6px; outline: none;
+    }
+    .form-group input::placeholder, .form-group textarea::placeholder {
+      color: #ff8c00; opacity: 0.5;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      border-color: #ff8c00; box-shadow: 0 0 10px rgba(255,102,0,0.3);
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .submit-btn {
+      background: var(--accent); color: #000000;
+      font-family: "Pixelify Sans", sans-serif; font-size: 18px;
+      font-weight: 700; padding: 14px 32px; border: none;
+      border-radius: 6px; cursor: pointer; width: 100%;
+      transition: all 0.2s;
+    }
+    .submit-btn:hover { background: #ff8c00; box-shadow: 0 0 20px rgba(255,102,0,0.5); }
+
+    .quote-section {
+      text-align: center; padding: 20px;
+      min-height: 60px; display: flex;
+      align-items: center; justify-content: center;
+    }
+    #quote {
+      color: var(--accent); font-size: 1.1rem; font-style: italic;
+      text-shadow: 0 0 12px rgba(255, 102, 0, 0.7);
+      opacity: 0; transition: opacity 0.8s ease-in-out;
+      max-width: 600px; text-align: center; padding: 0 20px;
+    }
+
+    footer {
+      text-align: center; padding: 20px;
+      border-top: 2px solid var(--accent); margin-top: 30px;
+      font-size: 14px; color: #ff8c00;
+    }
+
+    @media (max-width: 900px) {
+      #sidebar { width: 70px; padding: 16px 8px; }
+      #sidebar-logo { max-width: 50px; }
+      .sidebar-btn { font-size: 0; padding: 12px; justify-content: center; }
+      .sidebar-btn .icon { font-size: 20px; width: auto; }
+      #content-area { margin-left: 70px; padding: 20px; }
+    }
+    @media (max-width: 600px) {
+      #sidebar { width: 100%; min-height: auto; height: auto; position: relative;
+        flex-direction: row; flex-wrap: wrap; padding: 12px;
+        border-right: none; border-bottom: 3px solid var(--accent);
+      }
+      #sidebar-logo { max-width: 120px; margin-bottom: 12px; }
+      .sidebar-nav { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+      .sidebar-btn { font-size: 12px; padding: 8px 12px; width: auto; }
+      #content-area { margin-left: 0; }
+    }
+
+    /* ─── GAME VIEWER OVERLAY ─── */
+    #game-viewer {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 500; display: none; flex-direction: column;
+      background: #000;
+    }
+    #game-viewer.active { display: flex; }
+    #game-viewer.fullscreen-mode {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 500;
+    }
+    .game-viewer-bar {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(8,4,0,0.98); border-bottom: 2px solid var(--accent);
+      padding: 8px 16px; min-height: 50px; flex-shrink: 0;
+    }
+    .game-viewer-bar .game-title {
+      color: var(--accent); font-weight: 700; flex: 1;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      font-size: 16px;
+    }
+    .game-viewer-bar .gv-btn {
+      background: transparent; border: 2px solid var(--accent);
+      color: var(--accent); font-family: "Pixelify Sans", sans-serif;
+      font-size: 14px; font-weight: 600; padding: 6px 14px;
+      border-radius: 6px; cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .game-viewer-bar .gv-btn:hover {
+      background: var(--accent); color: #000;
+      box-shadow: 0 0 12px rgba(255,102,0,0.4);
+    }
+    #game-frame-container {
+      flex: 1; position: relative; background: #000;
+    }
+    #game-frame-container iframe {
+      width: 100%; height: 100%; border: none;
+    }
+    .loading-indicator {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--accent); font-size: 18px;
+      text-align: center;
+    }
+    .loading-indicator .spinner {
+      width: 40px; height: 40px; margin: 0 auto 16px;
+      border: 4px solid rgba(255,102,0,0.2);
+      border-top-color: var(--accent);
+      border-radius: 50%; animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+<base target="_blank">
+</head>
+<body>
+
+  <div id="loading-timer">5.00s</div>
+
+  <div id="loading-screen" class="loading-cursor">
+    <canvas id="loading-cursor-canvas" style="position:fixed;pointer-events:none;z-index:99999;width:32px;height:32px;display:none;"></canvas>
+    <svg class="blockScreen-svg" height="66" viewBox="0 0 66 66" width="66" xmlns="http://www.w3.org/2000/svg">
+      <title>access blocked</title>
+      <g fill="none" fill-rule="evenodd" stroke="#ff6600" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <path d="M33 1C15.327 1 1 15.327 1 33c0 17.673 14.327 32 32 32 17.673 0 32-14.327 32-32"></path>
+        <path d="M21.288 21.387v-4.344c0-3.624 2.936-6.562 6.564-6.562h17v10.93c1.35.26 2.37 1.446 2.37 2.883v.822c0 1.44-1.037 2.638-2.4 2.887-.437 6.106-5.53 10.924-11.752 10.924-6.213 0-11.302-4.816-11.75-10.9-1.435-.19-2.542-1.414-2.542-2.91v-.823c0-1.48 1.093-2.702 2.51-2.906zM27.435 38.926l-2.772 5.656h-6.598c-3.385 0-6.398 2.85-6.398 6.196v6.06m42.666-.134v-6.06c0-3.34-2.74-6.062-6.118-6.062h-7.413l-2.77-5.656M53.148 10.48H65v8.297H53.148zM55.52 3.37h7.11v7.11h-7.11z"></path>
+      </g>
+    </svg>
+    <div class="loading-school-name">Restricted Independent School District</div>
+    <div class="loading-stripe">
+      <div class="top-text">Oops,</div>
+      <div class="website">donotblockthislink.ub</div>
+      <div class="bottom-text">is not available because it is blocked for Games.</div>
+    </div>
+    <div class="loading-system-msg">
+      You are logged in as student111@risd.edu (IP Address: 111.111.1111).
+    </div>
+    </div>
+
+  <canvas id="bg-canvas"></canvas>
+
+  <div id="main-content">
+    <aside id="sidebar">
+      <div id="sidebar-logo">
+        <img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/UNBL0CKEDZ0NE%20in%20Text.png" alt="UNBL0CKEDZ0NE">
+      </div>
+      <div class="sidebar-divider"></div>
+      <nav class="sidebar-nav">
+        <button class="sidebar-btn active" data-tab="home">
+          <span class="icon">🏠</span> Home
+        </button>
+        <button class="sidebar-btn" data-tab="games">
+          <span class="icon">🎮</span> Games
+        </button>
+        <button class="sidebar-btn" data-tab="tools">
+          <span class="icon">🛠️</span> Tools
+        </button>
+        <button class="sidebar-btn" data-tab="partners">
+          <span class="icon">🤝</span> Partners
+        </button>
+        <button class="sidebar-btn" data-tab="media">
+          <span class="icon">📺</span> Media
+        </button>
+        <button class="sidebar-btn" data-tab="proxy">
+          <span class="icon">🔗</span> Proxies
+        </button>
+        <button class="sidebar-btn" data-tab="forms">
+          <span class="icon">📝</span> Forms
+        </button>
+      </nav>
+    </aside>
+
+    <main id="content-area">
+      <div class="tab-content active" id="home">
+        <div class="date-section">
+          <div class="day-name" id="dayName">SATURDAY</div>
+          <div class="full-date" id="fullDate">MAY 03, 2026</div>
+        </div>
+        <h2>Welcome to UNBL0CKEDZ0NE</h2>
+        <p>Your ultimate unblocked entertainment hub. Browse movies, TV shows, music, games, proxies, and more — all in one place.</p>
+        <div class="search-bar">
+          <input type="text" id="home-search-input" placeholder="Search games">
+        </div>
+        <div class="quote-section">
+          <div id="quote">There is Currently 168 G4mes! - ʊռɮʟօƈӄɛɖʐօռɛ</div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="media">
+        <h2>Media</h2>
+        <p>Movies, TV shows, music, and manga — all in one place.</p>
+        <div class="media-categories">
+          <button class="media-cat active" data-media="tv">📺 TV Shows</button>
+          <button class="media-cat" data-media="movies" data-external="https://sites.google.com/view/3xp7vm9zq2wb5nr8tyv4xc1om6pz3k/kP9vX2mQ7zWb5nR4tYv8xC1oM6pZ3jK9sBf4hG7dX2wL1vN5mQ8zP3kR9sBf4hG7dX2wL1vN5m/1a2b3C4d5E6f7G8h9I0j1K2l3M4n5O6p7Q8r9S0t1U2v3W4x5Y6z7A8b9C0d1E2f3G4h5I6j7K/w8Y9vK2xM4qR1pL5zC3bN8mX7jA9vF2wP6kL3hJ9nC4xZ8mB7vN1qW4rD6yT2pM9sK4cQ8/7bN4mK9xQ2wP8zR3vT6yL1fG5hD8jS2kX4mQ9zP1vB7nR3tW6jK2sF5hG8dX4wL1vN9mQ3zP/F9vM3xQ7zWb5nR1tYv8xC4oM2pZ6jK9sBf3hG7dX5wL1vN8mQ2zP4kR6sBf9hG3dX7wL1vN5/">🎬 Movies</button>
+          <button class="media-cat" data-media="manga">📖 Manga</button>
+          <button class="media-cat" data-media="music">🎵 Music</button>
+        </div>
+        <div class="media-section" id="media-movies" style="display:none">
+          <div class="search-bar">
+            <input type="text" id="movie-search" placeholder="Search movies...">
+          </div>
+          <div class="card-grid" id="movie-grid"></div>
+        </div>
+        <div class="media-section" id="media-tv">
+          <div class="search-bar">
+            <input type="text" placeholder="Search TV shows...">
+          </div>
+          <div class="card-grid">
+            <a href="#" class="card">
+              <div class="card-img">🧟</div>
+              <div class="card-info">
+                <h3>[Show Title]</h3>
+                <p>Season 1-4 / 48 Episodes</p>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <div class="card-img">👑</div>
+              <div class="card-info">
+                <h3>[Show Title]</h3>
+                <p>Season 1-6 / 73 Episodes</p>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <div class="card-img">🪐</div>
+              <div class="card-info">
+                <h3>[Show Title]</h3>
+                <p>Season 1-3 / 34 Episodes</p>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <div class="card-img">⚔️</div>
+              <div class="card-info">
+                <h3>[Show Title]</h3>
+                <p>Season 1 / 10 Episodes</p>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <div class="card-img">🧪</div>
+              <div class="card-info">
+                <h3>[Show Title]</h3>
+                <p>Season 1-5 / 62 Episodes</p>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <div class="card-img">🌊</div>
+              <div class="card-info">
+                <h3>[Show Title]</h3>
+                <p>Season 2 / 18 Episodes</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="media-section" id="media-music" style="display:none">
+          <div style="background:#fff;border-radius:8px;padding:4px;">
+            <iframe src="https://drive.google.com/embeddedfolderview?id=1lCifmGV8S5Th6Zc7M32HraEzaEvhapTj" style="width:100%;height:600px;border:none;border-radius:4px;"></iframe>
+          </div>
+        </div>
+        <div class="media-section" id="media-manga" style="display:none">
+          <div class="search-bar">
+            <input type="text" placeholder="Search manga...">
+          </div>
+          <div class="card-grid">
+            <a href="#" class="card">
+              <div class="card-img">🗡️</div>
+              <div class="card-info">
+                <h3>[Manga Title]</h3>
+                <p>Action / 200+ Chapters</p>
+                <span class="card-tag">ONGOING</span>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <div class="card-img">🎒</div>
+              <div class="card-info">
+                <h3>[Manga Title]</h3>
+                <p>Adventure / 100+ Chapters</p>
+                <span class="card-tag">COMPLETED</span>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <div class="card-img">👨‍🎓</div>
+              <div class="card-info">
+                <h3>[Manga Title]</h3>
+                <p>Slice of Life / 50+ Chapters</p>
+                <span class="card-tag">ONGOING</span>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <div class="card-img">⚡</div>
+              <div class="card-info">
+                <h3>[Manga Title]</h3>
+                <p>Shonen / 300+ Chapters</p>
+                <span class="card-tag">COMPLETED</span>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <div class="card-img">🧙</div>
+              <div class="card-info">
+                <h3>[Manga Title]</h3>
+                <p>Fantasy / 150+ Chapters</p>
+                <span class="card-tag">ONGOING</span>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <div class="card-img">🤖</div>
+              <div class="card-info">
+                <h3>[Manga Title]</h3>
+                <p>Sci-Fi / 80+ Chapters</p>
+                <span class="card-tag">ONGOING</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="tools">
+        <h2>Tools</h2>
+        <p>Useful browser tools and utilities.</p>
+        <div style="display:grid;gap:12px;">
+          <a href="#" class="proxy-section" style="text-decoration:none;display:block;" onclick="event.preventDefault();openGame('Code Editor','https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/html/other/runner.html');">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/vscode.png" style="width:40px;height:40px;border-radius:50%;object-fit:contain;background:rgba(255,102,0,.1);padding:6px;">
+              <div>
+                <h3 style="margin:0;color:var(--accent);font-size:16px;">Code Editor</h3>
+                <p style="margin:2px 0 0;color:#ff8c00;font-size:12px;">Write and run code in your browser</p>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="proxy-section" style="text-decoration:none;display:block;" onclick="event.preventDefault();openGame('HTML Embedder','https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/html/other/embed.html');">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/embed.png" style="width:40px;height:40px;border-radius:50%;object-fit:contain;background:rgba(255,102,0,.1);padding:6px;">
+              <div>
+                <h3 style="margin:0;color:var(--accent);font-size:16px;">HTML Embedder</h3>
+                <p style="margin:2px 0 0;color:#ff8c00;font-size:12px;">Embed any webpage as HTML</p>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="proxy-section" style="text-decoration:none;display:block;" onclick="event.preventDefault();openGame('Website Embedder','https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/html/other/embed2.html');">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/aboutblank.png" style="width:40px;height:40px;border-radius:50%;object-fit:contain;background:rgba(255,102,0,.1);padding:6px;">
+              <div>
+                <h3 style="margin:0;color:var(--accent);font-size:16px;">Website Embedder</h3>
+                <p style="margin:2px 0 0;color:#ff8c00;font-size:12px;">Embed websites in about:blank</p>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="proxy-section" style="text-decoration:none;display:block;" onclick="event.preventDefault();openGame('History Flooder','https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/html/other/history.html');">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/history.png" style="width:40px;height:40px;border-radius:50%;object-fit:contain;background:rgba(255,102,0,.1);padding:6px;">
+              <div>
+                <h3 style="margin:0;color:var(--accent);font-size:16px;">History Flooder</h3>
+                <p style="margin:2px 0 0;color:#ff8c00;font-size:12px;">Flood your browser history</p>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="proxy-section" style="text-decoration:none;display:block;" onclick="event.preventDefault();openGame('Screen Sharer','https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/html/other/share.html');">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/screen.png" style="width:40px;height:40px;border-radius:50%;object-fit:contain;background:rgba(255,102,0,.1);padding:6px;">
+              <div>
+                <h3 style="margin:0;color:var(--accent);font-size:16px;">Screen Sharer</h3>
+                <p style="margin:2px 0 0;color:#ff8c00;font-size:12px;">Share your screen easily</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="tab-content" id="games">
+        <h2>Games</h2>
+        <p>Play browser games from multiple sources — all unblocked and ready to go!</p>
+        <div class="search-bar">
+          <input type="text" id="game-search" placeholder="Search games...">
+        </div>
+        <div class="game-categories">
+          <button class="game-cat active" data-cat="ubz">UNBL0CKEDZ0NE</button>
+          <button class="game-cat" data-cat="gn">GN-Math</button>
+          <button class="game-cat" data-cat="elite">Elite Gamez</button>
+          <button class="game-cat" data-cat="sea">Sea Bean</button>
+          <button class="game-cat" data-cat="ugs">Ultimate Game Stash</button>
+          <button class="game-cat" data-cat="seraph">Seraph</button>
+          <button class="game-cat" data-cat="ckv">Chicken Kings Vault</button>
+          <button class="game-cat" data-cat="noah">Noah's Tutoring</button>
+          <button class="game-cat" data-cat="lumin">Lumin SDK</button>
+          <button class="game-cat" data-cat="all">All</button>
+        </div>
+        <div id="game-count" style="text-align:center;color:#ff8c00;margin-bottom:10px;font-size:14px;">0 games</div>
+        <div id="game-grid"></div>
+      </div>
+
+
+
+      <div class="tab-content" id="proxy">
+        <h2>Proxy Links</h2>
+        <p>Access blocked sites through these trusted proxy links. Stay safe out there!</p>
+        <div style="display:flex;flex-direction:column;gap:24px;margin-top:16px;">
+
+          <div class="proxy-section">
+            <div class="proxy-section-header" style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+              <img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/fern.png" style="height:28px;width:auto;border-radius:4px;">
+              <h3 style="margin:0;">Fern</h3>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:4px;">
+              <a href="https://s3.amazonaws.com/fernlinks/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/fernlinks/index.html</a>
+              <a href="https://s3.amazonaws.com/classworks/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/classworks/index.html</a>
+              <a href="https://s3.amazonaws.com/bull33/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/bull33/index.html</a>
+              <a href="https://s3.amazonaws.com/bullbestyoutuber/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/bullbestyoutuber/index.html</a>
+              <a href="https://s3.amazonaws.com/bulledu/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/bulledu/index.html</a>
+              <a href="https://s3.amazonaws.com/bullguardian/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/bullguardian/index.html</a>
+              <a href="https://s3.amazonaws.com/bullisgoated/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/bullisgoated/index.html</a>
+              <a href="https://s3.amazonaws.com/bulllightspeed/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/bulllightspeed/index.html</a>
+              <a href="https://s3.amazonaws.com/bullmath/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/bullmath/index.html</a>
+              <a href="https://s3.amazonaws.com/bullubg/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/bullubg/index.html</a>
+              <a href="https://s3.amazonaws.com/iloveliteratures/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/iloveliteratures/index.html</a>
+              <a href="https://s3.amazonaws.com/ilovemaths/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/ilovemaths/index.html</a>
+              <a href="https://s3.amazonaws.com/lsrelay-extension-production/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/lsrelay-extension-production/index.html</a>
+              <a href="https://s3.amazonaws.com/macrolo/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/macrolo/index.html</a>
+              <a href="https://s3.amazonaws.com/macrologoat/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/macrologoat/index.html</a>
+              <a href="https://s3.amazonaws.com/macrolomath/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/macrolomath/index.html</a>
+              <a href="https://s3.amazonaws.com/deaganfern/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/deaganfern/index.html</a>
+              <a href="https://bullbestyoutuber.s3.amazonaws.com/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">bullbestyoutuber.s3.amazonaws.com/index.html</a>
+              <a href="https://bulledu.s3.amazonaws.com/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">bulledu.s3.amazonaws.com/index.html</a>
+              <a href="https://bullguardian.s3.amazonaws.com/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">bullguardian.s3.amazonaws.com/index.html</a>
+              <a href="https://bullisgoated.s3.amazonaws.com/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">bullisgoated.s3.amazonaws.com/index.html</a>
+              <a href="https://bulllightspeed.s3.amazonaws.com/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">bulllightspeed.s3.amazonaws.com/index.html</a>
+              <a href="https://bullmath.s3.amazonaws.com/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">bullmath.s3.amazonaws.com/index.html</a>
+              <a href="https://bullubg.s3.amazonaws.com/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">bullubg.s3.amazonaws.com/index.html</a>
+              <a href="https://iloveliteratures.s3.amazonaws.com/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">iloveliteratures.s3.amazonaws.com/index.html</a>
+              <a href="https://ilovemaths.s3.amazonaws.com/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">ilovemaths.s3.amazonaws.com/index.html</a>
+              <a href="https://lsrelay-extension-production.s3.amazonaws.com/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">lsrelay-extension-production.s3.amazonaws.com/index.html</a>
+              <a href="https://macrolo.s3.amazonaws.com/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">macrolo.s3.amazonaws.com/index.html</a>
+              <a href="https://macrologoat.s3.amazonaws.com/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">macrologoat.s3.amazonaws.com/index.html</a>
+              <a href="https://macrolomath.s3.amazonaws.com/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">macrolomath.s3.amazonaws.com/index.html</a>
+              <a href="https://deaganfern.s3.amazonaws.com/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">deaganfern.s3.amazonaws.com/index.html</a>
+            </div>
+          </div>
+
+          <div class="proxy-section">
+            <div class="proxy-section-header" style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+              <img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/gn-math.png" style="height:28px;width:auto;border-radius:4px;">
+              <h3 style="margin:0;">GN-Math</h3>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:4px;">
+              <a href="https://unpkg.com/snoopylearning@1.0.0/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">unpkg.com/snoopylearning@1.0.0/index.svg</a>
+              <a href="https://unpkg.com/snoopylearning@1.0.0/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">unpkg.com/snoopylearning@1.0.0/index.html</a>
+              <a href="https://fastly.jsdelivr.net/npm/snoopylearning@1.0.0/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">fastly.jsdelivr.net/npm/snoopylearning@1.0.0/index.svg</a>
+              <a href="https://esm.sh/snoopylearning@1.0.0/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">esm.sh/snoopylearning@1.0.0/index.html</a>
+              <a href="https://cdn.statically.io/npm/snoopylearning@1.0.0/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.statically.io/npm/snoopylearning@1.0.0/index.svg</a>
+              <a href="https://cdn.statically.io/gh/daxcodesalt/x3@main/securly.com/classlink.com/FreeBusinessEducation-Logo-Square.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.statically.io/gh/daxcodesalt/x3@main/securly.com/classlink.com/FreeBusinessEducation-Logo-Square.svg</a>
+              <a href="https://www.sololearn.com/en/compiler-playground/W6oaP0W77da1" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">sololearn.com/en/compiler-playground/W6oaP0W77da1</a>
+              <a href="https://quizizz.com/_media/uploadedFiles/b5abc156-aa98-4eb1-81fa-b823bb67abd6-v2" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">quizizz.com/_media/uploadedFiles/b5abc156-aa98-4eb1-81fa-b823bb67abd6-v2</a>
+              <a href="https://quizizz.com/_media/uploadedFiles/165c8827-a467-4794-84f4-a9dd795d5001-v2" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">quizizz.com/_media/uploadedFiles/165c8827-a467-4794-84f4-a9dd795d5001-v2</a>
+              <a href="https://797902fe-b3d7-4ad2-9527-1e67cf1372d1.filesusr.com/html/1ce7bc_50f948dc314c4525966a767f300ffa00.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">797902fe-b3d7-4ad2-9527-1e67cf1372d1.filesusr.com/html/1ce7bc_50f948dc314c4525966a767f300ffa00.html</a>
+              <a href="https://snoopydbb-wixsite-com.filesusr.com/html/1ce7bc_ee1a218e32897c5f18855c7a5f85c451.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">snoopydbb-wixsite-com.filesusr.com/html/1ce7bc_ee1a218e32897c5f18855c7a5f85c451.html</a>
+              <a href="https://script.google.com/macros/s/AKfycbxISGMiKeaFqOx3Z9T8AB0tz-tiyteerO1DkaoB1FFaG-ghRJ_PtrHYEPWd0QrgvrY7Cg/exec" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">script.google.com/macros/s/AKfycbxISGMiKeaFqOx3Z9T8AB0tz-tiyteerO1DkaoB1FFaG-ghRJ_PtrHYEPWd0QrgvrY7Cg/exec</a>
+              <a href="https://jsdelivr.b-cdn.net/gh/stockable/sites@main/gnmath.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">jsdelivr.b-cdn.net/gh/stockable/sites@main/gnmath.svg</a>
+            </div>
+          </div>
+
+          <div class="proxy-section">
+            <div class="proxy-section-header" style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+              <img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/nike.png" style="height:28px;width:auto;border-radius:4px;">
+              <h3 style="margin:0;">NikeHub</h3>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:4px;">
+              <a href="https://cdn.jsdelivr.net/gh/NoseyGames/data@main/svgs/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/gh/NoseyGames/data@main/svgs/index.svg</a>
+              <a href="https://cdn.jsdelivr.net/gh/NoseyGames/svg@main/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/gh/NoseyGames/svg@main/index.svg</a>
+              <a href="https://cdn.jsdelivr.net/gh/avaisadev/svg@main/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/gh/avaisadev/svg@main/index.svg</a>
+              <a href="https://cdn.jsdelivr.net/gh/avaisadev/securly.com/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/gh/avaisadev/securly.com/index.svg</a>
+              <a href="https://cdn.jsdelivr.net/gh/avaisadev/testing@main/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/gh/avaisadev/testing@main/index.svg</a>
+              <a href="https://cdn.jsdelivr.net/gh/avaisadev/github.com/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/gh/avaisadev/github.com/index.svg</a>
+              <a href="https://esm.sh/gh/avaisadev/github.com@b9204eb/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">esm.sh/gh/avaisadev/github.com@b9204eb/index.svg</a>
+              <a href="https://esm.sh/gh/avaisadev/securly.com@8a9e121/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">esm.sh/gh/avaisadev/securly.com@8a9e121/index.svg</a>
+              <a href="https://unpkg.com/@securlytestingscrape/diagnostics@1.0.0/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">unpkg.com/@securlytestingscrape/diagnostics@1.0.0/index.svg</a>
+              <a href="https://cdn.jsdelivr.net/gh/lilrtglock/github@main/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/gh/lilrtglock/github@main/index.svg</a>
+              <a href="https://cdn.jsdelivr.net/gh/lilrtglock/github@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/gh/lilrtglock/github@latest/index.svg</a>
+              <a href="https://cdn.jsdelivr.net/gh/chillguyaQ-cmd/github.com@main/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/gh/chillguyaQ-cmd/github.com@main/index.svg</a>
+              <a href="https://cdn.jsdelivr.net/gh/chillguyaQ-cmd/github.com@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/gh/chillguyaQ-cmd/github.com@latest/index.svg</a>
+              <a href="https://cdn.jsdelivr.net/gh/avaisadev/how-to-use-linux@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/gh/avaisadev/how-to-use-linux@latest/index.svg</a>
+              <a href="https://quantil.jsdelivr.net/gh/avaisadev/how-to-use-linux@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">quantil.jsdelivr.net/gh/avaisadev/how-to-use-linux@latest/index.svg</a>
+              <a href="https://gcore.jsdelivr.net/gh/avaisadev/how-to-use-linux@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">gcore.jsdelivr.net/gh/avaisadev/how-to-use-linux@latest/index.svg</a>
+              <a href="https://originfastly.jsdelivr.net/gh/avaisadev/how-to-use-linux@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">originfastly.jsdelivr.net/gh/avaisadev/how-to-use-linux@latest/index.svg</a>
+              <a href="https://fastly.jsdelivr.net/gh/avaisadev/how-to-use-linux@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">fastly.jsdelivr.net/gh/avaisadev/how-to-use-linux@latest/index.svg</a>
+              <a href="https://testingcf.jsdelivr.net/gh/avaisadev/how-to-use-linux@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">testingcf.jsdelivr.net/gh/avaisadev/how-to-use-linux@latest/index.svg</a>
+              <a href="https://jsdelivr.b-cdn.net/gh/avaisadev/how-to-use-linux@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">jsdelivr.b-cdn.net/gh/avaisadev/how-to-use-linux@latest/index.svg</a>
+              <a href="https://cdn.statically.io/gh/avaisadev/how-to-use-linux@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.statically.io/gh/avaisadev/how-to-use-linux@latest/index.svg</a>
+              <a href="https://raw.githubusercontent.com/avaisadev/how-to-use-linux/latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">raw.githubusercontent.com/avaisadev/how-to-use-linux/latest/index.svg</a>
+              <a href="https://cdn.jsdelivr.net/gh/avaisadev/github@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/gh/avaisadev/github@latest/index.svg</a>
+              <a href="https://quantil.jsdelivr.net/gh/avaisadev/github@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">quantil.jsdelivr.net/gh/avaisadev/github@latest/index.svg</a>
+              <a href="https://gcore.jsdelivr.net/gh/avaisadev/github@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">gcore.jsdelivr.net/gh/avaisadev/github@latest/index.svg</a>
+              <a href="https://originfastly.jsdelivr.net/gh/avaisadev/github@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">originfastly.jsdelivr.net/gh/avaisadev/github@latest/index.svg</a>
+              <a href="https://fastly.jsdelivr.net/gh/avaisadev/github@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">fastly.jsdelivr.net/gh/avaisadev/github@latest/index.svg</a>
+              <a href="https://testingcf.jsdelivr.net/gh/avaisadev/github@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">testingcf.jsdelivr.net/gh/avaisadev/github@latest/index.svg</a>
+              <a href="https://jsdelivr.b-cdn.net/gh/avaisadev/github@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">jsdelivr.b-cdn.net/gh/avaisadev/github@latest/index.svg</a>
+              <a href="https://cdn.statically.io/gh/avaisadev/github@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.statically.io/gh/avaisadev/github@latest/index.svg</a>
+              <a href="https://raw.githubusercontent.com/avaisadev/github/latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">raw.githubusercontent.com/avaisadev/github/latest/index.svg</a>
+              <a href="https://cdn.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg</a>
+              <a href="https://quantil.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">quantil.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg</a>
+              <a href="https://gcore.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">gcore.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg</a>
+              <a href="https://originfastly.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">originfastly.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg</a>
+              <a href="https://fastly.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">fastly.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg</a>
+              <a href="https://testingcf.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">testingcf.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg</a>
+              <a href="https://jsdelivr.b-cdn.net/gh/avaisadev/github.com@main/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">jsdelivr.b-cdn.net/gh/avaisadev/github.com@main/index.svg</a>
+              <a href="https://cdn.statically.io/gh/avaisadev/github.com@main/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.statically.io/gh/avaisadev/github.com@main/index.svg</a>
+              <a href="https://raw.githubusercontent.com/avaisadev/github.com/main/index.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">raw.githubusercontent.com/avaisadev/github.com/main/index.svg</a>
+            </div>
+          </div>
+
+          <div class="proxy-section">
+            <div class="proxy-section-header" style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+              <img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/yukios.png" style="height:28px;width:auto;border-radius:4px;">
+              <h3 style="margin:0;">YukiOS</h3>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:4px;">
+              <a href="https://cdn.jsdelivr.net/gh/reeyuki/YukiOsSingleHtml@main/yukios.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.jsdelivr.net/gh/reeyuki/YukiOsSingleHtml@main/yukios.svg</a>
+              <a href="https://quantil.jsdelivr.net/gh/reeyuki/YukiOsSingleHtml@main/yukios.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">quantil.jsdelivr.net/gh/reeyuki/YukiOsSingleHtml@main/yukios.svg</a>
+              <a href="https://originfastly.jsdelivr.net/gh/reeyuki/YukiOsSingleHtml@main/yukios.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">originfastly.jsdelivr.net/gh/reeyuki/YukiOsSingleHtml@main/yukios.svg</a>
+              <a href="https://gcore.jsdelivr.net/gh/reeyuki/YukiOsSingleHtml@main/yukios.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">gcore.jsdelivr.net/gh/reeyuki/YukiOsSingleHtml@main/yukios.svg</a>
+              <a href="https://esm.sh/gh/reeyuki/YukiOsSingleHtml@main/yukios.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">esm.sh/gh/reeyuki/YukiOsSingleHtml@main/yukios.svg</a>
+              <a href="https://cdn.statically.io/gh/reeyuki/YukiOsSingleHtml@main/yukios.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.statically.io/gh/reeyuki/YukiOsSingleHtml@main/yukios.svg</a>
+              <a href="https://cdn.staticdelivr.com/gh/reeyuki/YukiOsSingleHtml/main/yukios.svg" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">cdn.staticdelivr.com/gh/reeyuki/YukiOsSingleHtml/main/yukios.svg</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="tab-content" id="partners">
+        <h2>Partners</h2>
+        <p>Shoutout to our awesome partners who help keep UNBL0CKEDZ0NE running!</p>
+        <div class="partner-grid">
+          <div class="partner-card">
+            <img class="partner-img" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/epik.png" alt="Ale's Epik Games" loading="lazy">
+            <h3>Ale's Epik Games</h3>
+            <p>100+ Epik Games and tons of apps!</p>
+            <a href="https://sites.google.com/view/ales-epik-games" target="_blank">Visit Site</a>
+          </div>
+          <div class="partner-card">
+            <img class="partner-img" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/unite.png" alt="Games Unite" loading="lazy">
+            <h3>Games Unite</h3>
+            <p>Uniting Others Alike.</p>
+            <a href="https://sites.google.com/view/iktkiytktktk-hdhdhdh/" target="_blank">Visit Site</a>
+          </div>
+          <div class="partner-card">
+            <img class="partner-img" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/network.png" alt="Network Unity" loading="lazy">
+            <h3>Network Unity</h3>
+            <p>This is Network Unity, a website that aims to quench all your needs!</p>
+            <a href="https://sites.google.com/view/novasremade" target="_blank">Visit Site</a>
+          </div>
+          <div class="partner-card">
+            <img class="partner-img" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/nike.png" alt="nikehub" loading="lazy">
+            <h3>nikehub</h3>
+            <p>A advanced unblocked games Discord server that provides "educational" games and a friendly community!</p>
+            <a href="https://nikehub.org/" target="_blank">Visit Site</a>
+          </div>
+          <div class="partner-card">
+            <img class="partner-img" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/classroom.png" alt="classroomspot" loading="lazy">
+            <h3>classroomspot</h3>
+            <p>Made by classroomspot.</p>
+            <a href="https://classroomspot.github.io/" target="_blank">Visit Site</a>
+          </div>
+          <div class="partner-card">
+            <img class="partner-img" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/skylink.png" alt="Skylink" loading="lazy">
+            <h3>Skylink</h3>
+            <p>SkyLink — Rise, Shine, and Sync!</p>
+            <a href="https://sites.google.com/view/frozentire" target="_blank">Visit Site</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="forms">
+        <h2>Forms</h2>
+        <p style="margin-bottom:20px;">Use my forms so I can make this the best possible site! - ʊռɮʟօƈӄɛɖʐօռɛ</p>
+        <div class="games-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;">
+          <div class="game-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSdWxjZZFtjsaoPVHv5F3Ipu-4kwLAtmHhswUpslxrJg5lQdRA/viewform','_blank')">
+            <div style="padding:20px;"><h3>Request Form</h3><p style="color:#aaa;font-size:13px;margin-top:8px;">Submit game or feature requests</p></div>
+          </div>
+          <div class="game-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSfmzC2HDePeAKoBtHVqS6VQFz6V_zX8ow7RPEEIc-nVjtCHSQ/viewform','_blank')">
+            <div style="padding:20px;"><h3>Partner Form</h3><p style="color:#aaa;font-size:13px;margin-top:8px;">Apply to become a partner</p></div>
+          </div>
+          <div class="game-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScGv2Cdpgmx6QLYJtV-SA7E3zfVDA60NpmdRsWjEMZ-7q8vMg/viewform','_blank')">
+            <div style="padding:20px;"><h3>Review Form</h3><p style="color:#aaa;font-size:13px;margin-top:8px;">Leave a review or report issues</p></div>
+          </div>
+          <div class="game-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSe8zWp-H6VZ5bdfgvjdCFbZSicmqEkrbbbv6jF7D_q8adFBpA/viewform','_blank')">
+            <div style="padding:20px;"><h3>Link Suggestion Form</h3><p style="color:#aaa;font-size:13px;margin-top:8px;">Suggest links to add to the site</p></div>
+          </div>
+          <div class="game-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSe0vNYCYlHHgSkRcYnfroNqcV3LfjKeE73GRNxjqRgroY72mw/viewform','_blank')">
+            <div style="padding:20px;"><h3>Music Form</h3><p style="color:#aaa;font-size:13px;margin-top:8px;">Submit music recommendations</p></div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ─── GAME VIEWER OVERLAY ─── -->
+  <div id="game-viewer">
+    <div class="game-viewer-bar">
+      <span class="game-title" id="gv-title">Loading...</span>
+      <button class="gv-btn" onclick="toggleGameFullscreen()">⛶ Fullscreen</button>
+      <button class="gv-btn" onclick="closeGameViewer()">✕ Close</button>
+    </div>
+    <div id="game-frame-container">
+      <div class="loading-indicator" id="gv-loading">
+        <div class="spinner"></div>
+        Loading game...
+      </div>
+      <iframe id="game-frame" sandbox="allow-scripts allow-forms allow-popups" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, mouse = { x: -9999, y: -9999 };
+    let particles = [], embers = [], rings = [];
+    const targetParticleCount = 120, glowMultiplier = 1.0;
+
+    window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    window.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+      initParticles();
+    }
+
+    function initParticles() {
+      particles = Array.from({ length: targetParticleCount }, () => {
+        const p = {
+          x: Math.random()*W, y: Math.random()*H,
+          r: Math.random()*2.2+0.3, baseR: 0,
+          dx: (Math.random()-.5)*.5, dy: (Math.random()-.5)*.5,
+          op: Math.random()*.55+.15,
+          hueOffset: Math.random()*30-15,
+          phase: Math.random()*Math.PI*2,
+          phaseSpeed: .005+Math.random()*.01,
+          depth: Math.random(),
+          pulse: Math.random(),
+          pulseSpeed: .01+Math.random()*.02
+        };
+        p.baseR = p.r;
+        return p;
+      });
+      embers = Array.from({ length: 40 }, () => spawnEmber());
+    }
+
+    function spawnEmber(fromBottom = false) {
+      return {
+        x: Math.random()*W,
+        y: fromBottom ? H+5 : Math.random()*H,
+        r: Math.random()*1.2+.2,
+        dy: -(.3+Math.random()*.7),
+        dx: (Math.random()-.5)*.4,
+        op: 0,
+        maxOp: Math.random()*.6+.2,
+        life: 0,
+        maxLife: 120+Math.random()*200,
+        hueOffset: Math.random()*40-20
+      };
+    }
+
+    function spawnRing(x, y) { rings.push({ x, y, r: 0, op: .5, speed: 1.5+Math.random() }); }
+
+    let frame = 0, ringTimer = 0;
+    canvas.addEventListener('click', e => spawnRing(e.clientX, e.clientY));
+    window.addEventListener('resize', resize);
+    resize();
+
+    function animate() {
+      frame++;
+      ctx.clearRect(0, 0, W, H);
+      const baseH = 24;
+
+      rings = rings.filter(r => r.op > .01);
+      rings.forEach(ring => {
+        ring.r += ring.speed;
+        ring.op *= .96;
+        ctx.beginPath();
+        ctx.arc(ring.x, ring.y, ring.r, 0, Math.PI*2);
+        ctx.strokeStyle = `hsla(${baseH},100%,60%,${ring.op * glowMultiplier})`;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      });
+
+      ringTimer++;
+      if (ringTimer > 480) { ringTimer = 0; spawnRing(Math.random()*W, Math.random()*H); }
+
+      embers.forEach((e, i) => {
+        e.life++; e.x += e.dx + Math.sin(e.life*.04)*.3; e.y += e.dy;
+        const progress = e.life / e.maxLife;
+        e.op = progress < .2 ? (progress/.2)*e.maxOp : progress > .7 ? e.maxOp*(1-(progress-.7)/.3) : e.maxOp;
+        e.op *= glowMultiplier;
+        if (e.life >= e.maxLife || e.y < -10) { embers[i] = spawnEmber(true); return; }
+        const h = baseH;
+        const grd = ctx.createRadialGradient(e.x, e.y, 0, e.x, e.y, e.r*3);
+        grd.addColorStop(0, `hsla(${h},100%,65%,${e.op})`);
+        grd.addColorStop(1, `hsla(${h},100%,45%,0)`);
+        ctx.beginPath(); ctx.arc(e.x, e.y, e.r*3, 0, Math.PI*2); ctx.fillStyle = grd; ctx.fill();
+      });
+
+      if (frame % 6 === 0) particles.sort((a, b) => a.depth - b.depth);
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        for (let j = i+1; j < particles.length; j++) {
+          const q = particles[j]; const dx = p.x-q.x, dy = p.y-q.y; const dist2 = dx*dx+dy*dy;
+          if (dist2 < 16900) {
+            if (Math.abs(p.depth-q.depth) > .4) continue;
+            const dist = Math.sqrt(dist2);
+            const lineOp = (1-dist/130)*.22*(1-Math.abs(p.depth-q.depth)*2)*Math.min(p.depth+.3,1)*glowMultiplier;
+            const lineH = baseH;
+            ctx.beginPath(); ctx.strokeStyle = `hsla(${lineH},100%,58%,${lineOp})`; ctx.lineWidth = .5+p.depth*.5;
+            ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+          }
+        }
+      }
+
+      particles.forEach(p => {
+        p.phase += p.phaseSpeed; p.pulse += p.pulseSpeed;
+        p.x += p.dx + Math.sin(p.phase)*.15*p.depth; p.y += p.dy + Math.cos(p.phase*.7)*.1*p.depth;
+        if (p.x < 0) p.x = W; if (p.x > W) p.x = 0; if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+        const mdx = p.x-mouse.x, mdy = p.y-mouse.y; const mdist2 = mdx*mdx+mdy*mdy;
+        if (mdist2 < 14400) { const mdist = Math.sqrt(mdist2); const force = (1-mdist/120)*1.8; p.x += (mdx/mdist)*force; p.y += (mdy/mdist)*force; }
+        const pulseFactor = 1 + Math.sin(p.pulse)*.25;
+        const drawR = p.baseR * pulseFactor * (.5+p.depth*.8);
+        const h = baseH;
+        const opacity = p.op * pulseFactor * glowMultiplier;
+        if (opacity > .05) {
+          const glowSize = drawR*(3+p.depth*5);
+          const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, glowSize);
+          grd.addColorStop(0, `hsla(${h},90%,55%,${opacity})`);
+          grd.addColorStop(.4, `hsla(${h},90%,45%,${opacity*.4})`);
+          grd.addColorStop(1, `hsla(${h},90%,35%,0)`);
+          ctx.beginPath(); ctx.arc(p.x, p.y, glowSize, 0, Math.PI*2); ctx.fillStyle = grd; ctx.fill();
+        }
+        ctx.beginPath(); ctx.arc(p.x, p.y, drawR, 0, Math.PI*2);
+        ctx.fillStyle = `hsla(${h},100%,80%,${Math.min(opacity*1.5,1)})`; ctx.fill();
+      });
+
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Loading Timer & Screen
+    const totalLoadTime = 5000;
+    const timerEl = document.getElementById('loading-timer');
+    const loadingScreen = document.getElementById('loading-screen');
+    const mainContent = document.getElementById('main-content');
+    const cursorCanvas = document.getElementById('loading-cursor-canvas');
+    const cursorCtx = cursorCanvas.getContext('2d');
+    cursorCanvas.width = 32; cursorCanvas.height = 32;
+
+    // Preload 37 cursor frames and animate them on the canvas
+    var cursorFrames = [];
+    var cursorFrameIdx = 0;
+    var framesLoaded = 0;
+    for (var f = 1; f <= 37; f++) {
+      (function(idx) {
+        var img = new Image();
+        img.onload = function() { framesLoaded++; };
+        img.onerror = function() { framesLoaded++; };
+        img.src = 'https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/cur' + idx + '.png';
+        cursorFrames.push(img);
+      })(f);
+    }
+
+    document.addEventListener('mousemove', function(e) {
+      cursorCanvas.style.left = (e.clientX + 18) + 'px';
+      cursorCanvas.style.top = (e.clientY + 18) + 'px';
+    });
+    cursorCanvas.style.display = 'block';
+    document.documentElement.classList.add('loading-custom-cursor');
+    var cursorAnimInterval = setInterval(function() {
+      if (cursorFrames.length === 0) return;
+      var img = cursorFrames[cursorFrameIdx];
+      if (img.complete && img.naturalWidth > 0) {
+        cursorCtx.clearRect(0, 0, 32, 32);
+        cursorCtx.drawImage(img, 0, 0, 32, 32);
+      }
+      cursorFrameIdx = (cursorFrameIdx + 1) % cursorFrames.length;
+    }, 30);
+
+    const startTime = Date.now();
+    const timerInterval = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(0, totalLoadTime - elapsed);
+      const seconds = (remaining / 1000).toFixed(2);
+      timerEl.textContent = seconds + 's';
+      if (remaining <= 0) {
+        clearInterval(timerInterval);
+        clearInterval(cursorAnimInterval);
+        document.documentElement.classList.remove('loading-custom-cursor');
+        timerEl.style.display = 'none';
+        cursorCanvas.style.display = 'none';
+        loadingScreen.classList.add('hidden');
+        setTimeout(() => { loadingScreen.style.display = 'none'; mainContent.classList.add('visible'); }, 500);
+      }
+    }, 50);
+
+    // Tab Switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.sidebar-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+    }
+
+    document.querySelectorAll('.sidebar-btn').forEach(btn => {
+      btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
+
+    // Date Logic
+    function updateDate() {
+      const now = new Date();
+      const days = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
+      const months = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
+      document.getElementById('dayName').textContent = days[now.getDay()];
+      document.getElementById('fullDate').textContent = `${months[now.getMonth()]} ${String(now.getDate()).padStart(2, '0')}, ${now.getFullYear()}`;
+    }
+    updateDate();
+    setInterval(updateDate, 60000);
+
+    // Quote Rotator
+    const quotes = [
+      "If you see this quote, I broke my code - ʊռɮʟօƈӄɛɖʐօռɛ",
+      "I goon my life away to femboy h***ai - classroomspot",
+      "Press Ctrl Shift W to close all windows. - ʊռɮʟօƈӄɛɖʐօռɛ",
+      "Rattler is kinda good, if you know, you know. - UberMint64",
+      "fortnite  please  🍕🍕🍕🍕 - Matias 12/11/24",
+      "the site got leaked again - UberMint64",
+      "If you rub an magnet next to a Chromebook, it will turn off. - ʊռɮʟօƈӄɛɖʐօռɛ",
+      "Ctrl Shift T brings back that window. - ʊռɮʟօƈӄɛɖʐօռɛ",
+      "rub your Chromebook for good luck - ʊռɮʟօƈӄɛɖʐօռɛ",
+      "Delete System32 for storage - muffled",
+      "Why Partner with me? - muffled",
+      "its not my fault if you block this link. - ʊռɮʟօƈӄɛɖʐօռɛ",
+      "Join the Discord, follow the TikTok, and subscribe to the YouTube! - ʊռɮʟօƈӄɛɖʐօռɛ",
+      "Use Scratch to listen to music! - ʊռɮʟօƈӄɛɖʐօռɛ",
+      "UberMint64 has 64 in his name. (SM64 Reference?) - ʊռɮʟօƈӄɛɖʐօռɛ",
+      "Use my forms so I can make this the best possible site! - ʊռɮʟօƈӄɛɖʐօռɛ",
+      "I hope these quotes are in order - ʊռɮʟօƈӄɛɖʐօռɛ",
+      "To eat, you must put food in your mouth. - UberMint64",
+      "Shoutout to UberMint64- ʊռɮʟօƈӄɛɖʐօռɛ",
+      "You should add a bunch of games from other game sites to look like you site is superior - Isaiah",
+      "Pepsi man - jaedon",
+      "chicken war - Henry",
+      "this is for dis site - muffled_lemon (btw they are not muffled)",
+      "I just wanted to say thank for adding YoungBoy - izeah",
+      "Console - Restarting Quotes ⟳ [ETA - 5s]",
+    ];
+    let qi = 0;
+    const quoteEl = document.getElementById('quote');
+    setTimeout(() => { quoteEl.style.opacity = '1'; }, 300);
+    setInterval(() => {
+      quoteEl.style.opacity = '0';
+      setTimeout(() => {
+        qi = (qi + 1) % quotes.length;
+        quoteEl.textContent = quotes[qi];
+        quoteEl.style.opacity = '1';
+      }, 800);
+    }, 5000);
+
+    // ─── Anti-close prompt (like Fern) ───
+    window.addEventListener('beforeunload', function(e) {
+      e.preventDefault();
+      e.returnValue = '';
+    });
+
+    // ─── GAME VIEWER ───
+    const gameViewer = document.getElementById('game-viewer');
+    const gameFrame = document.getElementById('game-frame');
+    const gvTitle = document.getElementById('gv-title');
+    const gvLoading = document.getElementById('gv-loading');
+
+    function makeCdnFriendly(url) {
+      const rawMatch = url.match(/^https?:\/\/raw\.githubusercontent\.com\/([^\/]+)\/([^\/]+)\/([^\/]+)\/(.+)/);
+      if (rawMatch) {
+        return `https://cdn.jsdelivr.net/gh/${rawMatch[1]}/${rawMatch[2]}@${rawMatch[3]}/${rawMatch[4]}`;
+      }
+      return url;
+    }
+
+    function resolveUrl(base, rel) {
+      rel = String(rel || '').trim();
+      if (!rel) return null;
+      if (rel.startsWith('http')) return rel;
+      return base.replace(/\/[^\/]*$/, '/') + rel.replace(/^\//, '');
+    }
+
+    function isWrapperPage(html) {
+      const iframeMatch = html.match(/<iframe[^>]*\s+src=["']([^"']+)["'][^>]*><\/iframe>/i);
+      if (!iframeMatch) return null;
+      const hasFullViewport = /iframe\s*\{[^}]*100%[^}]*height[^}]*100%/i.test(html) ||
+        /height:\s*100vh/.test(html) || /position:\s*fixed/.test(html) ||
+        /\.frame-wrapper\s*\{[^}]*height[^}]*calc/i.test(html);
+      return hasFullViewport ? iframeMatch[1] : null;
+    }
+
+    function openGame(name, url) {
+      url = String(url || '').trim();
+      if (!url.startsWith('http')) {
+        document.getElementById('gv-title').textContent = name;
+        const gvLoad = document.getElementById('gv-loading');
+        gvLoad.textContent = 'Invalid URL';
+        setTimeout(() => { gvLoad.style.display = 'none'; closeGameViewer(); }, 2000);
+        return;
+      }
+
+      startLoading(name);
+      loadGameInFrame(makeCdnFriendly(url));
+    }
+
+    function startLoading(name) {
+      const gameViewer = document.getElementById('game-viewer');
+      document.getElementById('gv-title').textContent = name;
+      gvLoading.style.display = 'block';
+      gameFrame.removeAttribute('srcdoc');
+      gameFrame.src = '';
+      gameViewer.classList.add('active');
+      gameViewer.classList.remove('fullscreen-mode');
+    }
+
+    function loadGameInFrame(url) {
+      function loadViaSrcdoc(html) {
+        gameFrame.sandbox = 'allow-scripts allow-forms allow-popups';
+        gameFrame.srcdoc = html;
+        gvLoading.style.display = 'none';
+      }
+      function loadViaSrc(u) {
+        gameFrame.sandbox = 'allow-scripts allow-forms allow-popups';
+        gameFrame.removeAttribute('srcdoc');
+        gameFrame.src = u;
+        gvLoading.style.display = 'none';
+      }
+      function tryFetch(u, depth) {
+        if (depth > 2) { loadViaSrc(u); return; }
+        fetch(u)
+          .then(r => { if (!r.ok) throw new Error(); return r.text(); })
+          .then(html => {
+            const innerSrc = isWrapperPage(html);
+            if (innerSrc) {
+              const resolved = resolveUrl(u, innerSrc);
+              if (resolved && resolved !== u) {
+                tryFetch(resolved, depth + 1);
+                return;
+              }
+            }
+            const baseMatch = html.match(/<head[^>]*>/i);
+            const patched = baseMatch
+              ? html.replace(baseMatch[0], baseMatch[0] + '<base href="' + u.replace(/"/g,'&quot;') + '">')
+              : '<head><base href="' + u.replace(/"/g,'&quot;') + '"></head>' + html;
+            loadViaSrcdoc(patched);
+          })
+          .catch(() => { loadViaSrc(u); });
+      }
+      tryFetch(url, 0);
+      setTimeout(() => { gvLoading.style.display = 'none'; }, 12000);
+    }
+
+    function closeGameViewer() {
+      gameViewer.classList.remove('active');
+      gameViewer.classList.remove('fullscreen-mode');
+      gameFrame.src = '';
+    }
+
+    function toggleGameFullscreen() {
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+        gameViewer.classList.remove('fullscreen-mode');
+      } else if (gameFrame.requestFullscreen) {
+        gameFrame.requestFullscreen();
+      } else if (gameFrame.webkitRequestFullscreen) {
+        gameFrame.webkitRequestFullscreen();
+      }
+    }
+    document.addEventListener('fullscreenchange', () => {
+      if (document.fullscreenElement === gameFrame) {
+        gameViewer.classList.add('fullscreen-mode');
+      } else {
+        gameViewer.classList.remove('fullscreen-mode');
+      }
+    });
+
+    // ─── GAME SYSTEM ───
+    const gameGrid = document.getElementById("game-grid");
+    const gameCount = document.getElementById("game-count");
+    const gameSearch = document.getElementById("game-search");
+
+    function normalizeGame(g) {
+      const name = String(g.name || g.title || 'Unknown').trim();
+      const url = String(g.url || g.file || g.html || '').trim();
+      const img = String(g.img || g.image || '').trim();
+      return {
+        name: name || 'Unknown',
+        url: url || '#',
+        img: img || 'https://cdn.jsdelivr.net/gh/tharun9772/game-assets@main/5968517.png'
+      };
+    }
+
+    let DATA = {
+      ubz: [],
+      gn: [],
+      elite: [],
+      sea: [],
+      ugs: [],
+      seraph: [],
+      ckv: [],
+      noah: [],
+      lumin: []
+    };
+
+    let CURRENT = [];
+    let FILTERED = [];
+
+    function loadUBZ() {
+      if(DATA.ubz.length) return;
+      DATA.ubz = [];
+    }
+
+    // ─── Noah's Tutoring Hub ───
+    const NOAH_BASE = 'https://cdn.jsdelivr.net/gh/NoahsAmazingTutoringHelp/Noahs-Calculus-Tutor@master';
+
+    function noahUrl(url) {
+      if (!url) return '#';
+      url = String(url).trim();
+      if (url.startsWith('http')) return url;
+      return NOAH_BASE + '/' + url.replace(/^\//, '');
+    }
+
+    async function loadNoah() {
+      if(DATA.noah.length) return;
+      try {
+        // Try JSON endpoint first
+        const r = await fetch(NOAH_BASE + '/games.json');
+        if (r.ok) {
+          const d = await r.json();
+          DATA.noah = (Array.isArray(d) ? d : (d.games || [])).map(g => normalizeGame({
+            name: g.title || g.name,
+            img: (g.image || g.img || '').startsWith('http') ? (g.image || g.img) : (NOAH_BASE + '/images/' + (g.image || g.img || '')),
+            url: noahUrl(g.url)
+          })).filter(g => g.url && g.url !== '#');
+          if (DATA.noah.length) return;
+        }
+      } catch(e) { console.warn("Noah JSON failed:", e); }
+
+      // Fallback: load games.js as text and extract array
+      try {
+        const r2 = await fetch(NOAH_BASE + '/games.js');
+        const text = await r2.text();
+        const gameObjects = [];
+        const objRegex = /\{([^}]+)\}/g;
+        let match;
+        while ((match = objRegex.exec(text)) !== null) {
+          const block = match[1];
+          const titleM = block.match(/title:\s*["'](.+?)["']/);
+          const urlM = block.match(/url:\s*["'](.+?)["']/);
+          const imageM = block.match(/image:\s*["'](.+?)["']/);
+          if (titleM && urlM) {
+            let img = imageM ? imageM[1] : '';
+            if (img && !img.startsWith('http')) {
+              img = NOAH_BASE + '/images/' + img;
+            }
+            gameObjects.push(normalizeGame({
+              name: titleM[1],
+              img: img,
+              url: noahUrl(urlM[1])
+            }));
+          }
+        }
+        if (gameObjects.length) DATA.noah = gameObjects;
+      } catch(e) { console.warn("Noah JS parse failed:", e); }
+    }
+
+    // ─── Other loaders ───
+    const GN_HTML_URL = 'https://cdn.jsdelivr.net/gh/freebuisness/html@main';
+    const GN_COVER_URL = 'https://cdn.jsdelivr.net/gh/freebuisness/covers@main';
+
+    async function loadGN(){
+      if(DATA.gn.length) return;
+      try {
+        const r = await fetch('https://cdn.jsdelivr.net/gh/freebuisness/assets/zones.json');
+        const d = await r.json();
+        DATA.gn = d
+          .filter(g => g.id !== -1 && !g.name.startsWith("[!]") && g.id !== undefined)
+          .map(g => {
+            const gu = String(g.url || '').replace(/\{HTML_URL\}/g, GN_HTML_URL).replace(/\{COVER_URL\}/g, GN_COVER_URL).trim();
+            const rawCover = String(g.cover || '').replace(/\{COVER_URL\}/g, GN_COVER_URL).trim();
+            return normalizeGame({
+              name: g.name,
+              img: rawCover.startsWith('http') ? rawCover : (GN_COVER_URL + '/' + rawCover),
+              url: gu.startsWith('http') ? gu : ('https://gn-math.dev/play/' + g.id)
+            });
+          });
+      } catch(e) { console.warn("GN load failed:", e); }
+    }
+
+    const ELITE_BASE = 'https://cdn.jsdelivr.net/gh/elite-gamez/elite-gamez.github.io@main';
+
+    async function loadElite(){
+      if(DATA.elite.length) return;
+      try {
+        const r = await fetch(ELITE_BASE + '/games.json');
+        const d = await r.json();
+        DATA.elite = d.map(g => {
+          const eu = String(g.url || '').trim();
+          const ei = g.image ? (g.image.startsWith('http') ? g.image : ELITE_BASE + '/' + g.image.replace(/^\//,'')) : '';
+          return normalizeGame({
+            name: g.title, img: ei,
+            url: eu && !eu.startsWith('http') ? ELITE_BASE + '/' + eu.replace(/^\//,'') : (eu || '')
+          });
+        });
+      } catch(e) { console.warn("Elite load failed:", e); }
+    }
+
+    const SEA_DATA = 'https://cdn.jsdelivr.net/gh/sea-bean-unblocked/sde@main';
+    const SEA_GAMES = 'https://cdn.jsdelivr.net/gh/sea-bean-unblocked/Singlemile@main/games';
+
+    async function loadSea(){
+      if(DATA.sea.length) return;
+      try {
+        const r = await fetch(SEA_DATA + '/zzz.json');
+        const d = await r.json();
+        DATA.sea = d.map(g => {
+          const cover = (g.cover || "").replace(/\{COVER_URL\}\/?/g, "");
+          let su = String(g.url || '').replace(/\{HTML_URL\}\/?/g, '').replace(/\{COVER_URL\}\/?/g, '').trim();
+          if (su && !su.startsWith('http')) su = SEA_GAMES + '/' + su.replace(/^\//,'');
+          return normalizeGame({
+            name: g.name, img: cover.startsWith('http') ? cover : (SEA_DATA + '/' + cover.replace(/^\//,'')),
+            url: su || ''
+          });
+        });
+      } catch(e) { console.warn("Sea load failed:", e); }
+    }
+
+    async function loadUGS(){
+      if(DATA.ugs.length) return;
+      const repos = ["tharun9772/ugs-1", "tharun9772/ugs-2", "tharun9772/ugs-3"];
+      let games = [];
+      for(const repo of repos){
+        try{
+          const r = await fetch(`https://api.github.com/repos/${repo}/contents/`);
+          const d = await r.json();
+          d.forEach(f => {
+            if(f.type === "file" && f.name.startsWith("cl") && f.name.endsWith(".html")){
+              games.push(normalizeGame({
+                name: f.name.replace(/^cl/,"").replace(".html",""),
+                img: "https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/fallback.png",
+                url: `https://cdn.jsdelivr.net/gh/${repo}/${f.name}`
+              }));
+            }
+          });
+        }catch(e){ console.warn("UGS failed:", repo); }
+      }
+      DATA.ugs = games;
+    }
+
+    async function loadSeraph(){
+      if(DATA.seraph.length) return;
+      try {
+        const r = await fetch("https://cdn.jsdelivr.net/gh/DominumNetwork/dominum@main/src/assets/libraries/seraph/games.json");
+        const d = await r.json();
+        const SERAPH_BASE = "https://cdn.jsdelivr.net/gh/a456pur/seraph@main/games/";
+        DATA.seraph = d.map(g => {
+          const si = String(g.img || '').trim();
+          return normalizeGame({
+            name: g.name,
+            img: si && !si.startsWith('http') ? SERAPH_BASE + si.replace(/^\//,'') : si,
+            url: g.url
+          });
+        });
+      } catch(e) { console.warn("Seraph load failed:", e); }
+    }
+
+    const CKV_BASE = 'https://cdn.jsdelivr.net/gh/carbonicality/ChickenKingsVault@main';
+
+    async function loadCKV(){
+      if(DATA.ckv.length) return;
+      try {
+        const r = await fetch(CKV_BASE + '/games.json');
+        const d = await r.json();
+        DATA.ckv = d.map(g => {
+          const cu = String(g.html || '').trim();
+          const ci = g.img ? (g.img.startsWith('http') ? g.img : CKV_BASE + '/images/' + g.img) : '';
+          return normalizeGame({
+            name: g.name, img: ci,
+            url: cu && !cu.startsWith('http') ? CKV_BASE + '/gamefiles/' + cu.replace(/^\//,'') : (cu || '')
+          });
+        });
+      } catch(e) { console.warn("CKV load failed:", e); }
+    }
+
+    // ─── Lumin SDK (proper API-based loader) ───
+    const LUMIN_API = 'https://a.luminsdk.com/api/v1';
+
+    function formatZoneId(id) {
+      return id.replace(/^cl/, '').replace(/([a-z])([A-Z])/g, '$1 $2').replace(/[_-]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).trim() || id;
+    }
+
+    async function loadLumin() {
+      if (DATA.lumin.length) return;
+      const games = [];
+      const fallback = "https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/fallback.png";
+
+      // 1. Load from Lumin API (sequential to avoid rate limits)
+      try {
+        const sessRes = await fetch(LUMIN_API + '/session', {method:'POST'});
+        if (!sessRes.ok) { console.warn('Lumin API: session POST failed', sessRes.status, await sessRes.text().catch(function(){})); return; }
+        const sess = await sessRes.json();
+        const sid = sess.session_id;
+        if (!sid) { console.warn('Lumin API: no session in response', sess); return; }
+        console.log('[Lumin] session_id:', sid);
+        const S = function(path) { return LUMIN_API + path + (path.indexOf('?')>0?'&':'?') + 'session_id=' + sid; };
+        const metaRes = await fetch(S('/games?page=1'));
+        const meta = await metaRes.json();
+        if (metaRes.status === 401) console.log('[Lumin] /games returned 401 but body has data (non-critical)');
+        console.log('[Lumin] /games meta:', JSON.stringify(meta).slice(0,200));
+        const pages = Math.min(meta.pages || 1, 49);
+        for (let p = 1; p <= pages; p++) {
+          try {
+            const res = await fetch(S('/games?page=' + p));
+            const data = await res.json();
+            if (data.games) {
+              data.games.forEach(g => {
+                games.push(normalizeGame({
+                  name: g.name,
+                  img: g.image_token ? `${LUMIN_API}/icon/${g.image_token}` : fallback,
+                  url: g.id ? `${LUMIN_API}/play/${g.id}` : ''
+                }));
+              });
+            }
+          } catch(e) { /* skip failed page */ }
+        }
+      } catch(e) { console.warn("Lumin API failed:", e); }
+
+      // 2. Load from zonesv2 (nikehub curated list via NoseyGames/freebuisness)
+      try {
+        const zoneText = await fetch('https://cdn.jsdelivr.net/gh/NoseyGames/data@main/zonesv2.js').then(r => r.text());
+        const zoneIds = zoneText.match(/'([^']+)'/g);
+        if (zoneIds) {
+          zoneIds.forEach(m => {
+            const cleanId = m.replace(/'/g, '').trim();
+            if (cleanId && !cleanId.includes('.txt')) {
+              games.push(normalizeGame({
+                name: formatZoneId(cleanId),
+                img: fallback,
+                url: `https://cdn.jsdelivr.net/gh/freebuisness/html@main/${cleanId}`
+              }));
+            }
+          });
+        }
+      } catch(e) { console.warn("zonesv2 load failed:", e); }
+
+      // Deduplicate by URL
+      const seen = new Set();
+      DATA.lumin = games.filter(g => {
+        const key = g.url;
+        if (!key || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    }
+
+    // ─── Category switching ───
+    document.querySelectorAll(".game-cat").forEach(btn=>{
+      btn.onclick = async () => {
+        document.querySelectorAll(".game-cat").forEach(c=>c.classList.remove("active"));
+        btn.classList.add("active");
+        const cat = btn.dataset.cat;
+
+        const loaders = {
+          ubz: loadUBZ,
+          gn: loadGN,
+          elite: loadElite,
+          sea: loadSea,
+          ugs: loadUGS,
+          seraph: loadSeraph,
+          ckv: loadCKV,
+          noah: loadNoah,
+          lumin: loadLumin
+        };
+
+        if (loaders[cat]) await loaders[cat]();
+
+        if(cat === "all"){
+          await Promise.all(Object.values(loaders).map(fn => fn()));
+          CURRENT = Object.values(DATA).flat();
+        } else {
+          CURRENT = DATA[cat] || [];
+        }
+
+        FILTERED = CURRENT;
+        updateGameCount();
+        renderGames();
+      };
+    });
+
+    document.getElementById('home-search-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        switchTab('games');
+        gameSearch.value = this.value;
+        gameSearch.focus();
+        gameSearch.dispatchEvent(new Event('input'));
+      }
+    });
+
+    gameSearch.oninput = () => {
+      const v = gameSearch.value.toLowerCase();
+      FILTERED = CURRENT.filter(g => g.name && g.name.toLowerCase().includes(v));
+      updateGameCount();
+      renderGames();
+    };
+
+    function renderGames(){
+      const fallback = "https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/fallback.png";
+      const activeCat = document.querySelector(".game-cat.active").dataset.cat;
+
+      if(activeCat === "ubz") {
+        gameGrid.innerHTML = `
+          <div class="under-construction">
+            <h3>🚧 Under Construction! 🚧</h3>
+            <p>UNBL0CKEDZ0NE games are coming soon. Check out the other game sources below!</p>
+          </div>`;
+        return;
+      }
+
+      gameGrid.innerHTML = "";
+      FILTERED.filter(g => g && g.name && g.url && g.url !== '#').forEach((g,i) => {
+        const card = document.createElement('div');
+        card.className = 'game-card';
+        card.innerHTML = `
+          <img loading="lazy" decoding="async" crossorigin="anonymous" src="${g.img || fallback}" onerror="this.onerror=null;this.src='${fallback}'">
+          <h3>${g.name.replace(/</g,'&lt;')}</h3>
+          <div class="play-btn">Play</div>`;
+        card.querySelector('.play-btn').onclick = () => openGame(g.name, g.url);
+        gameGrid.appendChild(card);
+      });
+    }
+
+    function updateGameCount(){
+      const activeCat = document.querySelector(".game-cat.active")?.dataset.cat;
+      if(activeCat === "ubz") {
+        gameCount.textContent = "Coming Soon!";
+      } else {
+        gameCount.textContent = FILTERED.length + " games";
+      }
+    }
+
+    // Initialize with UBZ (under construction)
+    loadUBZ();
+    CURRENT = DATA.ubz;
+    FILTERED = CURRENT;
+    updateGameCount();
+    renderGames();
+
+    // ─── Media sub-category switching ───
+    document.querySelectorAll(".media-cat").forEach(btn => {
+      btn.onclick = () => {
+        var external = btn.dataset.external;
+        if (external) { window.open(external, '_blank'); return; }
+        document.querySelectorAll(".media-cat").forEach(c => c.classList.remove("active"));
+        btn.classList.add("active");
+        var media = btn.dataset.media;
+        document.querySelectorAll(".media-section").forEach(s => s.style.display = "none");
+        var section = document.getElementById("media-" + media);
+        if (section) section.style.display = "block";
+      };
+    });
+
+    // ─── Movie Links ───
+    var movieLinks = ["https://drive.google.com/file/d/13KF2oQ-b1WRvbjL0vMMAMlI0Vj8TYBuM/view", "https://drive.google.com/file/d/1e2UIrJdsz_0k5tp2v0EnPZiPv2ZQSTzg/view", "https://drive.google.com/file/d/1VWLpj4G4CEgHnjpxfc67MrlEWu5pD75Y/view", "https://drive.google.com/file/d/1uCRRJZj1GAaweX996uHbF2zxPoessmGW/view", "https://drive.google.com/file/d/1ehi9tidOYHb1RMldxtBw6-L3UhyEKVm9/view", "https://drive.google.com/file/d/1wSrQaIbtaTYn9wvwWmLK3dn_FUxhf3_2/view", "https://drive.google.com/file/d/1em55qHTtdrWD4Dox9CXs9r1042TLu_cu/view", "https://drive.google.com/file/d/1eGdgQ9I1TxldaNk-gKqTNb7X2qDUe1oC/view", "https://drive.google.com/file/d/1GYQqHUdyWMNQJKj4Sa8SGW0ZRX32D5og/view", "https://drive.google.com/file/d/1LTKy48IbusfXsl5nSNDTd0M3A8B3aPke/view", "https://drive.google.com/file/d/1AIq4OqiMWiY9zZSayF5VID7pfTwSH6BM/view", "https://drive.google.com/file/d/1e4NzmeC84qest_9Wzmtvmi80brGPYnsN/view", "https://drive.google.com/file/d/15eSd5qT_fDyKZGSvEdNZ4gPecfKO3YM2/view", "https://drive.google.com/file/d/1ify_EMaQW-ZAn2F0STztn2AGU-jE7aHL/view", "https://drive.google.com/file/d/1_qJqk2Ss1f45puz3xGQcdD1NxM3ipupj/view", "https://drive.google.com/file/d/1JttHmQ0nz7UhvgK0QDUJP5vBQUPGkfTX/view", "https://drive.google.com/file/d/0B-uFeCO4yCFISTFmNlE3akNDbU0/view", "https://drive.google.com/file/d/16tKuEYtxi7EeKtX3yZZR-nXgZ_oGTxXS/view", "https://drive.google.com/file/d/1_2QvQwCTByZYYzSKCjUWuYPdjBM37OdH/view", "https://drive.google.com/file/d/1GLkdpNumWIYJ8rw6kUJgf5NiDLsaUDLU/view", "https://drive.google.com/file/d/1K88LvZ6q9KRwsdiVQ72Wrh5DQqWVLkd3/view", "https://drive.google.com/file/d/1vmA2LTkSzbtUJve8TTy2UVkPAfHMtGwK/view", "https://drive.google.com/file/d/1wdUOiz7tI3R5vTz779h7CesAW5h0kUh1/view", "https://drive.google.com/file/d/16A4hzHFTcNduq6F-u4zQw7iTha5aEKD-/view", "https://drive.google.com/file/d/198qUcefIK54KnZzxAx6_L8u7l37oCfhK/view", "https://drive.google.com/file/d/14PdqUTFgHjYSFHxVAYaDeYVMzJU_puBW/view", "https://drive.google.com/file/d/1fCv2dJuy8k_NQWAxbNRxqW0_zKetF-uy/view", "https://drive.google.com/file/d/18As-PyI9E5z5iYu2ns3meSiusKI9KLEv/view", "https://drive.google.com/file/d/1wEmEjdaO0dp1nonCewG8URl6YsQOk0ru/view", "https://drive.google.com/file/d/1AShi8tLLzbPiPO6vDokf8ew-qBbzh5Pb/view", "https://drive.google.com/file/d/1ZwP0FLdFdAoeskqGvQYX5CwqEeSFWS1G/view", "https://drive.google.com/file/d/1qZxoOGQTxqwlJtOQbwN8jeyD_yVvX7yc/view", "https://drive.google.com/file/d/1T2XMXtDAlohPcGdi-u2p9zXF9Os9zkY1/view", "https://drive.google.com/file/d/1fs2-oBGADuUeepkLX2V3zxNNUstHvBTs/view", "https://drive.google.com/file/d/1OsCtW4NUV94utDNxmFejUFoH6euf8Ind/view", "https://drive.google.com/file/d/1Nnkb35gi9f-jc4LvwVDUq8MTLur7mK3L/view", "https://drive.google.com/file/d/1IuwCkN-QY-y--RCNay1sJC-WJQtVBvvL/view", "https://drive.google.com/file/d/1wqi9Wk--koq0SqRkoVZWXLVJBtABkjPy/view", "https://drive.google.com/file/d/1TFiL16cNmQmG5pSi-s6od4xgymFqK1kJ/view", "https://drive.google.com/file/d/1FPO2K8Oqb1O3qm1qb57NhZHhaGCvQjAz/view", "https://drive.google.com/file/d/194M4dGCwh1hTxVM1-_axnLSdt4trnbK2/view", "https://drive.google.com/file/d/1zECVNreFAl8LNGcOrlPqtMzw_Su1S3AC/view", "https://drive.google.com/file/d/1BW7yv_y4uk99Nsjbc--z1beQ_bYYmUXk/view", "https://drive.google.com/file/d/1zcOWY_OTVctnY1sHg1KRjhDVls_3ebWs/view", "https://drive.google.com/file/d/1RoWQ2LZecPYvsZ48Sah7_xBvZzEHcXL1/view", "https://drive.google.com/file/d/1vrClp3nIYkdIBRPzZDxxq7ICIOWHioAh/view", "https://drive.google.com/file/d/1YinG1kmgSqWI5kQwfDsQO6vK1xzM6K7o/view", "https://drive.google.com/file/d/1w9nVBGOKDax-xCr-caqekW4hcjRUQWZA/view", "https://drive.google.com/file/d/1zGu4JvRmEG1B041H7DRBcdRGSgTdskPo/view", "https://drive.google.com/file/d/1KnW-KW6LV-fH0S0R_2sbsEKkKhSFK-OP/view", "https://drive.google.com/file/d/1j8pGyNx9PHk_Gicns9JlDaX82qBIi1_m/view", "https://drive.google.com/file/d/1iwnluIU4neLKqcJt4q5n2YhZLJbJbRkI/view", "https://drive.google.com/file/d/1sd8H5oqtZwgNj1x54L2RdDOXxgUP50Yx/view", "https://drive.google.com/file/d/1sy0E41GNhba6yPMdC62cvjaTl_VtjJaz/view", "https://drive.google.com/file/d/1cWJ8McRHEq7wtrnO1BfWlymjTIGVbJA0/view", "https://drive.google.com/file/d/1XUjU4fhDH7qpPEg_me8vlMba1uelRIwj/view", "https://drive.google.com/file/d/1siki1wYP3LpfjFpUT8Z9lJuJzl7MdBhX/view", "https://drive.google.com/file/d/1wcE3D19t54BnWtLNl5cruklfPVPh92nY/view", "https://drive.google.com/file/d/197KssJtLD2MgUPhm5psXN6xULrYgmjDo/view", "https://drive.google.com/file/d/1B_eiKUt7N5OxyUN9c37LG0pxcErP4yJ6/view", "https://drive.google.com/file/d/1iX6QbaV3Oi_yGDvqRcFvrJ4_gzIOisnT/view", "https://drive.google.com/file/d/1q5wcbuy536XQKTBAF7ImApMAlNMVHM5T/view", "https://drive.google.com/file/d/1rKRsgdNioFs3rtkZai7Gz97FtAX0jdJ_/view", "https://drive.google.com/file/d/1B9UlP9E81nAepDOVt18YFbOxl60FoQdW/view", "https://drive.google.com/file/d/1-cJP_6uvuboesHkiYPgfIg49eKvsBsF0/view", "https://drive.google.com/file/d/1yblYpS-_kvX6GMWy8Ksgn9yAReHPdpLv/view", "https://drive.google.com/file/d/1D0EgRNfJOZFkhvQDgazFiVpSsk8ogXoU/view", "https://drive.google.com/file/d/0B3mvUq8g3_1qV2stVmJnUnM1WUU/view", "https://drive.google.com/file/d/1G4C_sOWW3IEih7LVTGmeLpm9TaoVaQMq/view", "https://drive.google.com/file/d/1y5q4v_Sx6Kj9nIrNjaAbCVcX36nRC3qB/view", "https://drive.google.com/file/d/1OyO1OdhtfwR883Uvi0QPP5iooGcxTVSY/view", "https://drive.google.com/file/d/1njTri-d6eamwa3AFwuVD9nORZ7K6-D-N/view", "https://drive.google.com/file/d/1ZXmi1ifbr4wlvGt8cE1S68nUePCLEjCj/view", "https://drive.google.com/file/d/1Ak82TmSBG3_lpbUgsDq22AcZ5gzGvTTB/view", "https://drive.google.com/file/d/1doiq4ss2pVDSKbkOkxV6wtKEaQvdHq3s/view", "https://drive.google.com/file/d/1dW1XsOWtiL0mGHOFIB8n0rEhLPoa2buJ/view", "https://drive.google.com/file/d/1KcgJ-y5NjN6MsD-SscW4Qteqlz_nikFH/view", "https://drive.google.com/file/d/1IQjXZgoOjm8E1A7wqtrrc7iBU0oemfHX/view", "https://drive.google.com/file/d/1M2OD-EPO3AjkzwYNvJLXCNe4B7y6bmM6/view", "https://drive.google.com/file/d/1gEaEAiu7U4iFgIWRkM1k_NrLJBMGUC6H/view", "https://drive.google.com/file/d/1jP7PoHapLf_S_n75Afdc0RvzSwRqPcwm/view", "https://drive.google.com/file/d/1JCzIrmPWbgCdcSBfn4K4YSg5cyW47sx9/view", "https://drive.google.com/file/d/1QWUvYQ3XCFtyuddcCqAkbNecztXM6mzs/view", "https://drive.google.com/file/d/1NPB0oCsIuiPAc471b_XOGDnchbCZ72yh/view", "https://drive.google.com/file/d/1cBhl_4yyqtXZXvTMaAsS3zFBC076lHUe/view", "https://drive.google.com/file/d/1uDOp65KtEnID520JjNC_kMOm91mNfGq6/view", "https://drive.google.com/file/d/1XHIiXE91mx6K_vtZ-AvE_JZLhKUPk_O_/view", "https://drive.google.com/file/d/17VuqbLGq3I_OvgPClg59rEBvl-APxDsA/view", "https://drive.google.com/file/d/0B-pxQwOjtZ8gMzJRRWxQWnAxTTA/view", "https://drive.google.com/file/d/1hpUpKEdeT9ta-8FjSpMUAXw17E-8uwIY/view", "https://drive.google.com/file/d/1XIuN4Zp35mW0iN4p0ME5APxH18-6Zqft/view", "https://drive.google.com/file/d/1FvLZVBTBATp3DG6sudNyOb9v0lCJwxZw/view", "https://drive.google.com/file/d/1Tu0WxRUC-gADzYFEnSvudZ3MZ7Y735jH/view", "https://drive.google.com/file/d/1EPl07sM8LNMssAVzKmICliFrgKp3aCTf/view", "https://drive.google.com/file/d/0B-uFeCO4yCFIa3hNRDc5eVlBSjQ/view", "https://drive.google.com/file/d/1SKE9sQ-DnHRRVGxU10Qk2QJ1Ws2jvv5M/view", "https://drive.google.com/file/d/1kWubGA5tk1GMcHmNn4Q6VeH1M-5jYAYa/view", "https://drive.google.com/file/d/1ROenMVwRyMGW0EIsf4Xg67EvRAAT5kcX/view", "https://drive.google.com/file/d/1J_WyATYoZH9qcaX5RNFrjrwmvySFPTom/view", "https://drive.google.com/file/d/1VKxhPEp2ATQVqwmX9q2sedyHFer4-Riz/view", "https://drive.google.com/file/d/1jucPocCb8aq23Bh-GFLcniAk-k5UU-wC/view", "https://drive.google.com/file/d/1pP6Kkr-1WmcWWt2IKEIUv7RTkgMLXTmp/view", "https://drive.google.com/file/d/1Kur_TXv1AOx8hhs0qGc_IwZXKmWvD6Y7/view", "https://drive.google.com/file/d/1rin01fF2JeTiqBkvae2SJLZIuv2UUp2v/view", "https://drive.google.com/file/d/17dmsvcnKRCNhW3zD8lMgdTqqv8SEuGqw/view", "https://drive.google.com/file/d/1xMRDhscsmtcrECXXuOsqpAADTHJ0FxGS/view", "https://drive.google.com/file/d/1emaZNk8shYA98Sq_K0x_iVT78_coOByR/view", "https://drive.google.com/file/d/1pFavPs7Mi9rx_BrAjxbeHNWg7ClAB2_K/view", "https://drive.google.com/file/d/1g_YZyeIbjua21PNL4ZLfeIzJx-givpPE/view", "https://drive.google.com/file/d/1-QiYxJYgk4gw8fRHez7gUWMS6zE7vG-u/view", "https://drive.google.com/file/d/1lWeO09nNvc1beWyYUJJRDRnJ7p4xtmtk/view", "https://drive.google.com/file/d/1TOjPbqSF5UqnPrn1zFqEWvkUeBNiyMax/view", "https://drive.google.com/file/d/1ejFJmseRX08D8AW4AchpuYzl5rsJK22t/view", "https://drive.google.com/file/d/1VPN-P5xWjbEHv-VtlzjryjyV-nx7Z_w_/view", "https://drive.google.com/file/d/1RRlgtnQiIZEm8mgF45J0iOa6S3-ArDdE/view", "https://drive.google.com/file/d/1PvzOPEZp09GjSj3PEDuxb0Y1ceQvo1AX/view", "https://drive.google.com/file/d/1cS4L5FYnWergTViVgJJpKbMIIi8sju4P/view", "https://drive.google.com/file/d/1l7dSSnBmw9Fnku5lxl7zYk7CsQa4JU3d/view", "https://drive.google.com/file/d/1sXad7VvXVn7qIilwdspq5RtjmInpa7mQ/view", "https://drive.google.com/file/d/1sH3RXs-OiYr7ROKCtmB5miWVpX9G2b4Q/view", "https://drive.google.com/file/d/1c47Nko9vdJfe-KKF4nkpd-U-aMT_ZaQe/view", "https://drive.google.com/file/d/1_1kjmaNVAhaccTH3mCV5FfcML3MTiT0E/view", "https://drive.google.com/file/d/1bJMKhvzwuVfAYECLheyA_h38T9oYvkgX/view", "https://drive.google.com/file/d/1AC6j5pNVDl6fcvdT3e3hsAUkkBU-o3xD/view", "https://drive.google.com/file/d/1_z5TUQlNH-IWdeFo_jDZDKsuVi32VdRs/view", "https://drive.google.com/file/d/1Zu15ykGtc1xxKIKfAeUV_L1vAbCt--zO/view", "https://drive.google.com/file/d/1yYxqmSv99zFBsJkT0cZYd4C4PTNC9bUU/view", "https://drive.google.com/file/d/1eVK_s8Sp-Gvv1J65ocyLbwyqC7vkuoFK/view", "https://drive.google.com/file/d/0B_gF_cJaMa7FZ1ZJYnp6NnN0NXM/view", "https://drive.google.com/file/d/17UlhT2qVX10O8AksEEdWuaUqoVF78-oH/view", "https://drive.google.com/file/d/1gZ4FVX5GLCSv2-i_sabXWhgl9u_3FeOB/view", "https://drive.google.com/file/d/16jXkeJny6L8MrC_7issz4AtANAzNDJqw/view", "https://drive.google.com/file/d/1CdhzdqiTQvWMCvmLE_zFLuc2jHvTMqq8/view", "https://drive.google.com/file/d/0B5GBDxHMg1PHbG1pNFV3ZXM2Ym8/view", "https://drive.google.com/file/d/1tESCAvTcUvbjyGB_x4bPahm9ZsBCs33u/view", "https://drive.google.com/file/d/1BuNmXFmhFBoSKvcnbi5W1_hQkVLTrzwu/view", "https://drive.google.com/file/d/1H0nZ4WOP6B8iWU8YoMjbnbzrlDJ1YSan/view", "https://drive.google.com/file/d/1QOIBXMPZk86AVo0jI-zXYAuJGiWRUnNg/view", "https://drive.google.com/file/d/1vLFTFzlvu9TJXbcL40gnag9Xart3pKQI/view", "https://drive.google.com/file/d/1BEPGPg_iR7L5QFJ91SizjlA6khwj6j1e/view", "https://drive.google.com/file/d/1X4KKLClyHK_yIa_mYqFd4K6s_tvRAD1_/view", "https://drive.google.com/file/d/148ae2JtLzIZwy-AKjtRgLZPNf3vEmQOE/view", "https://drive.google.com/file/d/1XZrELbZbBqHShrCiPr4I4_pmOeT_gvwY/view", "https://drive.google.com/file/d/1T5xeDfwFXqP0WJMExe3nwnwHgUozfXK2/view", "https://drive.google.com/file/d/1XZ0pSe4bccOpJeF_VkXhkOhxQ3Tzp8RB/view", "https://drive.google.com/file/d/1bB65cEOgbz2Y0ic6nGDZfUQlECXBk2qt/view", "https://drive.google.com/file/d/1yeabiyT6b_WeWkktgHdlsTNY6qkhwegd/view", "https://drive.google.com/file/d/1oD0MwA_C9OVb7HeO70m9gAAs-dbm9SJG/view", "https://drive.google.com/file/d/1wiipkIcZ8r4itPij4w7CpOvC6uz-2wCS/view", "https://drive.google.com/file/d/1yLc26yxLh0fLJhk3xQvb6Qw8V66BX9kS/view", "https://drive.google.com/file/d/1X9Kflcg0LuRjceV6JghCzs49px8cRTIk/view", "https://drive.google.com/file/d/14pJGESxKXcFj3R3ysrQJ3bZIRCOPQpny/view", "https://drive.google.com/file/d/1W9RJS1N_rBcNFAA73Y3B6leLhhjXXY9k/view", "https://drive.google.com/file/d/10LUlcX6Hu9pn3c3xmPlfJOf20Qjwgxq_/view", "https://drive.google.com/file/d/16e_h0zUsyFcjJBK-7Ck2OtTOm8DImN39/view", "https://drive.google.com/file/d/1EX4kEXNgSrXoFo-KeUUSiBhXwcCtJdqu/view", "https://drive.google.com/file/d/1ys7CQlyywTD5YlMeCpfp0ThltWcMH99E/view", "https://drive.google.com/file/d/1x84uwAQzm7-j9MhDdNF5sb_jCRQFhjIa/view", "https://drive.google.com/file/d/1gA6fN27Rm6lj2FUUKiGv-sRZkLWmLly7/view", "https://drive.google.com/file/d/1cPYsXfP2YqdtUNnqXg3ycANRQQOuVOmR/view", "https://drive.google.com/file/d/19Iz7pU-A9RUMHe6q1I9faYi02ht5MwbT/view", "https://drive.google.com/file/d/1v7ujloX-mQ_2kSN7inxSSDIYnkpymWBU/view", "https://drive.google.com/file/d/1lfSnf9FQoB1xyeDJxEEh5JSG4ocnmqgx/view", "https://drive.google.com/file/d/1O7IPP73pLpqj6qH4mfqjDhwNbeDMSU7N/view", "https://drive.google.com/file/d/19e3HaItYsMHMCjHE0HD78-GsG1rbftJl/view", "https://drive.google.com/file/d/1p5DfNhB87k8bE-OQi7ELONmPkIhJIjC-/view", "https://drive.google.com/file/d/1zT4SAUoKx29aoNVS3scuTMvTqyNgMQ7E/view", "https://drive.google.com/file/d/1cAO1BUfYYBt8pnFSja9UHoPb8jfdksuB/view", "https://drive.google.com/file/d/1tMJAooF8bG9ghav9CU4GPYF3t07ySMXL/view", "https://drive.google.com/file/d/1j2kFu1apjVp0E2_xojdiqASlQOc8RBit/view", "https://drive.google.com/file/d/1_sb4Ogn-0xQX3Znf21COpLMrfs_x6Nuv/view", "https://drive.google.com/file/d/1YM5NTVfowYB6FzLQ2w6l23TMcyXv5EJS/view", "https://drive.google.com/file/d/1g6ZVlbeJ05SY5jleCqn_PMUMzevqPX6Y/view", "https://drive.google.com/file/d/1VcUlwoH5kBsHK6vYEMYMJuhpYgTCng20/view", "https://drive.google.com/file/d/1Xn4F4GNvfKOljko2ZE_JUQcBWIHhO0ql/view", "https://drive.google.com/file/d/1KaW5Mzc7eqOPv0OSz_-Wntp7tqkEWi4J/view", "https://drive.google.com/file/d/1fpkFiPnyvjxCtN6a89i-U2H1cr5_Y_HC/view", "https://drive.google.com/file/d/1wQIj-ZVsTxgTktceYFgyFei_XX-eXAt-/view", "https://drive.google.com/file/d/1sFYkkRX85JK-a2LRl8_QmZPhYkYIn6KG/view", "https://drive.google.com/file/d/1uQXNlwz-_1PwGdnJqTGUswBhJWgH8zMP/view", "https://drive.google.com/file/d/1TvrE3-T2tdfFhmEdhG_-NJlGNMnhHt2J/view", "https://drive.google.com/file/d/1Zkep5HZHk6daQhYjAN5Y9fBGy-K9dCu3/view", "https://drive.google.com/file/d/1Xg-DLA7N4hHN38uQ4IxReyxMeC10pAJT/view", "https://drive.google.com/file/d/1zFKXArAVk7j_yx2RdLFzrZdBckaH-uI0/view", "https://drive.google.com/file/d/1khAaDGsMt8pAGqtIPJERCqM_PgpiLShO/view", "https://drive.google.com/file/d/1pV4ujRFH3wIRE0GPZAWeEMFmnLMzvwYE/view", "https://drive.google.com/file/d/1temXH9CFHCd7gjIsu8TMCFiqxMy8jXfj/view", "https://drive.google.com/file/d/1ye-qQ6ZmBW98Xab4sjDJw1oxmUw_piBz/view", "https://drive.google.com/file/d/1iVJq1FsNG577gesP7CaTWPLgdqAtnaEg/view", "https://drive.google.com/file/d/1Ly6kH4RMc1kHLQJ1sdejKZHeA58oaKOZ/view", "https://drive.google.com/file/d/1W4aM_WbjjxTlE_f5zcKPYZ5pNOym_W8K/view", "https://drive.google.com/file/d/1SH1liTGeW3xZT37iIIzNmyIyqNZVEaWT/view", "https://drive.google.com/file/d/1MMl1EYr_OYdc9R-va2IIdPUmkqcj1UpR/view", "https://drive.google.com/file/d/1HOBF8qYxnEXjbjouFThL4B3ttoBiNUOY/view", "https://drive.google.com/file/d/1PUIzjrlfRen4M7CqwIcmVdABNBpMWt5s/view", "https://drive.google.com/file/d/1wBXYvvXlGsI7g6h-cMMZQ1YhoJ4SxHpl/view", "https://drive.google.com/file/d/1GLqywDPqfZSLmLAiKC8j2l0o52cAGP8S/view", "https://drive.google.com/file/d/1SxMLkaBMyPSuruaAmGWoA7AKB4FV9j3J/view", "https://drive.google.com/file/d/1Wpvc4eawdHc3DjkVVop959tYmJL6m3J2/view", "https://drive.google.com/file/d/1TNihEVsEiUIzxYV_6KHQKXC5pDR_nWW9/view", "https://drive.google.com/file/d/1PIQExpRvAPANHRDAZ-On7ld9je2O-5He/view", "https://drive.google.com/file/d/16Ze08q_XKmANPNYreDVZnEbZEZTSLwOa/view", "https://drive.google.com/file/d/13PKSmF1dnXkByra1B5NLarzB_ux4cU0T/view", "https://drive.google.com/file/d/1GhJnl35m05XYpjooWoxeg0lw54VpjCEx/view", "https://drive.google.com/file/d/1kjVDdXtZ3-O0SndMHeIwMXe4jNZJ4w2C/view", "https://drive.google.com/file/d/12oiUUNl2_I7l1GsXLD74FA0wJlrRX7v_/view", "https://drive.google.com/file/d/1nKl-oBgmnWygnF7xm6CfSWikp22ElVZY/view", "https://drive.google.com/file/d/1w3PdNgN0AXDmG1CYRv7v0kMYrC1Ywu_0/view", "https://drive.google.com/file/d/1DIHKkPm7JVwOWWgM5RvYgOhAbFXWOAhf/view", "https://drive.google.com/file/d/1ZcBKqjCxKjyddbVmb8sdOtCo-14v6fTp/view", "https://drive.google.com/file/d/13qCLa-UbWgLKDkm5EYs7y3-n5NVx7-73/view", "https://drive.google.com/file/d/1mnNpYvlG_QNVxpq8LniD4hOPLPinnBEP/view", "https://drive.google.com/file/d/1MQMWT5mYBF07GXiqgzAU8h9BcFe0phu9/view", "https://drive.google.com/file/d/1fIOuM1hV1Ga0O6eQrhvozLNc35Rw-XB8/view", "https://drive.google.com/file/d/0B7Z9hjzLxrtXZDBEZ29wOG90MGs/view", "https://drive.google.com/file/d/1vCPMrNGFL3Kyf1J4qaySzKnACtg8eAqj/view", "https://drive.google.com/file/d/1Sd1l_LhKRp_2OE5gRJJyPubnZjJccLgQ/view", "https://drive.google.com/file/d/1EMTjbbbBCnF6SoQNLPQ_IoLwqdO9NcJV/view", "https://drive.google.com/file/d/1VXxo8cvPI7-zigV3FR5JP3-C2WSXvkXt/view", "https://drive.google.com/file/d/1vi0w7U65XeR-u00AQ8uS9s3C-IoiV-_1/view", "https://drive.google.com/file/d/152-KeFdBMBscGESWVWLuDS-YUf8VsRCd/view", "https://drive.google.com/file/d/1V3Bq0lrDQUxJay5DDs3gK69ZvRNb1j2u/view", "https://drive.google.com/file/d/17hubcXZlc8AQCick-5kdB11mpEQlM1Zw/view", "https://drive.google.com/file/d/1QxSURVJ3CzrTMQtxs5KnPh7apxF4nkOe/view", "https://drive.google.com/file/d/1Xf8xZcY3kneGFln8NPsQMt7CLtmGhEeD/view", "https://drive.google.com/file/d/1RtaN8_Xsodf4Ub5K_yRp6eOx62tbj7Ap/view", "https://drive.google.com/file/d/1ps_r1YV8y5h93_mUu4OFlPVVkPzT0Rui/view", "https://drive.google.com/file/d/1mwatNbn0A7PeIm_alMZGYobXbsNIgBlo/view", "https://drive.google.com/file/d/1vPNUTkubVVmguVfwstRQm5xgbkRRii6z/view", "https://drive.google.com/file/d/1hnYa-Pkxqu6Qhhp56QXE34Rnctia_3yw/view", "https://drive.google.com/file/d/1u5u_-G0KReiP4Q4eHvx7qwb4jv6ZARdh/view", "https://drive.google.com/file/d/1h1hi-3Hn1awll6u51WQnGjkHqm3uJejF/view", "https://drive.google.com/file/d/13YPdlfR1BTzXfqwmfbzfiuPycjQsh0Yb/view", "https://drive.google.com/file/d/1mUF4PcT0_ZKofV0KHHdjxgTQdhF2BliQ/view", "https://drive.google.com/file/d/1v2xqKQcAvndfcqsctZH73NR2AjFXsrUr/view", "https://drive.google.com/file/d/1ceTZD9au_Nig69XiY_-X78RqHdKby4s9/view", "https://drive.google.com/file/d/1tqtj-_jOe_a1DtU3ekZSf5n8NEtHT8hn/view", "https://drive.google.com/file/d/1yX9UuVmhkJJrWBVjuhh6RyyvqtcLyfws/view", "https://drive.google.com/file/d/1sqWGrmbGc5lBmoFbtfMSIaqb60eXppvF/view", "https://drive.google.com/file/d/1ViFrWDfc9QNR1zKomCjXwTFOBbQYOANT/view", "https://drive.google.com/file/d/1-USLCEPDFzSOz30HDEiO6uv_fR9ZbTVo/view", "https://drive.google.com/file/d/1QK9RHd2T-ijthIL7A6NQvRztPkTx8NtN/view", "https://drive.google.com/file/d/1mwMlE9sWCZLVtQ4ljJEeLxtVrKknnfUB/view", "https://drive.google.com/file/d/1BJTsBEOeTbpv3fqU0ejzb44aQGrdLhyN/view", "https://drive.google.com/file/d/1PeOUtsdJfWRqJvGwBhRmeBc2fLiQyTJY/view", "https://drive.google.com/file/d/1ZwvqcClpD9K0_y3YKz5pN6NBFvBxvFQF/view", "https://drive.google.com/file/d/1y0T10xJ3KrUrMwWiQxRXGToRE89KyuLm/view", "https://drive.google.com/file/d/19PgqzZUwmwi23kbreRUGpa-Smb5pFOlA/view", "https://drive.google.com/file/d/1LrCBY9F1WJFqMMbHISbQ4ElHtAt_6Ksx/view", "https://drive.google.com/file/d/15PM35uRsY9eTtrjXx9A9TA-NQClfYUYu/view", "https://drive.google.com/file/d/11k9i0O6AkixbXv33LQOFmnrI8KOXXiSB/view", "https://drive.google.com/file/d/1wThJWyfKo3rKu0iZ3orn8XryPMfYeL5K/view", "https://drive.google.com/file/d/1q2pk3lo5VIDWKQq2lCh_UTC_V9Zkv-_X/view", "https://drive.google.com/file/d/1QdGBCLQCcTl2qU4ACaUXtSizJBj4ZZiB/view", "https://drive.google.com/file/d/1FDObnXkCwv9TEB-YAt-SAACGNQIOoqfN/view", "https://drive.google.com/file/d/12OyWGGokKPPKQLtjsLXB42q6acvLV7qt/view", "https://drive.google.com/file/d/13ZLgr8tBzOq3ZuFHbEf5fDwev9jK_pwy/view", "https://drive.google.com/file/d/1kGlS0jKAdlY6ze9l9cn6ALEVEW7dFhO4/view", "https://drive.google.com/file/d/1IZNQlKBJi5HwRJDokQ-YuxfteFKgLZI5/view", "https://drive.google.com/file/d/1WKcmkcQ52UBsN8WcWUEnwasMOA_1J0VK/view", "https://drive.google.com/file/d/1-3BhV5qghqkqn2-xvlawSEvFNLvejMpn/view", "https://drive.google.com/file/d/1SRZU-WaeYNHMvHNEwl3uAIuMSOJ4R1jY/view", "https://drive.google.com/file/d/1_MkoFWTqhvJM4YNqGFzSabwKSSL4fa55/view", "https://drive.google.com/file/d/16si_yvGyZn5mgvNIHil5xXOR3I8RaTKb/view", "https://drive.google.com/file/d/1_Jjo7rOcCkYt3UryVkV2XvTfrL4QvHTE/view", "https://drive.google.com/file/d/1uHLpcd43MtpfXPY2GEIKjLjCKcc7GuYl/view", "https://drive.google.com/file/d/19KYYKqlEQyEuUTUQv32U53WoIDvKTRrx/view", "https://drive.google.com/file/d/1eiY3r9KqM3Dmjtq38eRtR_eJFSGeciPz/view", "https://drive.google.com/file/d/1vELzmz9u6vQ18YtMipK9nSWJhZLP6KaH/view", "https://drive.google.com/file/d/1C0yGUsqW5IT81q8PAebnlw0Ha6oHWYV4/view", "https://drive.google.com/file/d/1NHe16TF1pjvjOD3jnA7A7H5n5Gzsgyys/view", "https://drive.google.com/file/d/18N4_ou-sji02HD3dOFNP0aDqCBleLr7G/view", "https://drive.google.com/file/d/1eirKJt3ulfEusRJ6OM0jwpJ_YbL8iExC/view", "https://drive.google.com/file/d/11zJofD5xdf-jkXTE0jzVgehctEQpyKmy/view", "https://drive.google.com/file/d/1ApUHMkZM-j3vM-rSG-kvjk3KuvJNAsXp/view", "https://drive.google.com/file/d/1BsmXOkJBD9RVJ8kxJNG91bV71gpxy1ye/view", "https://drive.google.com/file/d/1GM7QyJzFwEKM2fM42SWb7oIRN2UPUzqM/view", "https://drive.google.com/file/d/1RpYz_DVZDxYEz-a7f8dsWgeQ7Mh3qSEo/view", "https://drive.google.com/file/d/126Cdq7Z8bBMLPNyVNmxIa9uNnmQhLR8l/view", "https://drive.google.com/file/d/13IzLS6dOFDxCk_mNWpttFncqs1hQoJ3L/view", "https://drive.google.com/file/d/19m3GZmoLNC8qkmFs5d3yMNGOCB1-en4d/view", "https://drive.google.com/file/d/1ipW_qYhGb5ZyE3N3i6zS2BehE8PXq3VQ/view", "https://drive.google.com/file/d/1VXf3yS74swsu20oWAWMvYdHSueP1aRm7/view", "https://drive.google.com/file/d/1joF2I_zdjepCD9ukmjV672HTICUfp4tO/view", "https://drive.google.com/file/d/1iRN197XeJCQnZGza599ZTXsayEG1mdRB/view", "https://drive.google.com/file/d/1N6kL0SF4qR6wFpwfGIZUZjFnz3lQDGGz/view", "https://drive.google.com/file/d/1KOmgE1jMV0jT2QkWFFd3ieEzwf4GbVOw/view", "https://drive.google.com/file/d/1m2ku9im9QkdUw1ExyK_URGFsuAfQNd9S/view", "https://drive.google.com/file/d/1oeD_wjeRQck_3uRIOw9ZXIxG5PuUIPVD/view", "https://drive.google.com/file/d/0BzeqnwcztH5cRERqUGl6TFkyc3M/view", "https://drive.google.com/file/d/1Aau0xkVgqgDPWA8zery4YqgvxqobVNzW/view", "https://drive.google.com/file/d/16fA19e1MhAZaUaosRHey_c1VAZoM1iB8/view", "https://drive.google.com/file/d/1nYh0AJOLUY2FSNsq5yTpsJa1qsynFnjW/view", "https://drive.google.com/file/d/0BxvqXivT-hg5d2VmZDdsNlBNUzQ/view", "https://drive.google.com/file/d/1g82gSwLSB166U4XiW5h9E4H0fBxgaRDb/view", "https://drive.google.com/file/d/16pTCZ70BoJaKkzdcNDJdiIXiscnvbLtd/view", "https://drive.google.com/file/d/10lys4xAmzALt_F081ej_9oP3i7Lm1Qgq/view"];
+
+    var movieNames = {};
+    function extractDriveTitle(html) {
+      var m = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+      if (!m) return null;
+      return m[1].replace(/\s*[-–—]\s*Google\s*Drive.*$/i, '').replace(/\.(mp4|mkv|avi|mov|wmv|flv|webm|m4v|3gp)$/i, '').trim();
+    }
+
+    function renderMovies(list) {
+      var grid = document.getElementById('movie-grid');
+      grid.innerHTML = '';
+      list.forEach(function(url) {
+        var id = (url.match(/[-\w]{20,}/) || [])[0] || '';
+        var name = movieNames[url] || (id ? id.substring(0, 12) + '…' : 'Movie');
+        var card = document.createElement('a');
+        card.className = 'card';
+        card.href = url;
+        card.target = '_blank';
+        card.innerHTML = '<div class="card-img">🎬</div><div class="card-info"><h3>' + name.replace(/</g,'&lt;') + '</h3><p>Google Drive</p><span class="card-tag">HD</span></div>';
+        grid.appendChild(card);
+      });
+    }
+
+    // Fetch movie names from Drive page titles (client-side, bypasses server bot blocking)
+    var _moviesFetched = false;
+    function fetchMovieNames() {
+      if (_moviesFetched) return;
+      _moviesFetched = true;
+      var grid = document.getElementById('movie-grid');
+      movieLinks.forEach(function(url, idx) {
+        setTimeout(function() {
+          fetch(url, {mode: 'cors', credentials: 'include'})
+            .then(function(r) { return r.text(); })
+            .then(function(html) {
+              var title = extractDriveTitle(html);
+              if (title) { movieNames[url] = title; }
+            })
+            .catch(function() {})
+            .then(function() {
+              // Re-render if the movies tab is still visible
+              if (document.getElementById('media-movies').style.display !== 'none') {
+                var q = (document.getElementById('movie-search').value || '').toLowerCase();
+                renderMovies(q ? movieLinks.filter(function(u) { return u.toLowerCase().includes(q); }) : movieLinks);
+              }
+            });
+        }, idx * 200); // 200ms apart to avoid rate limits
+      });
+    }
+
+    renderMovies(movieLinks);
+    // Start fetching names when movies tab is first shown
+    function _scheduleMovieFetch() {
+      if (_moviesFetched) return;
+      setTimeout(fetchMovieNames, 1500);
+    }
+    var _mediaObserver = new MutationObserver(function() {
+      if (document.getElementById('media-movies').style.display !== 'none') _scheduleMovieFetch();
+    });
+    document.querySelectorAll('.media-cat').forEach(function(b) {
+      b.addEventListener('click', function() {
+        if (this.dataset.media === 'movies') _scheduleMovieFetch();
+      });
+    });
+
+    document.getElementById('movie-search').addEventListener('input', function() {
+      var q = this.value.toLowerCase();
+      renderMovies(movieLinks.filter(function(url) { return url.toLowerCase().includes(q); }));
+    });
+
+  </script>
+</body>
+</html>
