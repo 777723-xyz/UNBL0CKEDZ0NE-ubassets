@@ -5,11 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Cross-Origin-Embedder-Policy" content="unsafe-none">
   <title>Home - Classroom</title>
-  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEACABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAAAAAAAYqMdAAC8/wBanhIAAbT0AGSkIQBfoRkAWZ4RAP///wAJt/QAZKQgAF+hGAATuvUAFLr1AFyfFQAVuvUAY6QfAGGiHABbnxQAZqUjAAa29AAHtvQACLb0AGGiGwAQufUAErn1AFufEwBlpSIAYKIaAF2gFwBeoBcA9/f3AAK19AADtfQABLX0AAW19AAMuPUAYqMeAA249QAOuPUAXaAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAICCSMjFhUVIyMjIyMgAgICIyMjIyMjIyMjIyMjIwQCAiQGBwgICAgICAgIBwMgAiYCFwcICAgICAgICAcaIQInAhEHBwgfHx8fCAcHEiECAgIBBwcHBwcHBwcHBxIiAgIYJSUBBwcICAcHBygOIwICGRAQBwcICAgIBwcHDiMCAgwKChAlCB8fCAYeHSgUAgINGwUKEAcICAcGCx4oFAICDxMbBwcHBwcHHAseHRQCAiMjIyMjIyMjIyMjIyMUAgIjIyMjIyMjIyMjIyMjIwIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAP//AAA=">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Ccircle%20cx%3D%228%22%20cy%3D%228%22%20r%3D%228%22%20fill%3D%22%230D6529%22%2F%3E%3Ctext%20x%3D%228%22%20y%3D%2212%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%20font-size%3D%2211%22%20font-family%3D%22Arial%2Csans-serif%22%20font-weight%3D%22bold%22%3EC%3C%2Ftext%3E%3C%2Fsvg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luna-object-viewer/luna-object-viewer.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luna-data-grid/luna-data-grid.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luna-dom-viewer/luna-dom-viewer.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luna-console/luna-console.css">
   <script src="https://cdn.jsdelivr.net/gh/luminsdk/script@latest/lumin.min.js"></script>
   <style>
     :root{
@@ -20,7 +24,8 @@
       --bg-alpha:rgba(15,8,0,0.75);
     }
     *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%;font-family:'Pixelify Sans',monospace,sans-serif;background:#050001;color:var(--accent);overflow:hidden;cursor:url('https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/arrow.png'),auto;}
+    *::-webkit-scrollbar{display:none}
+    html,body{height:100%;font-family:'Pixelify Sans',monospace,sans-serif;background:#050001;color:var(--accent);overflow:hidden;scrollbar-width:none;-ms-overflow-style:none;cursor:url('https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/arrow.png'),auto;}
     a,button,.sidebar-btn,.card,.game-card,.play-btn,.partner-card a,.media-cat,.game-cat,.gv-btn,.link-item a{cursor:url('https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/hand.png'),pointer;}
     .loading-cursor{cursor:wait;}
     html.loading-custom-cursor, html.loading-custom-cursor * { cursor: none !important; }
@@ -43,15 +48,6 @@
       transition: opacity 0.5s ease;
     }
     #loading-screen.hidden { opacity: 0; pointer-events: none; }
-    #load-note {
-      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px);
-      background: rgba(255,102,0,.12); border: 1px solid rgba(255,102,0,.3);
-      color: #ff6600; padding: 12px 24px; border-radius: 10px;
-      font-size: 14px; font-weight: bold; z-index: 9998;
-      opacity: 0; transition: all 0.4s ease; pointer-events: none;
-      text-align: center; max-width: 90vw;
-    }
-    #load-note.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     #loading-screen svg { margin-bottom: 16px; }
     .loading-school-name { color: white; font-size: 18px; margin-bottom: 32px; }
     .loading-stripe {
@@ -76,43 +72,102 @@
     #main-content.visible { display: flex; }
 
     #sidebar {
-      width: 260px; min-height: 100vh;
-      background: rgba(8, 4, 0, 0.95);
-      border-right: 3px solid var(--accent);
-      display: flex; flex-direction: column; align-items: center;
-      padding: 24px 16px; position: fixed; left: 0; top: 0; bottom: 0;
+      height: 70px; width: 100%;
+      background: transparent;
+      border-top: none;
+      display: flex; flex-direction: row; align-items: center; justify-content: center;
+      padding: 0 16px 10px; position: fixed; left: 0; right: 0; bottom: 0;
       z-index: 100;
-      box-shadow: 0 0 30px rgba(255,102,0,0.3);
+      pointer-events: none;
     }
-    #sidebar-logo {
-      width: 100%; max-width: 220px; margin-bottom: 16px;
-      filter: drop-shadow(0 0 10px rgba(255,102,0,0.6));
+    #floating-logo {
+      position: fixed; bottom: 24px; right: 16px; z-index: 99;
     }
-    #sidebar-logo img { width: 100%; height: auto; display: block; }
+    #console-overlay {
+      position: fixed; bottom: 0; left: 0; width: 100%; height: 50%;
+      z-index: 600; display: none;
+      border-top: 2px solid var(--accent);
+      overflow: hidden;
+      background: rgba(0,0,0,0.8);
+    }
+    #console-overlay.active { display: block; }
+    #console-overlay #luna-console {
+      height: 100%; width: 100%;
+    }
+    #console-close {
+      position: absolute; top: 0; right: 0; z-index: 601;
+      background: transparent; border: none;
+      box-shadow: inset 0 0 0 1px var(--accent);
+      color: var(--accent); width: 24px; height: 24px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 12px; font-family: "Pixelify Sans", sans-serif;
+    }
+    #console-close:hover {
+      background: var(--accent); color: #000;
+    }
+    #console-close:hover {
+      background: var(--accent); color: #000;
+    }
+    .luna-console.luna-console-theme-dark {
+      background: transparent !important;
+    }
+    .luna-console-theme-dark .luna-console-header {
+      background: rgba(8,4,0,0.5) !important;
+    }
+    .luna-console-theme-dark .luna-console-log-item {
+      background: transparent !important;
+      border-bottom-color: rgba(255,102,0,0.15) !important;
+    }
+    .luna-console-theme-dark .luna-console-log-item.luna-console-error {
+      background: rgba(255,0,0,0.1) !important;
+      border-top-color: rgba(255,0,0,0.2) !important;
+      border-bottom-color: rgba(255,0,0,0.2) !important;
+    }
+    .luna-console-theme-dark .luna-console-log-item.luna-console-warn {
+      background: rgba(255,200,0,0.08) !important;
+    }
+    #floating-logo {
+      display: none; align-items: center; gap: 6px;
+      font-family: "Pixelify Sans", sans-serif; font-size: 12px; color: rgba(255,102,0,0.4);
+      pointer-events: none;
+    }
+    #floating-logo.visible { display: flex; }
+    #floating-logo img { height: 24px; width: auto; opacity: 0.4; display: block; }
     .sidebar-divider {
-      width: 100%; height: 2px;
-      background: linear-gradient(90deg, transparent, #ff6600, transparent);
-      margin: 4px 0 16px;
+      display: none;
     }
     .sidebar-nav {
-      display: flex; flex-direction: column; gap: 8px; width: 100%;
+      display: inline-flex; flex-direction: row; align-items: center;
+      overflow-x: auto; max-width: 100%;
+      background: rgba(8, 4, 0, 0.5);
+      border: 2px solid var(--accent);
+      border-radius: 999px;
+      box-shadow: 0 0 20px rgba(255,102,0,0.25);
+      pointer-events: auto;
     }
     .sidebar-btn {
-      background: transparent; border: 2px solid var(--accent); color: var(--accent);
-      font-family: "Pixelify Sans", sans-serif; font-size: 15px; font-weight: 600;
-      padding: 12px 16px; cursor: pointer; border-radius: 8px;
-      transition: all 0.2s; text-align: left;
-      display: flex; align-items: center; gap: 10px; width: 100%;
+      background: transparent; border: none; color: var(--accent);
+      font-family: "Pixelify Sans", sans-serif; font-size: 13px; font-weight: 600;
+      padding: 10px 14px; cursor: pointer;
+      transition: all 0.2s; text-align: center; white-space: nowrap;
+      display: flex; align-items: center; gap: 6px;
+      position: relative;
+    }
+    .sidebar-btn + .sidebar-btn::before {
+      content: ''; position: absolute; left: 0; top: 20%; height: 60%;
+      width: 1px; background: rgba(255,102,0,0.25);
     }
     .sidebar-btn:hover, .sidebar-btn.active {
       background: var(--accent); color: #000000;
-      box-shadow: 0 0 15px rgba(255,102,0,0.5);
-      transform: translateX(4px);
     }
-    .sidebar-btn .icon { font-size: 18px; width: 24px; text-align: center; }
+    .sidebar-btn:first-child { border-radius: 999px 0 0 999px; padding-left: 18px; }
+    .sidebar-btn:last-child { border-radius: 0 999px 999px 0; padding-right: 18px; }
+    .sidebar-btn:hover:first-child, .sidebar-btn.active:first-child { border-radius: 999px 0 0 999px; }
+    .sidebar-btn:hover:last-child, .sidebar-btn.active:last-child { border-radius: 0 999px 999px 0; }
+    .sidebar-btn .icon { font-size: 16px; width: 22px; text-align: center; display:inline-flex; align-items:center; justify-content:center; }
     #content-area {
-      margin-left: 260px; flex: 1; min-height: 100vh;
-      padding: 32px 40px; position: relative; overflow-y: auto; height: 100vh;
+      flex: 1; min-height: 100vh;
+      padding: 32px 40px 100px; position: relative; overflow-y: auto; height: 100vh;
     }
 
     .date-section { text-align: center; padding: 20px 20px 10px; }
@@ -151,6 +206,17 @@
     .search-bar input:focus {
       border-color: #ff8c00; box-shadow: 0 0 20px rgba(255,102,0,0.4);
     }
+
+    .settings-input {
+      width: 100%; background: rgba(8, 4, 0, 0.8);
+      border: 2px solid var(--accent); color: var(--accent);
+      font-family: "Pixelify Sans", sans-serif; font-size: 15px;
+      padding: 10px 14px; border-radius: 8px; outline: none; box-sizing: border-box;
+    }
+    .settings-input::placeholder { color: #ff8c00; opacity: 0.6; }
+    .settings-input:focus { border-color: #ff8c00; box-shadow: 0 0 20px rgba(255,102,0,0.4); }
+    select.settings-input { appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23ff6600' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; cursor: pointer; }
+    select.settings-input option { background: #1a0d00; color: var(--accent); }
 
     .game-categories {
       display: flex; flex-wrap: wrap; gap: 8px;
@@ -367,21 +433,21 @@
     }
 
     @media (max-width: 900px) {
-      #sidebar { width: 70px; padding: 16px 8px; }
-      #sidebar-logo { max-width: 50px; }
-      .sidebar-btn { font-size: 0; padding: 12px; justify-content: center; }
-      .sidebar-btn .icon { font-size: 20px; width: auto; }
-      #content-area { margin-left: 70px; padding: 20px; }
+      #sidebar { height: 54px; padding: 0 8px; }
+      .sidebar-btn { font-size: 11px; padding: 8px 10px; }
+      .sidebar-btn:first-child { padding-left: 14px; }
+      .sidebar-btn:last-child { padding-right: 14px; }
+      .sidebar-btn .icon { font-size: 14px; width: 18px; }
+      #content-area { padding: 20px 20px 74px; }
     }
     @media (max-width: 600px) {
-      #sidebar { width: 100%; min-height: auto; height: auto; position: relative;
-        flex-direction: row; flex-wrap: wrap; padding: 12px;
-        border-right: none; border-bottom: 3px solid var(--accent);
-      }
-      #sidebar-logo { max-width: 120px; margin-bottom: 12px; }
-      .sidebar-nav { flex-direction: row; flex-wrap: wrap; justify-content: center; }
-      .sidebar-btn { font-size: 12px; padding: 8px 12px; width: auto; }
-      #content-area { margin-left: 0; }
+      #sidebar { height: 48px; padding: 0 4px; justify-content: center; }
+      .sidebar-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .sidebar-btn { font-size: 0; padding: 8px 10px; min-width: 36px; justify-content: center; }
+      .sidebar-btn:first-child { padding-left: 12px; }
+      .sidebar-btn:last-child { padding-right: 12px; }
+      .sidebar-btn .icon { font-size: 16px; width: 20px; }
+      #content-area { padding: 16px 12px 68px; }
     }
 
     /* ─── GAME VIEWER OVERLAY ─── */
@@ -396,15 +462,18 @@
       z-index: 500;
     }
     .game-viewer-bar {
-      display: flex; align-items: center; gap: 10px;
+      display: flex; align-items: center; gap: 8px;
       background: rgba(8,4,0,0.98); border-bottom: 2px solid var(--accent);
-      padding: 8px 16px; min-height: 50px; flex-shrink: 0;
+      padding: 6px 12px; min-height: 52px; flex-shrink: 0;
     }
+    .game-viewer-bar .gv-left { display: flex; align-items: center; gap: 8px; }
     .game-viewer-bar .game-title {
-      color: var(--accent); font-weight: 700; flex: 1;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      color: var(--accent); font-weight: 700;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-      font-size: 16px;
+      font-size: 16px; max-width: 40%; text-align: center;
     }
+    .game-viewer-bar .gv-right { display: flex; align-items: center; gap: 8px; margin-left: auto; }
     .game-viewer-bar .gv-btn {
       background: transparent; border: 2px solid var(--accent);
       color: var(--accent); font-family: "Pixelify Sans", sans-serif;
@@ -461,37 +530,44 @@
       You are logged in as student111@risd.edu (IP Address: 111.111.1111).
     </div>
     </div>
-  <div id="load-note">v4.01 | I spent like too long making this new site, so please recommend my site to more people! - ʊռɮʟօƈӄɛɖʐօռɛ</div>
-
   <canvas id="bg-canvas"></canvas>
 
+  <div id="floating-logo" class="visible">
+    brought to you by <img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/UNBL0CKEDZ0NE%20in%20Text.png" alt="UNBL0CKEDZ0NE">
+  </div>
+  <div id="console-overlay">
+    <button id="console-close" onclick="toggleConsoleOverlay()">✕</button>
+    <div id="luna-console"></div>
+  </div>
   <div id="main-content">
     <aside id="sidebar">
-      <div id="sidebar-logo">
-        <img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/UNBL0CKEDZ0NE%20in%20Text.png" alt="UNBL0CKEDZ0NE">
-      </div>
-      <div class="sidebar-divider"></div>
       <nav class="sidebar-nav">
         <button class="sidebar-btn active" data-tab="home">
-          <span class="icon">🏠</span> Home
+          <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span> Home
         </button>
         <button class="sidebar-btn" data-tab="games">
-          <span class="icon">🎮</span> Games
+          <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg></span> Games
         </button>
         <button class="sidebar-btn" data-tab="tools">
-          <span class="icon">🛠️</span> Tools
+          <span class="icon"><svg width="24" height="24" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M12.1,2A9.8,9.8,0,0,0,6.7,3.6L13.1,10a2.1,2.1,0,0,1,.2,3,2.1,2.1,0,0,1-3-.2L3.7,6.4A9.84,9.84,0,0,0,2,12.1,10.14,10.14,0,0,0,12.1,22.2a10.9,10.9,0,0,0,2.6-.3l6.7,6.7a5,5,0,0,0,7.1-7.1l-6.7-6.7a10.9,10.9,0,0,0,.3-2.6A10,10,0,0,0,12.1,2Zm8,10.1a7.61,7.61,0,0,1-.3,2.1l-.3,1.1.8.8L27,22.8a2.88,2.88,0,0,1,.9,2.1A2.72,2.72,0,0,1,27,27a2.9,2.9,0,0,1-4.2,0l-6.7-6.7-.8-.8-1.1.3a7.61,7.61,0,0,1-2.1.3,8.27,8.27,0,0,1-5.7-2.3A7.63,7.63,0,0,1,4,12.1a8.33,8.33,0,0,1,.3-2.2l4.4,4.4a4.14,4.14,0,0,0,5.9.2,4.14,4.14,0,0,0-.2-5.9L10,4.2a6.45,6.45,0,0,1,2-.3,8.27,8.27,0,0,1,5.7,2.3A8.49,8.49,0,0,1,20.1,12.1Z" fill="currentColor"/></svg></span> Tools
         </button>
         <button class="sidebar-btn" data-tab="partners">
-          <span class="icon">🤝</span> Partners
+          <span class="icon"><svg width="24" height="24" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M4,16 L15,16.001 C16.0538182,16.001 16.9181157,16.8164855 16.9945109,17.8516842 L17,18.001 L17,20.5 C16.999,24.7 12.713,26 9.5,26 C6.35126,26 2.1710504,24.75148 2.00510151,20.7485328 L2,20.5 L2,18 C2,16.9461818 2.81639669,16.0818843 3.85080841,16.0054891 L4,16 Z M17.22,16.001 L24,16 C25.0538182,16 25.9181157,16.8163967 25.9945109,17.8508084 L26,18 L26,20 C25.999,23.759 22.57,25 20,25 C18.942,25 17.741,24.785 16.691,24.275 C17.4432667,23.3808667 17.9315867,22.2428222 17.9933526,20.8112714 L18,20.5 L18,18.001 C18,17.2991818 17.7512397,16.6601736 17.3461307,16.1500909 L17.22,16.001 L24,16 L17.22,16.001 Z M9.5,3 C12.537,3 15,5.463 15,8.5 C15,11.537 12.537,14 9.5,14 C6.463,14 4,11.537 4,8.5 C4,5.463 6.463,3 9.5,3 Z M20.5,5 C22.985,5 25,7.015 25,9.5 C25,11.985 22.985,14 20.5,14 C18.015,14 16,11.985 16,9.5 C16,7.015 18.015,5 20.5,5 Z"/></svg></span> Partners
         </button>
         <button class="sidebar-btn" data-tab="media">
-          <span class="icon">📺</span> Media
+          <span class="icon"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5,18 C3.34314575,18 2,16.6568542 2,15 L2,7 C2,5.34314575 3.34314575,4 5,4 L19,4 C20.6568542,4 22,5.34314575 22,7 L22,15 C22,16.6568542 20.6568542,18 19,18 L15,18 C15.5522847,18 16,18.4477153 16,19 C16,19.5522847 15.5522847,20 15,20 L9,20 C8.44771525,20 8,19.5522847 8,19 C8,18.4477153 8.44771525,18 9,18 L5,18 Z M19,6 L5,6 C4.44771525,6 4,6.44771525 4,7 L4,15 C4,15.5522847 4.44771525,16 5,16 L19,16 C19.5522847,16 20,15.5522847 20,15 L20,7 C20,6.44771525 19.5522847,6 19,6 Z" fill="currentColor"/></svg></span> Media
         </button>
         <button class="sidebar-btn" data-tab="proxy">
-          <span class="icon">🔗</span> Proxies
+          <span class="icon"><svg width="24" height="24" viewBox="5 6 26 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.6,24.32l-2.46,2.44a4,4,0,0,1-5.62,0,3.92,3.92,0,0,1,0-5.55l4.69-4.65a4,4,0,0,1,5.62,0,3.86,3.86,0,0,1,1,1.71A2,2,0,0,0,21.1,18l1.29-1.28a5.89,5.89,0,0,0-1.15-1.62,6,6,0,0,0-8.44,0L8.1,19.79a5.91,5.91,0,0,0,0,8.39,6,6,0,0,0,8.44,0l3.65-3.62c-.17,0-.33,0-.5,0A8,8,0,0,1,17.6,24.32Z" fill="currentColor"/><path d="M28.61,7.82a6,6,0,0,0-8.44,0l-3.65,3.62c.17,0,.33,0,.49,0h0a8,8,0,0,1,2.1.28l2.46-2.44a4,4,0,0,1,5.62,0,3.92,3.92,0,0,1,0,5.55l-4.69,4.65a4,4,0,0,1-5.62,0,3.86,3.86,0,0,1-1-1.71,2,2,0,0,0-.28.23l-1.29,1.28a5.89,5.89,0,0,0,1.15,1.62,6,6,0,0,0,8.44,0l4.69-4.65a5.92,5.92,0,0,0,0-8.39Z" fill="currentColor"/></svg></span> Proxies
         </button>
         <button class="sidebar-btn" data-tab="forms">
-          <span class="icon">📝</span> Forms
+          <span class="icon"><svg width="24" height="24" viewBox="-2 -2 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5.72 14.456l1.761-.508 10.603-10.73a.456.456 0 0 0-.003-.64l-.635-.642a.443.443 0 0 0-.632-.003L6.239 12.635l-.52 1.82zM18.703.664l.635.643c.876.887.884 2.318.016 3.196L8.428 15.561l-3.764 1.084a.901.901 0 0 1-1.11-.623.915.915 0 0 1-.002-.506l1.095-3.84L15.544.647a2.215 2.215 0 0 1 3.159.016zM7.184 1.817c.496 0 .898.407.898.909a.903.903 0 0 1-.898.909H3.592c-.992 0-1.796.814-1.796 1.817v10.906c0 1.004.804 1.818 1.796 1.818h10.776c.992 0 1.797-.814 1.797-1.818v-3.635c0-.502.402-.909.898-.909s.898.407.898.91v3.634c0 2.008-1.609 3.636-3.593 3.636H3.592C1.608 19.994 0 18.366 0 16.358V5.452c0-2.007 1.608-3.635 3.592-3.635h3.592z" fill="currentColor"/></svg></span> Forms
+        </button>
+        <button class="sidebar-btn" data-tab="settings">
+          <span class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M12.22 2h-.44a2 2 0 00-2 2v.18a2 2 0 01-1 1.73l-.43.25a2 2 0 01-2 0l-.15-.08a2 2 0 00-2.73.73l-.22.38a2 2 0 00.73 2.73l.15.1a2 2 0 011 1.72v.51a2 2 0 01-1 1.74l-.15.09a2 2 0 00-.73 2.73l.22.38a2 2 0 002.73.73l.15-.08a2 2 0 012 0l.43.25a2 2 0 011 1.73V20a2 2 0 002 2h.44a2 2 0 002-2v-.18a2 2 0 011-1.73l.43-.25a2 2 0 012 0l.15.08a2 2 0 002.73-.73l.22-.39a2 2 0 00-.73-2.73l-.15-.08a2 2 0 01-1-1.74v-.5a2 2 0 011-1.74l.15-.09a2 2 0 00.73-2.73l-.22-.38a2 2 0 00-2.73-.73l-.15.08a2 2 0 01-2 0l-.43-.25a2 2 0 01-1-1.73V4a2 2 0 00-2-2z" /><circle cx="12" cy="12" r="3" /></svg></span> Settings
+        </button>
+        <button class="sidebar-btn" data-tab="console">
+          <span class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span> Console
         </button>
       </nav>
     </aside>
@@ -970,7 +1046,7 @@
                 </div>
               </div>
             </a>
-            <a href="#" class="proxy-section" style="text-decoration:none;display:block;" onclick="event.preventDefault();openGame('Windows XP','https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/html/other/winxp.html');">
+            <a href="#" class="proxy-section" style="text-decoration:none;display:block;" onclick="event.preventDefault();openGame('Windows XP','https://quizizz.com/_media/uploadedFiles/93ce7539-624c-4dbf-b19b-a459c3cd80f2-v2');">
               <div style="display:flex;align-items:center;gap:12px;">
                 <img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/winxp.png" style="width:40px;height:40px;border-radius:50%;object-fit:contain;background:rgba(255,102,0,.1);padding:6px;">
                 <div>
@@ -979,7 +1055,7 @@
                 </div>
               </div>
             </a>
-            <a href="#" class="proxy-section" style="text-decoration:none;display:block;" onclick="event.preventDefault();openGame('Cloudmoon','https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/html/other/cloudmoon.html');">
+            <a href="#" class="proxy-section" style="text-decoration:none;display:block;" onclick="event.preventDefault();openGame('Cloudmoon','https://quizizz.com/_media/uploadedFiles/735c7e87-da68-4ac5-89f7-da92ec6d4ef3-v2');">
               <div style="display:flex;align-items:center;gap:12px;">
                 <img src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/cloudmoon.png" style="width:40px;height:40px;border-radius:50%;object-fit:contain;background:rgba(255,102,0,.1);padding:6px;">
                 <div>
@@ -1344,6 +1420,12 @@
             <p>SkyLink — Rise, Shine, and Sync!</p>
             <a href="https://sites.google.com/view/frozentire" target="_blank">Visit Site</a>
           </div>
+          <div class="partner-card">
+            <img class="partner-img" src="https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/yukios.png" alt="YukiOS" loading="lazy">
+            <h3>YukiOS</h3>
+            <p>A desktop OS inside your browser<br>Yuki OS • 30+ apps • 3600+ games • emulators</p>
+            <a href="https://yukios.netlify.app/" target="_blank">Visit Site</a>
+          </div>
         </div>
       </div>
 
@@ -1369,15 +1451,90 @@
         </div>
       </div>
 
+      <div class="tab-content" id="settings">
+        <h2>Settings</h2>
+        <p style="margin-bottom:20px;">Site configuration and information</p>
+        <div class="games-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
+          <div class="game-card" style="padding:20px;">
+            <h3>Cache</h3>
+            <p style="color:#aaa;font-size:13px;margin-top:8px;">Clear site data to resolve loading issues.</p>
+            <button class="gv-btn" style="margin-top:12px;padding:8px 16px;" onclick="localStorage.clear();sessionStorage.clear();alert('Site data cleared!');">Clear Cache</button>
+          </div>
+          <div class="game-card" style="padding:20px;">
+            <h3>Personalization</h3>
+            <p style="color:#aaa;font-size:13px;margin-top:8px;">Cursor image URL:</p>
+            <input type="text" id="cursor-url-input" class="settings-input" placeholder="https://example.com/cursor.png" onchange="document.getElementById('cursor-file-input').value='';">
+            <p style="color:#aaa;font-size:13px;margin-top:10px;">Or upload an image:</p>
+            <input type="file" id="cursor-file-input" accept="image/png,image/gif,image/jpeg,image/webp,image/cur,image/x-icon" style="display:none" onchange="handleCursorUpload(event)">
+            <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+              <button class="gv-btn" style="padding:8px 16px;" onclick="document.getElementById('cursor-file-input').click()">📁 Upload</button>
+              <button class="gv-btn" style="padding:8px 16px;" onclick="applyCustomCursor()">Apply URL</button>
+              <button class="gv-btn" style="padding:8px 16px;" onclick="resetCustomCursor()">Reset</button>
+            </div>
+          </div>
+          <div class="game-card" style="padding:20px;">
+            <h3>Tab Cloak</h3>
+            <p style="color:#aaa;font-size:13px;margin-top:8px;">Choose a preset or customize:</p>
+            <select id="cloak-preset" class="settings-input" style="margin-top:8px;">
+              <option value="">-- Select Preset --</option>
+              <option value="classroom">Google Classroom</option>
+              <option value="drive">Google Drive</option>
+              <option value="docs">Google Docs</option>
+              <option value="gmail">Gmail</option>
+              <option value="youtube">YouTube</option>
+              <option value="google">Google</option>
+              <option value="newtab">New Tab</option>
+              <option value="calendar">Google Calendar</option>
+              <option value="sites">Google Sites</option>
+              <option value="slides">Google Slides</option>
+              <option value="sheets">Google Sheets</option>
+              <option value="khanacademy">Khan Academy</option>
+              <option value="quizlet">Quizlet</option>
+              <option value="duolingo">Duolingo</option>
+              <option value="wikipedia">Wikipedia</option>
+              <option value="clipchamp">Microsoft Clipchamp</option>
+            </select>
+            <p style="color:#aaa;font-size:13px;margin-top:10px;">Custom favicon URL:</p>
+            <input type="text" id="cloak-favicon-input" class="settings-input" placeholder="https://example.com/favicon.ico">
+            <p style="color:#aaa;font-size:13px;margin-top:10px;">Or upload favicon:</p>
+            <input type="file" id="cloak-favicon-file" accept="image/*" style="display:none">
+            <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+              <button class="gv-btn" style="padding:8px 16px;" onclick="document.getElementById('cloak-favicon-file').click()">📁 Upload</button>
+              <button class="gv-btn" style="padding:8px 16px;" onclick="applyCloakFaviconUrl()">Apply Favicon</button>
+            </div>
+            <p style="color:#aaa;font-size:13px;margin-top:10px;">Custom tab name:</p>
+            <input type="text" id="cloak-title-input" class="settings-input" placeholder="My Tab Name">
+            <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+              <button class="gv-btn" style="padding:8px 16px;" onclick="applyCloakTitle()">Apply Title</button>
+              <button class="gv-btn" style="padding:8px 16px;" onclick="resetCloak()">Reset</button>
+            </div>
+            <div id="cloak-preview" style="margin-top:12px;padding:12px;background:rgba(0,0,0,0.3);border-radius:8px;border:1px solid rgba(255,102,0,0.3);display:flex;align-items:center;gap:10px;">
+              <span style="font-size:13px;color:#aaa;">Preview:</span>
+              <img id="cloak-preview-icon" src="" style="width:16px;height:16px;display:none;" alt="">
+              <span id="cloak-preview-title" style="font-size:13px;color:var(--accent);"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </main>
   </div>
 
   <!-- ─── GAME VIEWER OVERLAY ─── -->
   <div id="game-viewer">
     <div class="game-viewer-bar">
+      <div class="gv-left">
+        <button class="gv-btn" id="gv-newwindow" onclick="window.open(gvOrigUrl,'_blank')" style="display:none"><svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 7V5c0-1.105.895-2 2-2h11c1.105 0 2 .895 2 2v14c0 1.105-.895 2-2 2H8c-1.105 0-2-.895-2-2v-2h2v2h11V5H8v2H6zm5.5-.5l-1.414 1.414L13.172 11H3v2h10.172l-3.086 3.086L11.5 17.5 17 12l-5.5-5.5z" fill="currentColor"/></svg> New Tab</button>
+        <button class="gv-btn" id="gv-popout" onclick="popOutGame()"><svg fill="currentColor" width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M15.694 13.541l2.666 2.665 5.016-5.017 2.59 2.59 0.004-7.734-7.785-0.046 2.526 2.525-5.017 5.017zM25.926 16.945l-1.92-1.947 0.035 9.007-16.015 0.009 0.016-15.973 8.958-0.04-2-2h-7c-1.104 0-2 0.896-2 2v16c0 1.104 0.896 2 2 2h16c1.104 0 2-0.896 2-2l-0.074-7.056z"/></svg> Pop Out</button>
+        <button class="gv-btn" onclick="toggleConsoleOverlay()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg> Console</button>
+      </div>
       <span class="game-title" id="gv-title">Loading...</span>
-      <button class="gv-btn" onclick="toggleGameFullscreen()">⛶ Fullscreen</button>
-      <button class="gv-btn" onclick="closeGameViewer()">✕ Close</button>
+      <div class="gv-right">
+        <button class="gv-btn" onclick="refreshGame()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
+        <button class="gv-btn" id="gv-download" onclick="downloadGameHTML()"><svg width="16" height="16" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.50005 1.04999C7.74858 1.04999 7.95005 1.25146 7.95005 1.49999V8.41359L10.1819 6.18179C10.3576 6.00605 10.6425 6.00605 10.8182 6.18179C10.994 6.35753 10.994 6.64245 10.8182 6.81819L7.81825 9.81819C7.64251 9.99392 7.35759 9.99392 7.18185 9.81819L4.18185 6.81819C4.00611 6.64245 4.00611 6.35753 4.18185 6.18179C4.35759 6.00605 4.64251 6.00605 4.81825 6.18179L7.05005 8.41359V1.49999C7.05005 1.25146 7.25152 1.04999 7.50005 1.04999ZM2.5 10C2.77614 10 3 10.2239 3 10.5V12C3 12.5539 3.44565 13 3.99635 13H11.0012C11.5529 13 12 12.5528 12 12V10.5C12 10.2239 12.2239 10 12.5 10C12.7761 10 13 10.2239 13 10.5V12C13 13.1041 12.1062 14 11.0012 14H3.99635C2.89019 14 2 13.103 2 12V10.5C2 10.2239 2.22386 10 2.5 10Z" fill="currentColor"/></svg></button>
+        <button class="gv-btn" onclick="toggleGameFullscreen()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
+        <button class="gv-btn" onclick="closeGameViewer()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Close</button>
+      </div>
     </div>
     <div id="game-frame-container">
       <div class="loading-indicator" id="gv-loading">
@@ -1574,10 +1731,7 @@
         cursorCanvas.style.display = 'none';
         loadingScreen.classList.add('hidden');
         setTimeout(() => { loadingScreen.style.display = 'none'; mainContent.classList.add('visible'); }, 500);
-        setTimeout(() => {
-          const note = document.getElementById('load-note');
-          if (note) { note.classList.add('show'); setTimeout(() => note.classList.remove('show'), 6000); }
-        }, 3500);
+
       }
     }, 50);
 
@@ -1587,10 +1741,19 @@
       document.querySelectorAll('.sidebar-btn').forEach(btn => btn.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
       document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+      document.getElementById('floating-logo').classList.add('visible');
+      if (tabId === 'settings') {
+        var cur = localStorage.getItem('customCursor');
+        if (cur) document.getElementById('cursor-url-input').value = cur;
+      }
     }
 
     document.querySelectorAll('.sidebar-btn').forEach(btn => {
-      btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+      if (btn.dataset.tab === 'console') {
+        btn.addEventListener('click', function() { toggleConsoleOverlay(); });
+      } else {
+        btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+      }
     });
 
     // Date Logic
@@ -1655,6 +1818,9 @@
     const gameFrame = document.getElementById('game-frame');
     const gvTitle = document.getElementById('gv-title');
     const gvLoading = document.getElementById('gv-loading');
+    let gvOrigUrl = '';
+    let currentGameName = '';
+    let currentGameDirectSrc = false;
 
     function makeCdnFriendly(url) {
       const rawMatch = url.match(/^https?:\/\/raw\.githubusercontent\.com\/([^\/]+)\/([^\/]+)\/([^\/]+)\/(.+)/);
@@ -1664,7 +1830,11 @@
       return url;
     }
 
-    function openGame(name, url) {
+    function openGame(name, url, directSrc) {
+      gvOrigUrl = url;
+      currentGameName = name;
+      currentGameDirectSrc = directSrc;
+      document.getElementById('gv-newwindow').style.display = directSrc ? '' : 'none';
       url = String(url || '').trim();
       if (!url.startsWith('http')) {
         document.getElementById('gv-title').textContent = name;
@@ -1675,7 +1845,7 @@
       }
 
       startLoading(name);
-      loadGameInFrame(makeCdnFriendly(url));
+      loadGameInFrame(makeCdnFriendly(url), directSrc);
     }
 
     function startLoading(name) {
@@ -1688,18 +1858,19 @@
       gameViewer.classList.remove('fullscreen-mode');
     }
 
-    function loadGameInFrame(url) {
+    function loadGameInFrame(url, direct) {
       function loadViaSrcdoc(html) {
         gameFrame.sandbox = 'allow-scripts allow-forms allow-popups allow-same-origin';
         gameFrame.srcdoc = html;
         gvLoading.style.display = 'none';
       }
       function loadViaSrc(u) {
-        gameFrame.sandbox = 'allow-scripts allow-forms allow-popups';
+        gameFrame.sandbox = 'allow-scripts allow-forms allow-popups allow-same-origin';
         gameFrame.removeAttribute('srcdoc');
         gameFrame.src = u;
         gvLoading.style.display = 'none';
       }
+      if (direct) { loadViaSrc(url); return; }
       fetch(url)
         .then(r => { if (!r.ok) throw new Error(); return r.text(); })
         .then(html => {
@@ -1718,6 +1889,74 @@
       gameViewer.classList.remove('fullscreen-mode');
       gameFrame.src = '';
     }
+
+    function toggleConsoleOverlay() {
+      document.getElementById('console-overlay').classList.toggle('active');
+    }
+
+    function refreshGame() {
+      if (gvOrigUrl) openGame(currentGameName, gvOrigUrl, currentGameDirectSrc);
+    }
+
+    function popOutGame() {
+      if (gvOrigUrl) window.open(gvOrigUrl, '_blank', 'width=960,height=640,menubar=no,toolbar=no,location=no,status=no');
+    }
+
+    function downloadGameHTML() {
+      var url = gvOrigUrl;
+      if (!url || !url.startsWith('http')) return;
+      var name = document.getElementById('gv-title').textContent.replace(/[^a-zA-Z0-9_-]/g, '_') || 'game';
+      fetch(url).then(function(r){ return r.ok ? r.text() : Promise.reject(); }).then(function(html){
+        var blob = new Blob([html], { type: 'text/html' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = name + '.html';
+        a.click();
+        URL.revokeObjectURL(a.href);
+      }).catch(function(){ alert('Could not download — game may not be fetchable.'); });
+    }
+
+    function applyCustomCursor() {
+      var url = document.getElementById('cursor-url-input').value.trim();
+      if (!url) return;
+      localStorage.setItem('customCursor', url);
+      setCustomCursor(url);
+    }
+
+    function resetCustomCursor() {
+      localStorage.removeItem('customCursor');
+      var s = document.getElementById('custom-cursor-style');
+      if (s) s.remove();
+      document.getElementById('cursor-url-input').value = '';
+    }
+
+    function setCustomCursor(url) {
+      var s = document.getElementById('custom-cursor-style') || (function(){
+        var e = document.createElement('style');
+        e.id = 'custom-cursor-style';
+        document.head.appendChild(e);
+        return e;
+      })();
+      s.textContent = 'html,body,a,button,.sidebar-btn,.card,.game-card,.play-btn,.partner-card a,.media-cat,.game-cat,.gv-btn,.link-item a{cursor:url("' + url.replace(/"/g,'\\"') + '"),auto!important;}';
+    }
+
+    function handleCursorUpload(e) {
+      var file = e.target.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function(ev) {
+        var dataUrl = ev.target.result;
+        localStorage.setItem('customCursor', dataUrl);
+        setCustomCursor(dataUrl);
+        document.getElementById('cursor-url-input').value = '';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    (function(){
+      var saved = localStorage.getItem('customCursor');
+      if (saved) { setCustomCursor(saved); }
+    })();
 
     function toggleGameFullscreen() {
       if (document.fullscreenElement) {
@@ -1746,11 +1985,13 @@
       const name = String(g.name || g.title || 'Unknown').trim();
       const url = String(g.url || g.file || g.html || '').trim();
       const img = String(g.img || g.image || '').trim();
-      return {
+      const extra = {};
+      for (const k in g) { if (!['name','title','url','file','html','img','image'].includes(k)) extra[k] = g[k]; }
+      return Object.assign({}, extra, {
         name: name || 'Unknown',
         url: url || '#',
         img: img || 'https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/img/fallback.png'
-      };
+      });
     }
 
     let DATA = {
@@ -1770,49 +2011,179 @@
 
     function loadUBZ() {
       if(DATA.ubz.length) return;
-      const UBZ_BASE = 'https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/assets/html/main/';
-      const files = [
-        "112.html","1v1.html","2048.html","8ballpool.html","Antidisestablishmentarianism.html",
-        "Pneumonoultramicroscopicsilicovolcanoconiosis.html","UvuvwevwevweOnyetenvewveUgwemubwemOssas.html",
-        "adanceoffireandice.html","awesomeschoolhouse.html","awesometanks2.html","badtime.html",
-        "baldisbasics.html","baldisdecompile.html","bank.html","bartblast.html","baseballbros.html",
-        "basketbros.html","basketrandom.html","beeswarm.html","bendy.html","bendyclicker.html",
-        "bhop.html","bigebasics.html","bigeclicker.html","bitlife.html","bladeball.html",
-        "blockblast.html","bloodmoney.html","bloodmoney2.html","bowmasters.html","brawl.html",
-        "breeze.html","brokendash.html","brotatonewdawn.html","brotatopaws.html","buckshot.html",
-        "buildnow.html","caseohbasics.html","catburgular.html","cheese.html","chicken.html",
-        "chromedino.html","clash.html","classof09.html","clusterrush.html","crazycattle.html",
-        "crazyroll.html","cs.html","cuphead.html","dashio.html","drawclimber.html","escaperoad.html",
-        "escaperoad2.html","escaperoad3.html","femboyclicker.html","flappybird.html",
-        "flyinggorilla.html","fnae.html","fnaelastbreath.html","fnaf.html","fnf.html",
-        "fnfbfdi26.html","fnfbside.html","fnfgarcello.html","fnfhex.html","fnfhitsingle.html",
-        "fnfindiecross.html","fnfkapi.html","fnflullaby.html","fnfmario.html","fnfmidfight.html",
-        "fnfmiku.html","fnfneo.html","fnfourple.html","fnfpibby.html","fnfqt.html","fnfshaggy.html",
-        "fnfsky.html","fnfsoft.html","fnfsonicexe.html","fnftails.html","fnftricky.html",
-        "fnfwhitty.html","footballbros.html","frag.html","gd3d.html","gdlite.html","gdscratch.html",
-        "gdsubzero.html","gdsubzeroscratch.html","gdwave.html","gdwave2.html","gdwave3d.html",
-        "gdweb.html","gdwebv1.html","gdworld.html","googlesnake.html","goosegame.html","granny.html",
-        "granny2.html","grannynightmare.html","grannyonline.html","growagarden.html","gtag.html",
-        "gtamods.html","hackedimpossiblequiz.html","hardestgame.html","hollowknight.html",
-        "hollowknightsilksong.html","imaginemathfacts.html","impossiblequiz.html",
-        "indiantruckdriving.html","infinite.html","jumbomario.html","justbuild.html",
-        "kindergarten.html","kindergarten2.html","kindergarten3.html","lethalape.html",
-        "lobotomy.html","memetash.html","minus3.html","minus3remastred.html","minusb.html",
-        "nitroclash.html","onepiece.html","orange.html","osu.html","plagueinc.html",
-        "pocketediton.html","polytrack.html","pvz.html","ragdoll.html","raldiscrackhouse.html",
-        "repo.html","retrobowl.html","rocketgoal.html","run3.html","russia.html","sab.html",
-        "sab2player.html","slime.html","slope.html","slowroads.html","snowballio.html",
-        "snowrider.html","soccerrandom.html","soflowheelielife.html","spacewaves.html","spin.html",
-        "sprialroll.html","sprinter.html","stickman.html","subway.html","supermario63.html",
-        "supermarketsim.html","survivalrace.html","t3.html","terraria.html","themathisleaking.html",
-        "three.html","time.html","tombofmask.html","triplethorror.html","tripletobby.html",
-        "ultra.html","undertale.html","unfairmario.html","vicecity.html","whosyourdaddy.html",
-        "wrestlebros.html"
+      DATA.ubz = [
+        normalizeGame({name:"C.S. 1.6",url:"https://quizizz.com/_media/uploadedFiles/93567f43-e8fe-4f88-b3b3-9bcab197224f-v2"}),
+        normalizeGame({name:"-3 (minus 3)",url:"https://quizizz.com/_media/uploadedFiles/190517d7-d7a1-412e-857a-e1a057f36dc4-v2"}),
+        normalizeGame({name:"-3 Remastred (minus 3)",url:"https://quizizz.com/_media/uploadedFiles/a766fb85-169f-4c8e-ae5f-6d49a6453096-v2"}),
+        normalizeGame({name:"-b (minus b)",url:"https://quizizz.com/_media/uploadedFiles/be85c0a8-a519-404d-aeb8-26a8fa937396-v2"}),
+        normalizeGame({name:"1v1.LOL",url:"https://quizizz.com/_media/uploadedFiles/49bf5a19-4edc-470a-b6f5-641e0f49381d-v2"}),
+        normalizeGame({name:"2048",url:"https://script.google.com/macros/s/AKfycbwgo9fzGlgbzqpBKfXrw7gGGvg8cYPPL-ycgd_y9jKePSDVnk_zr_keYn8v-0eUJQd5/exec"}),
+        normalizeGame({name:"8 Ball Pool (Scratch)",url:"https://scratch.mit.edu/projects/1291919322/embed"}),
+        normalizeGame({name:"A Dance of Fire and Ice",url:"https://scratch.mit.edu/projects/511996585/embed"}),
+        normalizeGame({name:"Antidisestablishmentarianism",url:"https://quizizz.com/_media/uploadedFiles/d2f0ba57-8ef6-40ba-aaaf-0cd390d52946-v2"}),
+        normalizeGame({name:"Awesome Tanks 2",url:"https://quizizz.com/_media/uploadedFiles/03c4e032-ece4-417b-b7cf-0f0f70a3f9c8-v2"}),
+        normalizeGame({name:"Bad Time Simulator",url:"https://quizizz.com/_media/uploadedFiles/3334f15d-e130-4048-ac73-f45295371db9-v2"}),
+        normalizeGame({name:"Baldi's Basic's",url:"https://quizizz.com/_media/uploadedFiles/b5289b61-ba6c-450d-a210-102ffc45a5eb-v2"}),
+        normalizeGame({name:"Bank Robbery 2",url:"https://quizizz.com/_media/uploadedFiles/6ffcc194-cf52-42d9-a949-1353c6f1e741-v2"}),
+        normalizeGame({name:"Bart Blast",url:"https://quizizz.com/_media/uploadedFiles/b53a3ea6-bacd-4a7f-9dad-83e460cc57ee-v2"}),
+        normalizeGame({name:"Baseball Bros",url:"https://quizizz.com/_media/uploadedFiles/6490d9a7-3286-467d-a943-d874ad7aae2c-v2"}),
+        normalizeGame({name:"Basket Random",url:"https://quizizz.com/_media/uploadedFiles/f0d36ea4-52a1-43aa-8ddf-d1dca83e20e3-v2"}),
+        normalizeGame({name:"Basketball Bros",url:"https://script.google.com/macros/s/AKfycbxUfaDSpH-0SJL0WPKt38JY7OOOGMmtpY9JTSbL8pvtjxS7jSpNHHu6MdZgWUshIU00Kw/exec"}),
+        normalizeGame({name:"Bee Swarm",url:"https://quizizz.com/_media/uploadedFiles/862f95e4-515b-4101-9403-70c5113fb1c6-v2"}),
+        normalizeGame({name:"Bendy Clicker",url:"https://quizizz.com/_media/uploadedFiles/4110e757-df0f-4eeb-b568-88865d30cd0f-v2"}),
+        normalizeGame({name:"Bendy",url:"https://quizizz.com/_media/uploadedFiles/a4fe4d4c-0d11-4b00-b8c1-0802cb5c37ef-v2"}),
+        normalizeGame({name:"Bhop",url:"https://quizizz.com/_media/uploadedFiles/2c8ac700-2d92-443a-b6a2-67a4991b89d8-v2"}),
+        normalizeGame({name:"Bitlife",url:"https://quizizz.com/_media/uploadedFiles/f312f6df-109e-4482-b706-1d0480d14ca0-v2"}),
+        normalizeGame({name:"Blade Ball",url:"https://quizizz.com/_media/uploadedFiles/67c20f76-efde-4330-9a52-663f6b836503-v2"}),
+        normalizeGame({name:"Block Blast",url:"https://quizizz.com/_media/uploadedFiles/7b66a81b-0154-4247-bef4-4266fc4c33fc-v2"}),
+        normalizeGame({name:"Bloodmoney 2",url:"https://quizizz.com/_media/uploadedFiles/7480a30e-4a92-44a3-ad66-9095f4c39d0c-v2"}),
+        normalizeGame({name:"Bloodmoney",url:"https://quizizz.com/_media/uploadedFiles/a0b72166-e9b6-4e21-aa23-696094d78720-v2"}),
+        normalizeGame({name:"Bow Masters",url:"https://quizizz.com/_media/uploadedFiles/c8dab4e3-466e-446d-bf9b-4dc59b00b255-v2"}),
+        normalizeGame({name:"Brawl Stars",url:"https://quizizz.com/_media/uploadedFiles/979d60fb-6313-49fc-a889-51e8c31d4d2e-v2"}),
+        normalizeGame({name:"Brotato New Dawn",url:"https://quizizz.com/_media/uploadedFiles/1438fba3-e3c1-4b84-b5ef-c8fcb0107cf5-v2"}),
+        normalizeGame({name:"Brotato Paws",url:"https://quizizz.com/_media/uploadedFiles/78572ea5-13b6-49e6-9019-1c80c1dcf3f4-v2"}),
+        normalizeGame({name:"Buckshot Roulette",url:"https://quizizz.com/_media/uploadedFiles/4eb67657-400c-4a02-801e-e2f25d83de3b-v2"}),
+        normalizeGame({name:"BuildNow.GG",url:"https://quizizz.com/_media/uploadedFiles/6bd82d24-a9fb-45d8-8092-7e65d8714770-v2"}),
+        normalizeGame({name:"Caseoh Basic's",url:"https://quizizz.com/_media/uploadedFiles/fc36b797-c880-467e-8d27-3f7e0fc74655-v2"}),
+        normalizeGame({name:"Cat Burglar",url:"https://quizizz.com/_media/uploadedFiles/8cfea541-30c4-40ac-9ad8-0b08a503aa97-v2"}),
+        normalizeGame({name:"Cheese Champers 3D",url:"https://quizizz.com/_media/uploadedFiles/b885def2-7aea-4281-a802-b18194fa7e1e-v2"}),
+        normalizeGame({name:"Chicken War",url:"https://quizizz.com/_media/uploadedFiles/25766faf-b242-487e-bbea-de46fc7cc240-v2"}),
+        normalizeGame({name:"Chrome Dino",url:"https://quizizz.com/_media/uploadedFiles/d3e4a3b0-ce6a-4db8-93fc-84c78d0d1899-v2"}),
+        normalizeGame({name:"Clash Royale",url:"https://quizizz.com/_media/uploadedFiles/c4dd35bc-5ae1-4e9e-a598-f27f86a63ab9-v2"}),
+        normalizeGame({name:"Class of 09",url:"https://quizizz.com/_media/uploadedFiles/cd6fc362-cec9-4aee-a862-3b8070a0f36d-v2"}),
+        normalizeGame({name:"Cluster Rush",url:"https://quizizz.com/_media/uploadedFiles/5c781abe-1d80-44b1-a190-b99193197a07-v2"}),
+        normalizeGame({name:"Crazy Cattle",url:"https://quizizz.com/_media/uploadedFiles/978f7ad9-6d8b-4bad-9aec-caeb256a1b2c-v2"}),
+        normalizeGame({name:"Crazy Roll",url:"https://quizizz.com/_media/uploadedFiles/cf8fd463-d21a-405a-89e8-fe5fe364ca84-v2"}),
+        normalizeGame({name:"Cuphead",url:"https://quizizz.com/_media/uploadedFiles/4a3efdbb-9020-4074-90db-22971180b491-v2"}),
+        normalizeGame({name:"Dash.IO",url:"https://quizizz.com/_media/uploadedFiles/bf91f40a-168e-495e-b9bd-7653126c1af0-v2"}),
+        normalizeGame({name:"Draw Climber",url:"https://quizizz.com/_media/uploadedFiles/9b507373-550b-48db-b204-513e065eec44-v2"}),
+        normalizeGame({name:"Drive in Russia",url:"https://quizizz.com/_media/uploadedFiles/467361fe-49b7-4f16-a384-62d7bd236c78-v2"}),
+        normalizeGame({name:"Eaglercraft 1.12",url:"https://quizizz.com/_media/uploadedFiles/4a3e0dfc-10b4-470e-99bc-8d4048e4694e-v2"}),
+        normalizeGame({name:"Epstein Clicker",url:"https://quizizz.com/_media/uploadedFiles/70f13e98-06b0-4d94-aa0e-1096da9b5f07-v2"}),
+        normalizeGame({name:"Epstein's Basics in Education and Kidnapping",url:"https://quizizz.com/_media/uploadedFiles/60b77f1e-c19d-4843-81aa-464e4a7be365-v2"}),
+        normalizeGame({name:"Escape Road 2",url:"https://quizizz.com/_media/uploadedFiles/4c625744-ddfa-41eb-9835-4f5e840d1bb5-v2"}),
+        normalizeGame({name:"Escape Road 3",url:"https://quizizz.com/_media/uploadedFiles/8c328101-91b2-48c8-a373-fcebc2d13a62-v2"}),
+        normalizeGame({name:"Escape Road",url:"https://quizizz.com/_media/uploadedFiles/87334257-820d-4079-ac44-3df4826b4f69-v2"}),
+        normalizeGame({name:"Femboy Clicker",url:"https://quizizz.com/_media/uploadedFiles/15859437-6560-43fb-9a90-21c5d0f6630a-v2"}),
+        normalizeGame({name:"Five Night's at Epstein's",url:"https://quizizz.com/_media/uploadedFiles/eac898dc-d3e2-4f43-a377-642317f296ed-v2"}),
+        normalizeGame({name:"Flying Gorilla",url:"https://quizizz.com/_media/uploadedFiles/61ce9fb7-1a10-4f7a-aeca-02395d370f9a-v2"}),
+        normalizeGame({name:"FNAE Last Breath",url:"https://quizizz.com/_media/uploadedFiles/309375b8-cc13-4c43-945b-1423252bf930-v2"}),
+        normalizeGame({name:"FNAF (Scratch)",url:"https://scratch.mit.edu/projects/1287361673/embed"}),
+        normalizeGame({name:"FNF vs BFDI26",url:"https://quizizz.com/_media/uploadedFiles/2d808936-b73c-4526-b085-d82b2dbd8768-v2"}),
+        normalizeGame({name:"FNF vs Bside",url:"https://quizizz.com/_media/uploadedFiles/975f12de-67c6-404e-8ee4-7ae330a5dcf8-v2"}),
+        normalizeGame({name:"FNF vs Garcello",url:"https://quizizz.com/_media/uploadedFiles/683a64f3-9b02-4bf9-9e7f-d6e05a4aa560-v2"}),
+        normalizeGame({name:"FNF vs Hex",url:"https://quizizz.com/_media/uploadedFiles/2aad49b6-2e7b-4f1f-bef1-20f87d809499-v2"}),
+        normalizeGame({name:"FNF vs Hit Single Real",url:"https://quizizz.com/_media/uploadedFiles/05bd9971-ef39-43ad-9d32-2b0703b32f8d-v2"}),
+        normalizeGame({name:"FNF vs Indie Cross",url:"https://quizizz.com/_media/uploadedFiles/ff927302-2fd3-4b42-9a31-ef9e76767790-v2"}),
+        normalizeGame({name:"FNF vs Kapi",url:"https://quizizz.com/_media/uploadedFiles/436b0b32-7735-4c40-af70-5cf2a45f38c4-v2"}),
+        normalizeGame({name:"FNF vs Lullaby",url:"https://quizizz.com/_media/uploadedFiles/e2fae88a-65f1-4424-bc18-75224fcb04e7-v2"}),
+        normalizeGame({name:"FNF vs Mario",url:"https://quizizz.com/_media/uploadedFiles/557fc8e8-7039-4ce2-99ae-bb5fd5d3f6c7-v2"}),
+        normalizeGame({name:"FNF vs Mid Fight",url:"https://quizizz.com/_media/uploadedFiles/8cb7928e-bebf-45f9-9285-da3f0ba97266-v2"}),
+        normalizeGame({name:"FNF vs Miku",url:"https://quizizz.com/_media/uploadedFiles/29068945-74ac-468e-8d8e-5e2a281f9828-v2"}),
+        normalizeGame({name:"FNF vs Neo",url:"https://quizizz.com/_media/uploadedFiles/7ccff623-b69a-4a26-9750-3e7a8f02e6c4-v2"}),
+        normalizeGame({name:"FNF vs Ourple",url:"https://quizizz.com/_media/uploadedFiles/ceea9ccf-0a02-4934-8380-5c18c533ed8a-v2"}),
+        normalizeGame({name:"FNF vs Pibby",url:"https://quizizz.com/_media/uploadedFiles/86e7a524-582d-48ad-8990-847edcbf198b-v2"}),
+        normalizeGame({name:"FNF vs QT",url:"https://quizizz.com/_media/uploadedFiles/2ea66e67-781a-438f-b3b8-c7806dfee3a9-v2"}),
+        normalizeGame({name:"FNF vs Shaggy",url:"https://quizizz.com/_media/uploadedFiles/ac437c4b-76e5-443b-a5b0-8e5b6fb8c03b-v2"}),
+        normalizeGame({name:"FNF vs Sky",url:"https://quizizz.com/_media/uploadedFiles/208edb85-c261-49ae-9911-ea9ba1f4dde3-v2"}),
+        normalizeGame({name:"FNF vs Soft",url:"https://quizizz.com/_media/uploadedFiles/35a8bc7d-5af7-4fdf-8942-9cde688288d3-v2"}),
+        normalizeGame({name:"FNF vs Sonic.exe",url:"https://quizizz.com/_media/uploadedFiles/d88bd8fe-b5a4-40a8-aca0-7e56d4ff10dd-v2"}),
+        normalizeGame({name:"FNF vs Tails",url:"https://quizizz.com/_media/uploadedFiles/4775d512-169a-4dd1-8b7c-34513859bc86-v2"}),
+        normalizeGame({name:"FNF vs Tricky",url:"https://quizizz.com/_media/uploadedFiles/2ef7f88e-799d-4a45-9db1-dc53a9997bba-v2"}),
+        normalizeGame({name:"FNF vs Whitty",url:"https://quizizz.com/_media/uploadedFiles/ad606609-9ad6-488e-90ad-cd440cda5b0f-v2"}),
+        normalizeGame({name:"Football Bros",url:"https://quizizz.com/_media/uploadedFiles/2bedd253-c0f0-46a9-af66-624f9037f32a-v2"}),
+        normalizeGame({name:"Fragzone",url:"https://quizizz.com/_media/uploadedFiles/24be9a74-12a5-4705-93f4-82a902ee16ef-v2"}),
+        normalizeGame({name:"Friday Night Funkin (FNF)",url:"https://quizizz.com/_media/uploadedFiles/9846cccb-8ba6-4c4d-baeb-0b16a1bfea06-v2"}),
+        normalizeGame({name:"Gabriel's Awesome School House",url:"https://quizizz.com/_media/uploadedFiles/7b476bde-1e5a-43fa-86b1-3ef54a99dcee-v2"}),
+        normalizeGame({name:"GD Wave",url:"https://quizizz.com/_media/uploadedFiles/e58bb4bf-7305-484e-b50d-2148d86bcb37-v2"}),
+        normalizeGame({name:"GDWEB (V1)",url:"https://quizizz.com/_media/uploadedFiles/e43f3558-4db0-40df-b2e7-2dec81dd37f8-v2"}),
+        normalizeGame({name:"GDWEB+ (Broken Version)",url:"https://quizizz.com/_media/uploadedFiles/7a1f6363-5a13-49eb-aa31-bb6ad1080e0b-v2"}),
+        normalizeGame({name:"GDWEB+ (Updated!)",url:"https://quizizz.com/_media/uploadedFiles/a73590de-9951-49aa-aee7-9738ce47246c-v2"}),
+        normalizeGame({name:"Geometry Dash (Scratch)",url:"https://scratch.mit.edu/projects/1282825077/embed"}),
+        normalizeGame({name:"Geometry Dash 3D",url:"https://quizizz.com/_media/uploadedFiles/602028e1-239d-4c68-933c-b2b35fad59ac-v2"}),
+        normalizeGame({name:"Geometry Dash Breeze",url:"https://quizizz.com/_media/uploadedFiles/f5d89855-4abc-4401-8840-4ecf2e4c4f85-v2"}),
+        normalizeGame({name:"Geometry Dash Lite",url:"https://quizizz.com/_media/uploadedFiles/e166efd5-3a21-4cc8-b75f-0d7bbd537f4d-v2"}),
+        normalizeGame({name:"Geometry Dash Subzero (Scratch)",url:"https://scratch.mit.edu/projects/1288073971/embed"}),
+        normalizeGame({name:"Geometry Dash SubZero",url:"https://quizizz.com/_media/uploadedFiles/abf8e545-1ee8-4478-9dfc-56525927c72a-v2"}),
+        normalizeGame({name:"Geometry Dash World",url:"https://quizizz.com/_media/uploadedFiles/3fdd69c5-124c-4011-9750-011c91e4b631-v2"}),
+        normalizeGame({name:"Google Snake (Scratch)",url:"https://scratch.mit.edu/projects/1283303860/embed"}),
+        normalizeGame({name:"Gorilla Tag",url:"https://quizizz.com/_media/uploadedFiles/aa29c8b0-7670-429e-bff0-cede186a7b81-v2"}),
+        normalizeGame({name:"Granny 2",url:"https://quizizz.com/_media/uploadedFiles/6ea0297b-5ace-4f7a-a67e-498da98421c2-v2"}),
+        normalizeGame({name:"Granny Nightmare",url:"https://quizizz.com/_media/uploadedFiles/fe1d0b00-73dc-4ffa-b028-df420d90c474-v2"}),
+        normalizeGame({name:"Granny Online",url:"https://quizizz.com/_media/uploadedFiles/8bb23089-9940-4e28-9589-d46ce92186d9-v2"}),
+        normalizeGame({name:"Granny",url:"https://quizizz.com/_media/uploadedFiles/f09025fb-2bdd-408e-b4b1-f6bc8c43819a-v2"}),
+        normalizeGame({name:"Grow a Garden",url:"https://quizizz.com/_media/uploadedFiles/cc55cd43-1bb6-45aa-bf39-c3243bf72f03-v2"}),
+        normalizeGame({name:"GTA Mods",url:"https://quizizz.com/_media/uploadedFiles/2d6bf9ea-211f-4f40-bd6e-54671381e6b5-v2"}),
+        normalizeGame({name:"Gun Spin",url:"https://quizizz.com/_media/uploadedFiles/36335e74-1109-4890-8a23-ae28264deb4f-v2"}),
+        normalizeGame({name:"Hacked Impossible Quiz",url:"https://quizizz.com/_media/uploadedFiles/bacf133d-419e-437c-b6a1-71705da135d0-v2"}),
+        normalizeGame({name:"Hollow Knight Silksong",url:"https://quizizz.com/_media/uploadedFiles/8120ed43-15aa-4f44-93be-53987926ec3d-v2"}),
+        normalizeGame({name:"Hollow Knight",url:"https://quizizz.com/_media/uploadedFiles/32ad279c-6a35-4c00-a018-ea801afb91e2-v2"}),
+        normalizeGame({name:"Imagine Math Facts",url:"https://quizizz.com/_media/uploadedFiles/434bba6a-59c1-4c0e-b2c3-9d7e4241cbea-v2"}),
+        normalizeGame({name:"Impossible Quiz",url:"https://quizizz.com/_media/uploadedFiles/0f87a67d-7e6c-402f-ab30-b3acaa06c6bb-v2"}),
+        normalizeGame({name:"Indian Truck Driving",url:"https://quizizz.com/_media/uploadedFiles/51348490-d8cc-4d68-a238-4d923c36dbd8-v2"}),
+        normalizeGame({name:"Infinite Craft",url:"https://quizizz.com/_media/uploadedFiles/48e79018-ef3b-4ef1-90d1-87ec6ffd743a-v2"}),
+        normalizeGame({name:"Jumbo Mario",url:"https://quizizz.com/_media/uploadedFiles/76a511bc-231d-44e1-9618-512f3cc5f3d8-v2"}),
+        normalizeGame({name:"Just Build LOL",url:"https://quizizz.com/_media/uploadedFiles/987a45b6-4f69-4968-a507-3d4999568d8c-v2"}),
+        normalizeGame({name:"Kindergarten 2",url:"https://quizizz.com/_media/uploadedFiles/d6011645-15b5-497b-b5ec-0549c9495648-v2"}),
+        normalizeGame({name:"Kindergarten 3",url:"https://quizizz.com/_media/uploadedFiles/d30d215d-7947-437d-8f43-7410fc653701-v2"}),
+        normalizeGame({name:"Kindergarten",url:"https://quizizz.com/_media/uploadedFiles/ee947e20-20a2-4caf-bca4-8b1c67705798-v2"}),
+        normalizeGame({name:"Lethal Ape",url:"https://quizizz.com/_media/uploadedFiles/3dc1b527-6f7a-4404-802b-64d63b323087-v2"}),
+        normalizeGame({name:"Lobotomy Dash",url:"https://quizizz.com/_media/uploadedFiles/7ef89a61-a94f-480e-85f5-ee1254373c08-v2"}),
+        normalizeGame({name:"Memetash",url:"https://quizizz.com/_media/uploadedFiles/2b336076-a776-4916-a72c-e52fca9eae60-v2"}),
+        normalizeGame({name:"Minecraft P.E",url:"https://quizizz.com/_media/uploadedFiles/e90b1e1b-ef80-45c8-908c-106826e82c7e-v2"}),
+        normalizeGame({name:"Nitro Clash",url:"https://quizizz.com/_media/uploadedFiles/38677a8d-24d6-4c39-a191-205cf16a68c0-v2"}),
+        normalizeGame({name:"One Piece Fighting",url:"https://quizizz.com/_media/uploadedFiles/d9d05ab3-6492-4616-b810-6d0723d07808-v2"}),
+        normalizeGame({name:"Orange Roulette",url:"https://quizizz.com/_media/uploadedFiles/e17d0375-5c50-4653-b2a4-9a1159ad9abb-v2"}),
+        normalizeGame({name:"OSU",url:"https://scratch.mit.edu/projects/17828009/embed"}),
+        normalizeGame({name:"Plague Inc",url:"https://quizizz.com/_media/uploadedFiles/c466e9bf-b6a9-4d22-9421-d2b582a17d0d-v2"}),
+        normalizeGame({name:"Pneumonoultramicroscopicsilicovolcanoconiosis",url:"https://quizizz.com/_media/uploadedFiles/86804561-275c-42af-902f-c47e6aa2d65d-v2"}),
+        normalizeGame({name:"Poly Track",url:"https://quizizz.com/_media/uploadedFiles/188ac4a0-a14d-4759-bf62-7113f7dd3aca-v2"}),
+        normalizeGame({name:"PVZ",url:"https://quizizz.com/_media/uploadedFiles/cd539523-8c0c-454d-9763-83596ac31378-v2"}),
+        normalizeGame({name:"R.E.P.O",url:"https://quizizz.com/_media/uploadedFiles/c5868dbe-d132-463b-9aea-85ecb6a1bf5e-v2"}),
+        normalizeGame({name:"Ragdoll Archers",url:"https://quizizz.com/_media/uploadedFiles/4b06b0a4-0352-4077-956f-662768096a1d-v2"}),
+        normalizeGame({name:"Raldi's Crack House",url:"https://quizizz.com/_media/uploadedFiles/9e0d241f-2014-4ae6-be1c-82f1f5e98615-v2"}),
+        normalizeGame({name:"Retro Bowl",url:"https://quizizz.com/_media/uploadedFiles/70ea1f7f-23c3-414f-9097-42fb07e4d417-v2"}),
+        normalizeGame({name:"Rocket Goal",url:"https://quizizz.com/_media/uploadedFiles/a51ebc17-9bb2-4bae-a10b-5169134b77ab-v2"}),
+        normalizeGame({name:"Run 3",url:"https://quizizz.com/_media/uploadedFiles/fb3a0dcc-4fe5-4739-84a8-8ff2b2fb7da0-v2"}),
+        normalizeGame({name:"Slime Rancher",url:"https://quizizz.com/_media/uploadedFiles/5f19e1c8-7d39-44d7-ba8f-259d43955908-v2"}),
+        normalizeGame({name:"Slope",url:"https://quizizz.com/_media/uploadedFiles/d44f91a8-8f3e-4498-b698-fb264c6fa014-v2"}),
+        normalizeGame({name:"Slow Roads",url:"https://quizizz.com/_media/uploadedFiles/13a4ebba-c09c-4c2d-b158-8055be3a8a04-v2"}),
+        normalizeGame({name:"Snow Rider 3D",url:"https://quizizz.com/_media/uploadedFiles/a43a5ad0-589d-458c-bd63-d6a8b8051301-v2"}),
+        normalizeGame({name:"Snowball.IO",url:"https://quizizz.com/_media/uploadedFiles/391e662f-769d-413e-a87c-a91326495a72-v2"}),
+        normalizeGame({name:"Soccer Random",url:"https://quizizz.com/_media/uploadedFiles/0949eea4-37ce-46c7-8d13-09ba2dd61e26-v2"}),
+        normalizeGame({name:"Soflo Wheelie Life",url:"https://scratch.mit.edu/projects/1231016758/embed"}),
+        normalizeGame({name:"Space Waves",url:"https://quizizz.com/_media/uploadedFiles/c7b197ec-211f-49f0-9bc0-6d985ccefb1b-v2"}),
+        normalizeGame({name:"Spiral Roll",url:"https://quizizz.com/_media/uploadedFiles/82748805-6de4-4589-aea6-19db3baf6f94-v2"}),
+        normalizeGame({name:"Sprinter",url:"https://quizizz.com/_media/uploadedFiles/01b737ed-e2ac-4275-bf8a-cc871513f0cc-v2"}),
+        normalizeGame({name:"Steal a Brainrot Duel",url:"https://quizizz.com/_media/uploadedFiles/522f3b99-4bbf-40a4-9b65-f5ee768373b7-v2"}),
+        normalizeGame({name:"Steal a Brainrot",url:"https://quizizz.com/_media/uploadedFiles/f2e439e6-24da-4baa-83bf-034bf8244a0e-v2"}),
+        normalizeGame({name:"Stickman Duel",url:"https://quizizz.com/_media/uploadedFiles/b46cffbe-a211-4f00-ae80-aefb74236b99-v2"}),
+        normalizeGame({name:"Subway Surfers",url:"https://quizizz.com/_media/uploadedFiles/559943b2-fce5-4763-b0f8-7748b090d466-v2"}),
+        normalizeGame({name:"Super Mario 63",url:"https://quizizz.com/_media/uploadedFiles/0dd77172-91fe-45df-88c2-dfd7e8e9b09b-v2"}),
+        normalizeGame({name:"Super Market Simulator",url:"https://quizizz.com/_media/uploadedFiles/19ad830d-2ec8-42cd-92fd-16528b4c5ca9-v2"}),
+        normalizeGame({name:"Survival Race",url:"https://quizizz.com/_media/uploadedFiles/78d606ed-3dbf-4362-aed3-85db2e888ee0-v2"}),
+        normalizeGame({name:"t³ (t cubed)",url:"https://quizizz.com/_media/uploadedFiles/a52649e8-113c-470b-82d5-f7ce76d86a14-v2"}),
+        normalizeGame({name:"Terraria",url:"https://scratch.mit.edu/projects/322341152/embed"}),
+        normalizeGame({name:"The Math is Leaking",url:"https://quizizz.com/_media/uploadedFiles/d9253947-52ed-4ff9-9f97-65344cc71fd1-v2"}),
+        normalizeGame({name:"The Ultimate Baldi's Basic's Decompile",url:"https://quizizz.com/_media/uploadedFiles/5fc1b6b2-9f6c-4725-bd8e-689a65b4934d-v2"}),
+        normalizeGame({name:"The World's Hardest Game",url:"https://quizizz.com/_media/uploadedFiles/2b80bed9-d0af-4209-b373-a76a9e233755-v2"}),
+        normalizeGame({name:"three",url:"https://quizizz.com/_media/uploadedFiles/9cbdbabd-e52b-451a-b9b2-a697dc64b7ae-v2"}),
+        normalizeGame({name:"Time Shooter 3 SWAT",url:"https://quizizz.com/_media/uploadedFiles/830b0142-e39a-4078-9cb6-5bed39d7e161-v2"}),
+        normalizeGame({name:"Tomb of Mask",url:"https://quizizz.com/_media/uploadedFiles/af0ac1ca-8bfb-48a4-86ef-a8ef7f467648-v2"}),
+        normalizeGame({name:"Tung Tung Horror",url:"https://quizizz.com/_media/uploadedFiles/b34dd3b1-0c34-45b5-b85a-10ce34f17426-v2"}),
+        normalizeGame({name:"Tung Tung Sahur Obby",url:"https://quizizz.com/_media/uploadedFiles/17066df5-4b20-4c60-a4bb-f64b78429b70-v2"}),
+        normalizeGame({name:"Ultrakill",url:"https://quizizz.com/_media/uploadedFiles/8e116a13-ebc0-4c35-b01c-b8da7cff4168-v2"}),
+        normalizeGame({name:"Undertale",url:"https://quizizz.com/_media/uploadedFiles/68474e56-2259-4957-bec9-80e64c7484c7-v2"}),
+        normalizeGame({name:"Unfair Mario",url:"https://quizizz.com/_media/uploadedFiles/004820f7-3774-4d70-bb1b-e9bcdb8134d9-v2"}),
+        normalizeGame({name:"Untitled Goose Game",url:"https://quizizz.com/_media/uploadedFiles/bd1040c9-d3d7-4949-a5f0-2dd2c56ad8b4-v2"}),
+        normalizeGame({name:"UvuvwevwevweOnyetenvewveUgwemubwemOssas",url:"https://quizizz.com/_media/uploadedFiles/f2e17285-ddb2-4ff9-aa5a-2a9b2d6d7e92-v2"}),
+        normalizeGame({name:"Vice City",url:"https://quizizz.com/_media/uploadedFiles/d96062d5-eb55-411f-bf98-56028e2ecf4b-v2"}),
+        normalizeGame({name:"Wave Dash",url:"https://quizizz.com/_media/uploadedFiles/c2809de0-882d-47d4-9358-c2a98591068d-v2"}),
+        normalizeGame({name:"Wave Road 3D",url:"https://quizizz.com/_media/uploadedFiles/cfaa268b-da1d-487e-b8c7-94188c5a6634-v2"}),
+        normalizeGame({name:"Who's Your Daddy",url:"https://quizizz.com/_media/uploadedFiles/490de9ed-4c34-4aff-8ed2-c90ed891d787-v2"}),
+        normalizeGame({name:"Wrestle Bros",url:"https://quizizz.com/_media/uploadedFiles/d13a55df-851a-4560-a96e-605b835dcad5-v2"})
       ];
-      DATA.ubz = files.map(f => normalizeGame({
-        name: f.replace(/\.html$/,'').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b\w/g,c=>c.toUpperCase()),
-        url: UBZ_BASE + f
-      }));
+      DATA.ubz.forEach(g => g._ubz = true);
     }
 
     // ─── Noah's Tutoring Hub ───
@@ -1870,7 +2241,7 @@
     }
 
     // ─── Other loaders ───
-    const GN_HTML_URL = 'https://cdn.jsdelivr.net/gh/freebuisness/html@main';
+    const GN_HTML_URL = 'https://testingcf.jsdelivr.net/gh/freebuisness/html@main';
     const GN_COVER_URL = 'https://cdn.jsdelivr.net/gh/freebuisness/covers@main';
 
     async function loadGN(){
@@ -1886,7 +2257,7 @@
             return normalizeGame({
               name: g.name,
               img: rawCover.startsWith('http') ? rawCover : (GN_COVER_URL + '/' + rawCover),
-              url: gu.startsWith('http') ? gu : ('https://gn-math.dev/play/' + g.id)
+              url: gu.startsWith('http') ? gu : (GN_HTML_URL + '/' + g.id + '.html')
             });
           });
       } catch(e) { console.warn("GN load failed:", e); }
@@ -2035,7 +2406,7 @@
               games.push(normalizeGame({
                 name: formatZoneId(cleanId),
                 img: fallback,
-                url: `https://cdn.jsdelivr.net/gh/freebuisness/html@main/${cleanId}`
+                url: `https://testingcf.jsdelivr.net/gh/freebuisness/html@main/${cleanId}`
               }));
             }
           });
@@ -2123,7 +2494,7 @@
               if (result && result.url) playUrl = result.url;
             } catch(e) { console.warn('Lumin play failed:', e); }
           }
-          openGame(g.name, playUrl);
+          openGame(g.name, playUrl, !!g._ubz);
         };
         gameGrid.appendChild(card);
       });
@@ -2226,6 +2597,152 @@
       renderMovies(movieLinks.filter(function(url) { return url.toLowerCase().includes(q); }));
     });
 
+    // ─── Tab Cloak ───
+    var cloakPresets = {
+      classroom: { title: 'Home - Classroom', icon: 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Ccircle%20cx%3D%228%22%20cy%3D%228%22%20r%3D%228%22%20fill%3D%22%230D6529%22%2F%3E%3Ctext%20x%3D%228%22%20y%3D%2212%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%20font-size%3D%2211%22%20font-family%3D%22Arial%2Csans-serif%22%20font-weight%3D%22bold%22%3EC%3C%2Ftext%3E%3C%2Fsvg%3E' },
+      drive: { title: 'Google Drive', icon: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADBklEQVR4AWIgFYwC8QYrHYkGCwcAbeUAZFcMQNHMdG3btlmu7fe3tm3btu32o7Zt27ZtpslMs3z5yerOnPF758ZimA6KdAEVleCVgofX3OQ9SASVcXSt/la4D1iUqzxqUWONEJlwC/HbZmRVqlwyyQv+2q2COVS+o5dKeiE5xPguTPspJrcZEg7vbtH6hgtgfu+uVK9c5KGKXAsk/oSABIdxUcUK9JrjTEZPeAT3AY2yj14mLCJiQsDSTGg5JF/uNjwEvtmuQcT57FEZVCZ5kCwnAgvFcJ0an1dg8TKLP1gowrdv+zQcSj/9MuEYrUCwNOe79fAqsMZYf/hjlwqtAPy5W1VaSrmkHk1O8F2Qeun2Zu0bREZll0rVEsm9Fbk6IXLhEZYwWIcEpxCQwSm4D6jwj14qGcYh/xakyHXBo2PIyVI045JHSLMc8M9ZBdD+GEW+wevMUeIZ3AcMACshshwpx+if4WUi36Af2+AdzyyxR2WUcrlUEsUhh8FyoREoEnzmOWbh1/d96i7i9/2+KBX083McBU4BkeBbD99+HCU2UUaf04xn9PhyApSg+78WQ06OZSIomIB1WQZo7V8xC0iFZYAR/BJy7IVrhY4lXlOeYxe+PMcGMPJzp2oI5yxEARKXwQsGuwxd+Mp58DIoyrAFT0PHb1wTM+LzIh6WD+2/6WN3h6cfOjvBYnRx+vmxp/3ddz2cGwMSi5aXUi1bXYQ07Npdg+jHPxCQh6Shb97fS4yGL2NDqTxPCPEBeRm8TwWJrtEKhPR7wS0nTG457w9N/io2dBcoGsvW5xPF5C4db4pLGCQOf/fnYnqWWIFfZPTFgoTbCsqtWl2CVQa9pYsYdO+yq/jo40JmAVps2l52QeJfpIBnt3tsEYO9klYFC7x7FxWg/D2wanVhHJZbt7kMawz/+KOsBWr1v/P1WVzE/wIh7QArpm2v6Fi2unQoqM/zx9wiBvOaTXr0MjZsFYyK+jdY4UPYEY4tn6qcWr5sdmz7sp8S7NT6eX147b0csOWDEYwCAJuJN71tqVZWAAAAAElFTkSuQmCC' },
+      docs: { title: 'Untitled document - Google Docs', icon: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAEc0lEQVR4Ae3XA4w1axLG8V+9fWa+tW3bDHfDtW0bcbJxNlgbwdoK1rZt+9o2Zrrr6k3ypjP3dN+Zvr7/pFLnNOvpp6rhYuYKwkzu/fp8YfKsSPcUru0C8MC7+Cie70Jg9bIvpil+/TdfHXhkIAOJMJtrXNXzjjnJgBcuLmBrsJbf/t3jS/HIgCTCrrju1b3g6BPtw7MWFZBpLVG8KBOBICCQLjDXu4ZnHnmcK+OJFqIMPesi0gICsikeYn603ODanjDwlQFLRJnaIMP1NGQiSfNjzI2u7VHD4OvDwF6jTG0wJiB2Z0DLTa7r4aX4SinsKSY2WJyxEzn4Wg7sNsrEBhc6N76uR5Tw5RLsKiY2WIS0nhtex6PxVbuguAg49XRMi3ik8AXB/KBMbLAIBx5hFje8tseV4nPzB5hVKS50Dj6SCG5xQ66yz1quf01POfZEW3Of2KsuXCQcdMR5MUUEV7+KZ171yr6FT0wKOPQYlygyOeFkTjzZx/vwb/xqrYCDj15+ypei8Fnceq2A4hLNrRa7jUaTL0LSBKu5xWcQQahkTZd0AQFBQdRIiJpThbwkO1CiBrLGkOSFK6RbTgC6oFOLToYdhCQiyWXEbC3SQhGUYBV0AbXwqEKCIcdiFnFmWMyBLljViKiF1+JHubpTc5C7HPycMwNpmlJjFWxEFWCH4tVAGv1vnAnkDDExR0BYT4wc2CiU5ioPIyfGy/qsYjR5evgXbKFoZ4CN+lst+KpX4UF34sqbpFqc9vfO/08+g6//hWNPW9Nii85A00JdUfub1z6BW17PrnjE3XjOR8bDTySBJBe9C3W1hbrGgc3Ortm3YiMY2nlKbfP3i9+FqgOiOvCh73DnW9CV6dZpf5+5zW8PYKPUwtHXUP8HwyJDXNQZKGwUVo0Dhx7DwUc3w1tzPx5oO+fNUrdHGdA8KLG9jAPRzEAVEqO7TZv7oBuvm9i+JKWQA3U5WPBdqAqoLshR7za5a4tTl09s3wfbtfi+RqR++edAjWiu7I2uw+ZGc58ftUkmp57J/kedvxPbSdTCtxBLzUA7B9UBm00LPe7B3P22ZvH7//H+b9Hv4EQJAttJF5RAWi00A81ttEbUIu5wc7O592250TU56sSRE9UBwVahDASEq0wLiOnixy3UOvCD33DHW9MVIDU5a8ZWzx//x0mnsNneOhsHYJV0COAaizhQRi20EZTqwL//xz/+VwuacevcjGbAa7FDsp1kUNtHIDhjiSHuI3RlZweM7zrjKzusyV2zfQkyWVUREUhn7tmB5CRcq86AVY3qgEz6mne4sutFoL6ximQorAYKAjh2iRb6VfDQgkIVUQs0dqD5P9cJdEmp+6zaNuK3e26hwjvwUIig1OhUF5BIOxQ314kgqnOrZgaS9+75i2wrfQuvCd4UCJTm7hTNa3BRhawRVFvGeB30TXtGevU1ih9OCrhGMckZvTfr/XQ7fXIr3Xp7IAut+MyatSJGBLKKH+WSQPDfjqdef9PvzSCe+o50aaa4lHMWe7dEBsdPSfQAAAAASUVORK5CYII=' },
+      gmail: { title: 'Gmail', icon: 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Ccircle%20cx%3D%228%22%20cy%3D%228%22%20r%3D%228%22%20fill%3D%22%23EA4335%22%2F%3E%3Ctext%20x%3D%228%22%20y%3D%2212%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%20font-size%3D%2211%22%20font-family%3D%22Arial%2Csans-serif%22%20font-weight%3D%22bold%22%3EM%3C%2Ftext%3E%3C%2Fsvg%3E' },
+      youtube: { title: 'YouTube', icon: 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Ccircle%20cx%3D%228%22%20cy%3D%228%22%20r%3D%228%22%20fill%3D%22%23FF0000%22%2F%3E%3Cpolygon%20points%3D%226%2C5%2011%2C8%206%2C11%22%20fill%3D%22white%22%2F%3E%3C%2Fsvg%3E' },
+      google: { title: 'Google', icon: 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Ccircle%20cx%3D%228%22%20cy%3D%228%22%20r%3D%228%22%20fill%3D%22%234285F4%22%2F%3E%3Ctext%20x%3D%228%22%20y%3D%2212%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%20font-size%3D%2211%22%20font-family%3D%22Arial%2Csans-serif%22%20font-weight%3D%22bold%22%3EG%3C%2Ftext%3E%3C%2Fsvg%3E' },
+      newtab: { title: 'New Tab', icon: 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Ccircle%20cx%3D%228%22%20cy%3D%228%22%20r%3D%228%22%20fill%3D%22%23ff6600%22%2F%3E%3C%2Fsvg%3E' },
+      calendar: { title: 'Google Calendar', icon: 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Crect%20width%3D%2214%22%20height%3D%2212%22%20x%3D%221%22%20y%3D%222%22%20rx%3D%222%22%20fill%3D%22%234285F4%22%2F%3E%3Ctext%20x%3D%228%22%20y%3D%2212%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%20font-size%3D%2210%22%20font-family%3D%22Arial%2Csans-serif%22%20font-weight%3D%22bold%22%3E31%3C%2Ftext%3E%3Crect%20width%3D%222%22%20height%3D%222%22%20x%3D%223%22%20y%3D%220%22%20fill%3D%22%234285F4%22%2F%3E%3Crect%20width%3D%222%22%20height%3D%222%22%20x%3D%2211%22%20y%3D%220%22%20fill%3D%22%234285F4%22%2F%3E%3C%2Fsvg%3E' },
+      sites: { title: 'Google Sites', icon: 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Ccircle%20cx%3D%228%22%20cy%3D%228%22%20r%3D%228%22%20fill%3D%22%234285F4%22%2F%3E%3Ctext%20x%3D%228%22%20y%3D%2212%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%20font-size%3D%2211%22%20font-family%3D%22Arial%2Csans-serif%22%20font-weight%3D%22bold%22%3ES%3C%2Ftext%3E%3C%2Fsvg%3E' },
+      slides: { title: 'Untitled presentation - Google Slides', icon: 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Ccircle%20cx%3D%228%22%20cy%3D%228%22%20r%3D%228%22%20fill%3D%22%23FBBC04%22%2F%3E%3Ctext%20x%3D%228%22%20y%3D%2212%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%20font-size%3D%2211%22%20font-family%3D%22Arial%2Csans-serif%22%20font-weight%3D%22bold%22%3ES%3C%2Ftext%3E%3C%2Fsvg%3E' },
+      sheets: { title: 'Untitled spreadsheet - Google Sheets', icon: 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Ccircle%20cx%3D%228%22%20cy%3D%228%22%20r%3D%228%22%20fill%3D%22%230F9D58%22%2F%3E%3Ctext%20x%3D%228%22%20y%3D%2212%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%20font-size%3D%2211%22%20font-family%3D%22Arial%2Csans-serif%22%20font-weight%3D%22bold%22%3ES%3C%2Ftext%3E%3C%2Fsvg%3E' },
+      khanacademy: { title: 'Dashboard | Khan Academy', icon: 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Ccircle%20cx%3D%228%22%20cy%3D%228%22%20r%3D%228%22%20fill%3D%22%2314B2A6%22%2F%3E%3Ctext%20x%3D%228%22%20y%3D%2212%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%20font-size%3D%2211%22%20font-family%3D%22Arial%2Csans-serif%22%20font-weight%3D%22bold%22%3EK%3C%2Ftext%3E%3C%2Fsvg%3E' },
+      quizlet: { title: 'Quizlet', icon: 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Ccircle%20cx%3D%228%22%20cy%3D%228%22%20r%3D%228%22%20fill%3D%22%23425BF5%22%2F%3E%3Ctext%20x%3D%228%22%20y%3D%2212%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%20font-size%3D%2211%22%20font-family%3D%22Arial%2Csans-serif%22%20font-weight%3D%22bold%22%3EQ%3C%2Ftext%3E%3C%2Fsvg%3E' },
+      duolingo: { title: 'Duolingo', icon: 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Ccircle%20cx%3D%228%22%20cy%3D%228%22%20r%3D%228%22%20fill%3D%22%2358CC02%22%2F%3E%3Ctext%20x%3D%228%22%20y%3D%2212%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%20font-size%3D%2211%22%20font-family%3D%22Arial%2Csans-serif%22%20font-weight%3D%22bold%22%3ED%3C%2Ftext%3E%3C%2Fsvg%3E' },
+      wikipedia: { title: 'Wikipedia', icon: 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Ccircle%20cx%3D%228%22%20cy%3D%228%22%20r%3D%228%22%20fill%3D%22%23000%22%2F%3E%3Ctext%20x%3D%228%22%20y%3D%2212%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%20font-size%3D%2211%22%20font-family%3D%22Arial%2Csans-serif%22%20font-weight%3D%22bold%22%3EW%3C%2Ftext%3E%3C%2Fsvg%3E' },
+      clipchamp: { title: 'Clipchamp', icon: 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Ccircle%20cx%3D%228%22%20cy%3D%228%22%20r%3D%228%22%20fill%3D%22%2300A4EF%22%2F%3E%3Ctext%20x%3D%228%22%20y%3D%2212%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%20font-size%3D%2211%22%20font-family%3D%22Arial%2Csans-serif%22%20font-weight%3D%22bold%22%3EC%3C%2Ftext%3E%3C%2Fsvg%3E' }
+    };
+
+    function setFavicon(url) {
+      document.querySelectorAll('link[rel*="icon"]').forEach(function(el) { el.remove(); });
+      var t = 'image/x-icon';
+      if (url.startsWith('data:image/svg')) t = 'image/svg+xml';
+      else if (url.startsWith('data:image/png')) t = 'image/png';
+      else if (url.startsWith('data:image/gif')) t = 'image/gif';
+      else if (url.endsWith('.svg')) t = 'image/svg+xml';
+      else if (url.endsWith('.png')) t = 'image/png';
+      var link = document.createElement('link');
+      link.type = t; link.rel = 'icon'; link.href = url;
+      document.head.appendChild(link);
+    }
+
+    function updateCloakPreview(icon, title) {
+      try {
+        var pi = document.getElementById('cloak-preview-icon');
+        var pt = document.getElementById('cloak-preview-title');
+        if (pi) { if (icon) { pi.src = icon; pi.style.display = 'inline-block'; } else { pi.style.display = 'none'; } }
+        if (pt && title !== undefined && title !== null) pt.textContent = title;
+      } catch(e) {}
+    }
+
+    function applyCloakPreset(value) {
+      if (!value || !cloakPresets[value]) return;
+      var preset = cloakPresets[value];
+      setFavicon(preset.icon);
+      document.title = preset.title;
+      updateCloakPreview(preset.icon, preset.title);
+      try { localStorage.setItem('cloakPreset', value); } catch(e) {}
+      try { localStorage.removeItem('cloakCustomFavicon'); } catch(e) {}
+      try { localStorage.removeItem('cloakCustomTitle'); } catch(e) {}
+      try { document.getElementById('cloak-favicon-input').value = ''; } catch(e) {}
+      try { document.getElementById('cloak-title-input').value = ''; } catch(e) {}
+    }
+
+    function applyCloakFaviconUrl() {
+      var url = (document.getElementById('cloak-favicon-input') || {}).value;
+      if (!url || !(url = url.trim())) return;
+      setFavicon(url);
+      try { localStorage.setItem('cloakCustomFavicon', url); } catch(e) {}
+      try { localStorage.removeItem('cloakPreset'); } catch(e) {}
+      try { document.getElementById('cloak-preset').value = ''; } catch(e) {}
+      updateCloakPreview(url, null);
+    }
+
+    function applyCloakTitle() {
+      var title = (document.getElementById('cloak-title-input') || {}).value;
+      if (!title || !(title = title.trim())) return;
+      document.title = title;
+      try { localStorage.setItem('cloakCustomTitle', title); } catch(e) {}
+      updateCloakPreview(null, title);
+    }
+
+    function resetCloak() {
+      try { localStorage.removeItem('cloakPreset'); } catch(e) {}
+      try { localStorage.removeItem('cloakCustomFavicon'); } catch(e) {}
+      try { localStorage.removeItem('cloakCustomTitle'); } catch(e) {}
+      setFavicon('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Ccircle%20cx%3D%228%22%20cy%3D%228%22%20r%3D%228%22%20fill%3D%22%230D6529%22%2F%3E%3Ctext%20x%3D%228%22%20y%3D%2212%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%20font-size%3D%2211%22%20font-family%3D%22Arial%2Csans-serif%22%20font-weight%3D%22bold%22%3EC%3C%2Ftext%3E%3C%2Fsvg%3E');
+      document.title = 'Home - Classroom';
+      try { document.getElementById('cloak-preset').value = ''; } catch(e) {}
+      try { document.getElementById('cloak-favicon-input').value = ''; } catch(e) {}
+      try { document.getElementById('cloak-title-input').value = ''; } catch(e) {}
+      updateCloakPreview('', '');
+    }
+
+    document.getElementById('cloak-preset').addEventListener('change', function() { applyCloakPreset(this.value); });
+    document.getElementById('cloak-favicon-file').addEventListener('change', function(e) {
+      var file = e.target.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function(ev) {
+        var dataUrl = ev.target.result;
+        setFavicon(dataUrl);
+        localStorage.setItem('cloakCustomFavicon', dataUrl);
+        localStorage.removeItem('cloakPreset');
+        document.getElementById('cloak-preset').value = '';
+        updateCloakPreview(dataUrl, null);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Apply saved cloak on load
+    (function() {
+      var preset = localStorage.getItem('cloakPreset');
+      var favicon = localStorage.getItem('cloakCustomFavicon');
+      var title = localStorage.getItem('cloakCustomTitle');
+      if (preset && cloakPresets[preset]) {
+        applyCloakPreset(preset);
+      } else if (favicon || title) {
+        if (favicon) setFavicon(favicon);
+        if (title) document.title = title;
+      }
+    })();
+
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/luna-object-viewer/luna-object-viewer.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/luna-data-grid/luna-data-grid.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/luna-dom-viewer/luna-dom-viewer.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/luna-console/luna-console.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var container = document.getElementById('luna-console');
+      if (container && typeof LunaConsole !== 'undefined') {
+        container.classList.add('luna-console-theme-dark');
+        window._lc = new LunaConsole(container);
+        window._lc.on('command', function(cmd) {
+          try {
+            var result = eval(cmd);
+            window._lc.log(result);
+          } catch(e) {
+            window._lc.error(e.toString());
+          }
+        });
+        var methods = ['log','error','warn','info','dir','table','clear','count','countReset','time','timeLog','timeEnd','assert','group','groupCollapsed','groupEnd'];
+        methods.forEach(function(m) {
+          var orig = console[m];
+          console[m] = function() {
+            var args = Array.prototype.slice.call(arguments);
+            try { if (window._lc && window._lc[m]) window._lc[m].apply(window._lc, args); } catch(e) {}
+            if (orig) orig.apply(console, args);
+          };
+        });
+        window._lc.log('Console ready.');
+      }
+    });
   </script>
 </body>
 </html>
