@@ -8,7 +8,7 @@
   <link rel="icon" type="image/svg+xml" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAOCAYAAAAmL5yKAAAAAXNSR0IArs4c6QAAAhBJREFUOE9tk89rE1EQx78Tf0A22tg2W4qHVqPVtol3Dyq24M2r7B48WS9F0KNQ0CLoP9CbCJ6zvSiKIlY02ggFr2tvmjbVKGSTIs22iSk7MvM21VIfebz3yHw/7/tmZunW1aN8ZXIbIAYR4mE2zAAhATCB5RwRmOU/AiLCk9I+UGfJZuIQRBItYfFgAZhgESoknuCEgZEF6nxMsdzsb/Xjc8s2LlRsLMiqM2IgMvtcch1565cCqVM6xHKz1xjFfGNU3Rm/DOtAUoXNdjMGROAogpMpw8lU1BX9XjysgPn6KXiN0zsvSB20MDt5W2GzCw/QbIUqFqAAXLtiHLQ/9LC836uP6DQWgBtnp3Axe073xS+LmCs9BHYAK3DttRjwPs2i8YIT8Oon/3GQxL1LM3q+8+o+QnHAXQerCtAntIpHNNeFehZekP1bBQApyQEzwraIJaGSSIZjV+Da34yD1rterV0hOAYvOK6A/OAYcoPjusrwfyxjaeUTykFZIU5mDe7Ad+Ng622fAdSG4QXDuHl+GhMjF3Y56R6e+y/xqPRYxa5dNQ423/SbHNSGUKgN4en1wn/F6qS6jJlnd1Xs2FWtEG0u2FpGP+yBH6ZxZmxqF0AbKh5h+BNfV18gZ20gb20YB+HrAemzbvX23q4AaWX5mVXbW5uNQNcup9md2B8LSWO77byXlog/MNMrXnEbfwCrwRQID/CEeAAAAABJRU5ErkJggg==">
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Pacifico&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luna-object-viewer/luna-object-viewer.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luna-data-grid/luna-data-grid.css">
@@ -73,8 +73,8 @@
 
     #sidebar {
       height: 70px; width: 100%;
-      background: transparent;
-      border-top: none;
+      background: rgba(0,0,0,0.6);
+      border-top: 1px solid rgba(255,102,0,0.3);
       display: flex; flex-direction: row; align-items: center; justify-content: center;
       padding: 0 16px 10px; position: fixed; left: 0; right: 0; bottom: 0;
       z-index: 100;
@@ -527,6 +527,16 @@
       background: var(--accent); color: #000;
       box-shadow: 0 0 12px rgba(255,102,0,0.4);
     }
+    .settings-btn {
+      background: transparent; border: 2px solid var(--accent);
+      color: var(--accent); font-family: "Pixelify Sans", sans-serif;
+      font-size: 14px; font-weight: 600; padding: 8px 18px;
+      border-radius: 6px; cursor: pointer; transition: all 0.2s;
+    }
+    .settings-btn:hover {
+      background: var(--accent); color: #000;
+      box-shadow: 0 0 12px rgba(255,102,0,0.4);
+    }
     #game-frame-container {
       flex: 1; position: relative; background: #000;
     }
@@ -565,7 +575,7 @@
     <div class="loading-school-name">Restricted Independent School District</div>
     <div class="loading-stripe">
       <div class="top-text">Oops,</div>
-      <div class="website">2kp6j7kpq2m9xlb.ub</div>
+      <div class="website" id="loading-hostname">2kp6j7kpq2m9xlb.ub</div>
       <div class="bottom-text">is not available because it is blocked for █████.</div>
     </div>
     <div class="loading-system-msg">
@@ -611,8 +621,8 @@
         <button class="sidebar-btn" data-tab="console">
           <span class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span> Console
         </button>
-        <button class="sidebar-btn" id="music-btn" type="button" data-tab="music" onclick="toggleMusic()">
-          <span class="icon" id="music-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/></svg></span> Music
+        <button class="sidebar-btn" id="music-btn" type="button" data-tab="music">
+          <span class="icon" id="music-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/></svg></span> <span id="music-label">Music</span>
         </button>
       </nav>
       <audio id="bg-music" preload="auto"></audio>
@@ -624,10 +634,10 @@
           <div class="day-name" id="dayName">SATURDAY</div>
           <div class="full-date" id="fullDate">MAY 03, 2026</div>
         </div>
-        <h2>Welcome to UNBL0CKEDZ0NE</h2>
-        <p>We got everything because I am just the best. - ʊռɮʟօƈӄɛɖʐօռɛ</p>
-        <div class="search-bar">
-          <input type="text" id="home-search-input" placeholder="Search games">
+        <h2 id="welcome-heading" style="font-family:'Pacifico',cursive;font-weight:400;font-size:36px;">Welcome!</h2>
+        <div class="search-bar" style="position:relative;">
+          <input type="text" id="home-search-input" placeholder="Search for G4mes! - v4.01" style="padding-right:44px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);pointer-events:none;" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </div>
         <div class="games-section">
           <button class="game-btn" onclick="openGame('Friday Night Funkin (FNF)','https://quizizz.com/_media/uploadedFiles/9846cccb-8ba6-4c4d-baeb-0b16a1bfea06-v2')">
@@ -1698,7 +1708,7 @@
           <div class="game-card" style="padding:20px;">
             <h3>Cache</h3>
             <p style="color:#aaa;font-size:13px;margin-top:8px;">Clear site data to resolve loading issues.</p>
-            <button class="gv-btn" style="margin-top:12px;padding:8px 16px;" onclick="localStorage.clear();sessionStorage.clear();alert('Site data cleared!');">Clear Cache</button>
+            <button class="settings-btn" style="margin-top:12px;" onclick="localStorage.clear();sessionStorage.clear();alert('Site data cleared!');">Clear Cache</button>
           </div>
           <div class="game-card" style="padding:20px;">
             <h3>Personalization</h3>
@@ -1707,9 +1717,9 @@
             <p style="color:#aaa;font-size:13px;margin-top:10px;">Or upload an image:</p>
             <input type="file" id="cursor-file-input" accept="image/png,image/gif,image/jpeg,image/webp,image/cur,image/x-icon" style="display:none" onchange="handleCursorUpload(event)">
             <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
-              <button class="gv-btn" style="padding:8px 16px;" onclick="document.getElementById('cursor-file-input').click()">📁 Upload</button>
-              <button class="gv-btn" style="padding:8px 16px;" onclick="applyCustomCursor()">Apply URL</button>
-              <button class="gv-btn" style="padding:8px 16px;" onclick="resetCustomCursor()">Reset</button>
+              <button class="settings-btn" onclick="document.getElementById('cursor-file-input').click()">📁 Upload</button>
+              <button class="settings-btn" onclick="applyCustomCursor()">Apply URL</button>
+              <button class="settings-btn" onclick="resetCustomCursor()">Reset</button>
             </div>
           </div>
           <div class="game-card" style="padding:20px;">
@@ -1738,8 +1748,8 @@
             <p style="color:#aaa;font-size:13px;margin-top:10px;">Favicon Data URL:</p>
             <input type="text" id="cloak-favicon-input" class="settings-input" placeholder="data:image/png;base64,...">
             <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
-              <button class="gv-btn" style="padding:8px 16px;" onclick="applyManualCloak()">Apply</button>
-              <button class="gv-btn" style="padding:8px 16px;" onclick="resetCloak()">Reset</button>
+              <button class="settings-btn" onclick="applyManualCloak()">Apply</button>
+              <button class="settings-btn" onclick="resetCloak()">Reset</button>
             </div>
             <div id="cloak-preview" style="margin-top:12px;padding:12px;background:rgba(0,0,0,0.3);border-radius:8px;border:1px solid rgba(255,102,0,0.3);display:flex;align-items:center;gap:10px;">
               <span style="font-size:13px;color:#aaa;">Preview:</span>
@@ -1912,6 +1922,7 @@
     animate();
 
     // Loading Timer & Screen
+    document.getElementById('loading-hostname').textContent = window.location.hostname;
     const totalLoadTime = 5000;
     const timerEl = document.getElementById('loading-timer');
     const loadingScreen = document.getElementById('loading-screen');
@@ -1964,8 +1975,8 @@
         cursorCanvas.style.display = 'none';
         loadingScreen.classList.add('hidden');
         setTimeout(() => { loadingScreen.style.display = 'none'; mainContent.classList.add('visible'); }, 500);
-        var bgAudio = document.getElementById('bg-music');
-        var trackList = [
+        var bgAudio = window.bgAudio = document.getElementById('bg-music');
+        var trackList = window.trackList = [
           'https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/oobe.mp3',
           'https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/far.mp3',
           'https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/chirp.mp3',
@@ -1974,15 +1985,15 @@
           'https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/dog.mp3',
           'https://cdn.jsdelivr.net/gh/UNBL0CKEDZ0NE/ubassets@main/cat.mp3'
         ];
-        function playRandomTrack() {
+        window.playRandomTrack = function() {
           var next;
           do { next = trackList[Math.floor(Math.random() * trackList.length)]; }
           while (next === bgAudio.src && trackList.length > 1);
           bgAudio.src = next;
           bgAudio.play();
-        }
+        };
         bgAudio.volume = 0;
-        bgAudio.onended = playRandomTrack;
+        bgAudio.onended = window.playRandomTrack;
         bgAudio.src = trackList[Math.floor(Math.random() * trackList.length)];
         var playPromise = bgAudio.play();
         if (playPromise !== undefined) {
@@ -2012,6 +2023,11 @@
       if (tabId === 'settings') {
         var cur = localStorage.getItem('customCursor');
         if (cur) document.getElementById('cursor-url-input').value = cur;
+      }
+      var welcomeEl = document.getElementById('welcome-heading');
+      if (tabId !== 'home' && welcomeEl) {
+        welcomeEl.textContent = '';
+        welcomeEl.id = '';
       }
     }
 
@@ -2063,16 +2079,26 @@
       "chicken war - Henry",
       "this is for dis site - muffled_lemon (btw they are not muffled)",
       "I just wanted to say thank for adding YoungBoy - izeah",
+      "26% percent of yall are femboys btw",
       "Console - Restarting Quotes ⟳ [ETA - 5s]",
     ];
-    let qi = 0;
     const quoteEl = document.getElementById('quote');
+    var shown = [];
     setTimeout(() => { quoteEl.style.opacity = '1'; }, 300);
     setInterval(() => {
       quoteEl.style.opacity = '0';
       setTimeout(() => {
-        qi = (qi + 1) % quotes.length;
-        quoteEl.textContent = quotes[qi];
+        var pool = quotes.slice(0, -1);
+        if (shown.length >= pool.length) {
+          quoteEl.textContent = quotes[quotes.length - 1];
+          shown = [];
+        } else {
+          var idx;
+          do { idx = Math.floor(Math.random() * pool.length); }
+          while (shown.indexOf(idx) !== -1);
+          shown.push(idx);
+          quoteEl.textContent = pool[idx];
+        }
         quoteEl.style.opacity = '1';
       }, 800);
     }, 5000);
@@ -2131,6 +2157,44 @@
         icon.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>';
       }
     }
+    var musicBtn = document.getElementById('music-btn');
+    var musicLabel = document.getElementById('music-label');
+    var musicIcon = document.getElementById('music-icon');
+    var clickCount = 0;
+    var clickTimer = null;
+    musicBtn.addEventListener('click', function(e) {
+      clickCount++;
+      if (clickTimer) clearTimeout(clickTimer);
+      if (clickCount === 2) {
+        var orig = musicIcon.innerHTML;
+        musicIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5.5L16 12L6 18.5Z"/><line x1="19" y1="5" x2="19" y2="19"/></svg>';
+        window.playRandomTrack();
+        setTimeout(function() { musicIcon.innerHTML = orig; }, 1000);
+        clickCount = 0;
+        return;
+      }
+      clickTimer = setTimeout(function() {
+        toggleMusic();
+        clickCount = 0;
+      }, 300);
+    });
+    var songNames = {
+      oobe: 'Gribbly - OOBE',
+      far: 'C418 - Far',
+      chirp: 'C418 - Chirp',
+      strad: 'C418 - Strad',
+      wait: 'C418 - Wait',
+      dog: 'C418 - Dog',
+      cat: 'C418 - Cat'
+    };
+    musicBtn.addEventListener('mouseenter', function() {
+      var src = document.getElementById('bg-music').src;
+      var key = src.split('/').pop().replace('.mp3','');
+      musicLabel.textContent = songNames[key] || key || 'Music';
+    });
+    musicBtn.addEventListener('mouseleave', function() {
+      musicLabel.textContent = 'Music';
+    });
 
     function startLoading(name) {
       const gameViewer = document.getElementById('game-viewer');
